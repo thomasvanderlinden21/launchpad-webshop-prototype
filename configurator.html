@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Device Finder – Webshop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <script src="cart.js" defer></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /* Range slider */
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(to right, #277777 0%, #277777 50%, #e6ebeb 50%, #e6ebeb 100%);
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #277777;
+      cursor: pointer;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1);
+    }
+    input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #277777;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    /* Option card selected state */
+    .option-card.selected {
+      border-color: #277777 !important;
+      border-width: 2.5px !important;
+      background-color: #ffffff !important;
+      box-shadow: 0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1);
+    }
+    .option-card.selected .radio-dot {
+      border-color: #277777 !important;
+    }
+
+    /* Result section */
+    #result-section { display: none; }
+    #result-section.visible { display: block; }
+  </style>
+</head>
+<body class="bg-white text-[#121621]">
+
+  <!-- Nav -->
+  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative">
+    <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Products</a>
+      <a href="configurator.html" class="text-sm font-medium text-[#277777] transition-colors">Recommendation</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Solutions</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <div class="w-px h-5 bg-[#e6ebeb] mr-2"></div>
+      <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button aria-label="Profile" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <a href="basket.html" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors relative" aria-label="Shopping cart">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#121621] text-white text-[10px] font-medium rounded-full items-center justify-center hidden">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Page title -->
+  <div class="max-w-[1100px] mx-auto px-16 pt-14 pb-10">
+    <h1 class="text-[42px] font-semibold text-[#121621] leading-[1.15] max-w-[560px]">Find your perfect payment solution</h1>
+  </div>
+
+  <!-- Form -->
+  <div class="max-w-[1100px] mx-auto px-16 pb-24 flex flex-col gap-20">
+
+    <!-- Q1: Business description -->
+    <div class="flex flex-col gap-4">
+      <div>
+        <h2 class="text-[20px] font-medium text-[#121621] mb-1">Tell us a bit about your business</h2>
+        <p class="text-sm text-[#6b7676]">Like your store type or industry. We'll use this to fill in good defaults for you.</p>
+      </div>
+      <div class="flex items-center border border-[#4e575f] rounded-[8px] px-4 py-[15px] gap-3 bg-white hover:border-[#277777] transition-colors focus-within:border-[#277777]">
+        <input id="business-desc" type="text" placeholder="I'm running a small convenience store in the heart of London…" class="flex-1 text-[15px] text-[#121621] outline-none placeholder-[#9a9a9a] bg-transparent" onkeydown="if(event.key==='Enter') applySmartDefaults()" />
+        <button onclick="applySmartDefaults()" class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #277777 0%, rgba(39,119,119,0.65) 100%);">
+          <svg class="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Q2: Business type -->
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[20px] font-medium text-[#121621]">What type of business do you have?</h2>
+      <div class="grid grid-cols-3 gap-5">
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="businessType" data-value="physical" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[100px] h-[96px] text-[#6b7676]" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1">
+              <rect x="6" y="20" width="36" height="22" rx="1.5" fill="#f0ebe4" stroke="#c4a882" stroke-width="1"/>
+              <path d="M6 20L24 8l18 12" stroke="#c4a882" stroke-width="1" stroke-linejoin="round"/>
+              <rect x="17" y="28" width="14" height="14" rx="1" fill="white" stroke="#c4a882" stroke-width="1"/>
+              <rect x="8" y="24" width="8" height="8" rx="1" fill="#e8d5b7" stroke="#c4a882" stroke-width="0.8"/>
+              <rect x="32" y="24" width="8" height="8" rx="1" fill="#e8d5b7" stroke="#c4a882" stroke-width="0.8"/>
+              <path d="M24 8v2" stroke="#c4a882" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Permanent physical location</p>
+        </button>
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="businessType" data-value="online" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[100px] h-[96px] text-[#6b7676]" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1">
+              <rect x="4" y="8" width="40" height="26" rx="3" fill="#ede8f5" stroke="#b09ad4" stroke-width="1"/>
+              <path d="M4 16h40" stroke="#b09ad4" stroke-width="1"/>
+              <rect x="10" y="20" width="12" height="8" rx="1" fill="#c8b8e8" stroke="#b09ad4" stroke-width="0.8"/>
+              <rect x="26" y="20" width="12" height="3" rx="0.5" fill="#b09ad4" stroke="none"/>
+              <rect x="26" y="25" width="8" height="3" rx="0.5" fill="#b09ad4" stroke="none"/>
+              <path d="M18 34h12M24 34v4" stroke="#b09ad4" stroke-width="1" stroke-linecap="round"/>
+              <rect x="16" y="38" width="16" height="2" rx="1" fill="#b09ad4" stroke="none"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Online store</p>
+        </button>
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="businessType" data-value="popup" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[100px] h-[96px]" fill="none" viewBox="0 0 48 48">
+              <path d="M8 30 L24 12 L40 30" stroke="#d4919f" stroke-width="1" stroke-linejoin="round" fill="#f5d5da"/>
+              <path d="M10 30 L10 40 L38 40 L38 30Z" fill="#f0d4d8" stroke="#d4919f" stroke-width="1"/>
+              <rect x="19" y="30" width="10" height="10" rx="1" fill="white" stroke="#d4919f" stroke-width="0.8"/>
+              <path d="M4 30h40" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
+              <path d="M8 30v3M40 30v3" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Pop up / market stall</p>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Q3: Payment method -->
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[20px] font-medium text-[#121621]">How would you like to accept payments?</h2>
+      <div class="grid grid-cols-3 gap-5">
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="paymentMethod" data-value="link-only" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[90px] h-[90px]" fill="none" viewBox="0 0 48 48">
+              <rect x="12" y="4" width="24" height="40" rx="4" fill="#e8dfd4" stroke="#c4a882" stroke-width="1"/>
+              <rect x="15" y="10" width="18" height="22" rx="2" fill="white" stroke="#c4a882" stroke-width="0.8"/>
+              <circle cx="24" cy="38" r="2" fill="#c4a882"/>
+              <path d="M18 16h12M18 20h8M18 24h10" stroke="#c4a882" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="34" cy="14" r="7" fill="#277777"/>
+              <path d="M31 14l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Only Pay by link</p>
+        </button>
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="paymentMethod" data-value="terminal-link" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[90px] h-[90px]" fill="none" viewBox="0 0 48 48">
+              <rect x="14" y="4" width="20" height="34" rx="3" fill="#ede8f5" stroke="#b09ad4" stroke-width="1"/>
+              <rect x="17" y="8" width="14" height="18" rx="1.5" fill="white" stroke="#b09ad4" stroke-width="0.8"/>
+              <path d="M20 34h8" stroke="#b09ad4" stroke-width="1.5" stroke-linecap="round"/>
+              <rect x="17" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
+              <rect x="22" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
+              <rect x="27" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
+              <path d="M36 20 C36 20 40 24 40 28 C40 32 36 36 32 36" stroke="#b09ad4" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Payment terminal &amp; pay by link</p>
+        </button>
+
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+          data-group="paymentMethod" data-value="online-terminal-link" onclick="selectOption(this)">
+          <div class="flex items-center justify-end mb-auto">
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+            </div>
+          </div>
+          <div class="flex-1 flex items-center justify-center">
+            <svg class="w-[100px] h-[90px]" fill="none" viewBox="0 0 56 48">
+              <rect x="2" y="10" width="30" height="22" rx="2.5" fill="#f5d5da" stroke="#d4919f" stroke-width="1"/>
+              <path d="M2 16h30" stroke="#d4919f" stroke-width="1"/>
+              <rect x="6" y="20" width="8" height="6" rx="1" fill="#f0b8c0" stroke="#d4919f" stroke-width="0.7"/>
+              <path d="M16 32h8M20 32v3" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
+              <rect x="34" y="16" width="14" height="24" rx="2.5" fill="#f5d5da" stroke="#d4919f" stroke-width="1"/>
+              <rect x="36" y="19" width="10" height="14" rx="1" fill="white" stroke="#d4919f" stroke-width="0.7"/>
+              <path d="M38 37h6" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
+              <circle cx="28" cy="14" r="6" fill="#277777"/>
+              <path d="M25 14l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mt-2">Online payments, terminal &amp; pay by link</p>
+        </button>
+
+      </div>
+    </div>
+
+    <!-- Q4: Transactions per month -->
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[20px] font-medium text-[#121621]">How many transactions will you do per month?</h2>
+      <div class="border border-[#e6ebeb] rounded-[10px] px-6 pt-6 pb-5">
+        <div class="flex justify-between text-[15px] text-[#121621] mb-5">
+          <span>0 – 1,000</span>
+          <span>50,000+</span>
+        </div>
+        <div class="relative mb-14">
+          <input type="range" id="txn-slider" min="0" max="50000" step="500" value="25000" oninput="updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn)" />
+          <div id="txn-tooltip" class="absolute -translate-x-1/2 bg-[#277777] text-white text-[13px] font-medium px-3 py-1 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.1)] whitespace-nowrap pointer-events-none" style="top: 36px; left: 50%;">25,000</div>
+        </div>
+        <p id="txn-label" class="text-sm text-[#6b7676]">~25,000 transactions / month</p>
+      </div>
+    </div>
+
+    <!-- Q5: Avg spend per transaction -->
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[20px] font-medium text-[#121621]">How much do your customers spend per transaction?</h2>
+      <div class="border border-[#e6ebeb] rounded-[10px] px-6 pt-6 pb-5">
+        <div class="flex justify-between text-[15px] text-[#121621] mb-5">
+          <span>€0 – €5</span>
+          <span>€50+</span>
+        </div>
+        <div class="relative mb-14">
+          <input type="range" id="spend-slider" min="0" max="50" step="1" value="25" oninput="updateSlider('spend-slider','spend-tooltip','spend-label',formatSpend)" />
+          <div id="spend-tooltip" class="absolute -translate-x-1/2 bg-[#277777] text-white text-[13px] font-medium px-3 py-1 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.1)] whitespace-nowrap pointer-events-none" style="top: 36px; left: 50%;">€25</div>
+        </div>
+        <p id="spend-label" class="text-sm text-[#6b7676]">~€25 per transaction</p>
+      </div>
+    </div>
+
+    <!-- Q6: Print receipts -->
+    <div class="flex flex-col gap-4">
+      <h2 class="text-[20px] font-medium text-[#121621]">Do you need to print receipts?</h2>
+      <div class="flex flex-col gap-3">
+        <button class="option-card flex items-center justify-between px-[17px] py-[17px] border border-[#4e575f] rounded-[8px] text-left bg-white hover:border-[#277777] transition-colors"
+          data-group="receipts" data-value="yes" onclick="selectOption(this)">
+          <span class="text-[15px] font-medium text-[#525d5d]">Yes</span>
+          <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c0c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+            <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+          </div>
+        </button>
+        <button class="option-card flex items-center justify-between px-[17px] py-[17px] border border-[#4e575f] rounded-[8px] text-left bg-white hover:border-[#277777] transition-colors"
+          data-group="receipts" data-value="no" onclick="selectOption(this)">
+          <span class="text-[15px] font-medium text-[#525d5d]">No, digital receipts is fine / I have a cash register that prints receipts</span>
+          <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c0c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+            <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <div>
+      <button onclick="submitConfigurator()" class="inline-flex items-center gap-3 h-[44px] px-6 border border-[#121621] rounded-full text-[15px] text-[#121621] font-medium hover:bg-[#f5f7f7] transition-colors">
+        Continue
+        <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </button>
+      <p id="form-error" class="text-sm text-red-500 mt-4 hidden">Please select an answer for all questions before continuing.</p>
+    </div>
+
+  </div>
+
+  <!-- Result section -->
+  <div id="result-section">
+
+    <!-- Heading + AI summary bar -->
+    <section class="max-w-[1440px] mx-auto px-24 py-12 pb-6">
+      <h2 class="text-[56px] font-semibold text-[#121621] leading-[66px] mb-4">Your recommended setup</h2>
+      <p class="text-base text-[#6b7676] leading-7 mb-8 max-w-[560px]">Based on your answers, here are the two terminals that fit your business best. You can still browse all options below.</p>
+
+      <!-- AI summary bar -->
+      <div id="rec-summary-bar" class="flex items-center gap-4 h-[54px] px-6 rounded-[8px] border border-[rgba(39,119,119,0.25)] shadow-[0px_2px_16px_0px_rgba(39,119,119,0.08)] w-fit" style="background: linear-gradient(170deg, rgba(39,119,119,0.07) 0%, rgba(39,119,119,0.02) 100%);">
+        <span class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #277777 0%, rgba(39,119,119,0.65) 100%);">
+          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+        </span>
+        <span id="rec-summary-text" class="text-[#277777] font-medium text-sm tracking-[-0.01em]"></span>
+        <span class="flex items-center gap-1">
+          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-60"></span>
+        </span>
+      </div>
+    </section>
+
+    <!-- 2-column recommendation cards -->
+    <section class="max-w-[1440px] mx-auto px-24 py-6 pb-16">
+      <div class="grid grid-cols-2 gap-6">
+
+        <!-- Best match card -->
+        <div id="rec-best" class="relative bg-white border-2 border-[#277777] rounded-[12px] shadow-sm overflow-visible flex flex-col">
+          <!-- Floating badge -->
+          <div class="absolute -top-[14px] left-6 z-10">
+            <span class="bg-[#277777] text-white text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide shadow-sm">Best match</span>
+          </div>
+          <!-- Image -->
+          <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
+            <div class="w-[80px] h-[120px] bg-[rgba(107,118,118,0.3)] rounded"></div>
+          </div>
+          <!-- Content -->
+          <div class="p-8 flex flex-col flex-1">
+            <p id="rec-best-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
+            <h3 id="rec-best-name" class="text-[32px] font-semibold text-[#121621] leading-tight mb-1"></h3>
+            <p id="rec-best-price" class="text-[32px] font-medium text-[#121621] mb-6"></p>
+            <!-- Savings box -->
+            <div id="rec-best-savings" class="bg-[#f5f7f7] border border-[rgba(39,119,119,0.3)] rounded-[8px] px-5 py-4 mb-6 flex items-center justify-between">
+              <span id="rec-best-savings-text" class="text-sm text-[#277777] font-medium"></span>
+            </div>
+            <!-- Bullets -->
+            <ul id="rec-best-bullets" class="flex flex-col gap-3 mb-8"></ul>
+            <!-- Buttons -->
+            <div class="flex items-center gap-3 mt-auto flex-wrap">
+              <a id="rec-best-detail" href="#" class="h-[46px] px-6 rounded-[8px] bg-[#e6ebeb] border border-[#859090] text-[#121621] font-medium text-sm flex items-center hover:bg-[#d0d5d5] transition-colors">Learn more</a>
+              <button id="rec-best-add" class="h-[46px] px-6 rounded-[8px] bg-[#277777] text-white font-medium text-sm hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Best alternative card -->
+        <div id="rec-alt" class="relative bg-white border border-[#e6ebeb] rounded-[12px] overflow-visible flex flex-col">
+          <!-- Floating badge -->
+          <div class="absolute -top-[14px] left-6 z-10">
+            <span class="bg-[#f5f7f7] text-[#121621] text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide border border-[#e6ebeb]">Best alternative</span>
+          </div>
+          <!-- Image -->
+          <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
+            <div class="w-[80px] h-[120px] bg-[rgba(107,118,118,0.3)] rounded"></div>
+          </div>
+          <!-- Content -->
+          <div class="p-8 flex flex-col flex-1">
+            <p id="rec-alt-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
+            <h3 id="rec-alt-name" class="text-[32px] font-semibold text-[#121621] leading-tight mb-1"></h3>
+            <p id="rec-alt-price" class="text-[32px] font-medium text-[#121621] mb-6"></p>
+            <!-- Bullets -->
+            <ul id="rec-alt-bullets" class="flex flex-col gap-3 mb-8"></ul>
+            <!-- Buttons -->
+            <div class="flex items-center gap-3 mt-auto flex-wrap">
+              <a id="rec-alt-detail" href="#" class="h-[46px] px-6 rounded-[8px] bg-[#e6ebeb] border border-[#859090] text-[#121621] font-medium text-sm flex items-center hover:bg-[#d0d5d5] transition-colors">Learn more</a>
+              <button id="rec-alt-add" class="h-[46px] px-6 rounded-[8px] bg-[#277777] text-white font-medium text-sm hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Dark compare-all section -->
+    <section class="bg-[#1b1c1e] py-20">
+      <div class="max-w-[1440px] mx-auto px-24">
+        <p class="text-sm font-semibold text-[#6b7676] uppercase tracking-widest mb-3">Compare all devices</p>
+        <h2 class="text-[40px] font-semibold text-white leading-tight mb-3">Or view our complete selection</h2>
+        <p class="text-base text-[rgba(255,255,255,0.55)] leading-7 mb-12 max-w-[520px]">Not sure our recommendation is right? Browse all terminals and compare them side by side to find your perfect fit.</p>
+        <div class="grid grid-cols-4 gap-5 mb-12">
+          <a href="product.html?id=tap-on-mobile" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
+            <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
+              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+            </div>
+            <div>
+              <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Mobile Terminal</p>
+              <p class="text-base font-semibold text-white mb-1">Tap on Mobile</p>
+              <p class="text-sm text-[rgba(255,255,255,0.45)]">€0</p>
+            </div>
+          </a>
+          <a href="product.html?id=link-2500" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
+            <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
+              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+            </div>
+            <div>
+              <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Mobile Terminal</p>
+              <p class="text-base font-semibold text-white mb-1">Link/2500</p>
+              <p class="text-sm text-[rgba(255,255,255,0.45)]">€79</p>
+            </div>
+          </a>
+          <a href="product.html?id=ex8000" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
+            <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
+              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+            </div>
+            <div>
+              <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Portable Terminal</p>
+              <p class="text-base font-semibold text-white mb-1">EX8000</p>
+              <p class="text-sm text-[rgba(255,255,255,0.45)]">€238</p>
+            </div>
+          </a>
+          <a href="product.html?id=saturn-1000f2" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
+            <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
+              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+            </div>
+            <div>
+              <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Countertop Terminal</p>
+              <p class="text-base font-semibold text-white mb-1">Saturn 1000F2</p>
+              <p class="text-sm text-[rgba(255,255,255,0.45)]">Contact sales</p>
+            </div>
+          </a>
+        </div>
+        <a href="index.html" class="inline-flex items-center h-[54px] px-8 rounded-[8px] bg-white text-[#121621] font-medium text-base hover:bg-gray-100 transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.10)]">Compare devices</a>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#121621] py-16 mt-8">
+    <div class="max-w-[1440px] mx-auto px-24">
+      <p class="text-gray-500 text-sm text-center">&copy; 2026 Webshop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ── Product data ─────────────────────────────────────────────────────────────
+    const PRODUCTS = {
+      'tap-on-mobile': {
+        name: 'Tap on Mobile',
+        category: 'Mobile Terminal',
+        price: '€0',
+        description: 'Turn your iPhone or Android into a payment terminal. No extra hardware required — accept contactless payments wherever you are.',
+        bullets: ['No upfront hardware cost', 'Works on any iPhone or Android', 'NFC contactless built-in', 'Perfect for low-volume businesses'],
+      },
+      'link-2500': {
+        name: 'Link/2500',
+        category: 'Mobile Terminal',
+        price: '€79',
+        description: 'Lightweight mobile terminal with built-in 4G, integrated receipt printer, and an 8-hour battery. Ideal for on-the-go merchants.',
+        bullets: ['Built-in 4G connectivity', '8-hour battery life', 'Integrated receipt printer', 'Rugged, drop-resistant design'],
+      },
+      'ex8000': {
+        name: 'EX8000',
+        category: 'Portable Terminal',
+        price: '€238',
+        description: 'Slim, full-featured portable terminal with a 5.5" touchscreen and 12-hour battery. Built for high-volume mobile use.',
+        bullets: ['4G + WiFi dual connectivity', '12-hour battery life', '5.5" HD touchscreen', 'Built-in receipt printer'],
+      },
+      'saturn-1000f2': {
+        name: 'Saturn 1000F2',
+        category: 'Countertop Terminal',
+        price: 'Contact sales',
+        description: 'High-performance countertop terminal built for busy retail environments. Plug-in powered, fast, and always ready.',
+        bullets: ['High-speed transaction processing', 'Large 7" colour display', 'Ethernet + Wi-Fi + optional 4G', 'Built-in high-speed printer'],
+      }
+    };
+
+    // ── Smart defaults from text input ───────────────────────────────────────────
+    function applySmartDefaults() {
+      const text = document.getElementById('business-desc').value.toLowerCase();
+      if (!text.trim()) return;
+
+      // Business type
+      if (/restaurant|cafe|café|bar|pub|shop|store|retail|boutique|physical|counter|bakery|pharmacy|salon|gym/.test(text)) {
+        const card = document.querySelector('[data-group="businessType"][data-value="physical"]');
+        if (card && !selections.businessType) selectOption(card);
+      } else if (/online|ecommerce|e-commerce|website|web shop|webshop|digital|internet|dropship/.test(text)) {
+        const card = document.querySelector('[data-group="businessType"][data-value="online"]');
+        if (card && !selections.businessType) selectOption(card);
+      } else if (/market|stall|popup|pop.?up|festival|event|fair|craft|outdoor|mobile/.test(text)) {
+        const card = document.querySelector('[data-group="businessType"][data-value="popup"]');
+        if (card && !selections.businessType) selectOption(card);
+      }
+
+      // Payment method — infer from context
+      if (/online|ecommerce|e-commerce|website|digital/.test(text) && /terminal|card reader|in.person|physical/.test(text)) {
+        const card = document.querySelector('[data-group="paymentMethod"][data-value="online-terminal-link"]');
+        if (card && !selections.paymentMethod) selectOption(card);
+      } else if (/terminal|card reader|in.person|tap|contactless/.test(text)) {
+        const card = document.querySelector('[data-group="paymentMethod"][data-value="terminal-link"]');
+        if (card && !selections.paymentMethod) selectOption(card);
+      } else if (/link|invoice|send|remote|digital only|no terminal/.test(text)) {
+        const card = document.querySelector('[data-group="paymentMethod"][data-value="link-only"]');
+        if (card && !selections.paymentMethod) selectOption(card);
+      }
+
+      // Receipts — infer if printer mentioned
+      if (/receipt|printer|print/.test(text)) {
+        const card = document.querySelector('[data-group="receipts"][data-value="yes"]');
+        if (card && !selections.receipts) selectOption(card);
+      } else if (/digital receipt|email receipt|no receipt|no print/.test(text)) {
+        const card = document.querySelector('[data-group="receipts"][data-value="no"]');
+        if (card && !selections.receipts) selectOption(card);
+      }
+
+      // Scroll to first unanswered question
+      const firstUnanswered = document.querySelector('.option-card:not(.selected)');
+      if (firstUnanswered) {
+        firstUnanswered.closest('.flex.flex-col.gap-4')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    // ── Selection state ──────────────────────────────────────────────────────────
+    const selections = { businessType: null, paymentMethod: null, receipts: null };
+
+    function selectOption(btn) {
+      const group = btn.dataset.group;
+      document.querySelectorAll(`.option-card[data-group="${group}"]`).forEach(el => {
+        el.classList.remove('selected');
+        const fill = el.querySelector('.radio-fill');
+        const dot  = el.querySelector('.radio-dot');
+        if (fill) fill.classList.add('hidden');
+        if (dot)  dot.classList.remove('border-[#277777]');
+      });
+      btn.classList.add('selected');
+      const fill = btn.querySelector('.radio-fill');
+      const dot  = btn.querySelector('.radio-dot');
+      if (fill) fill.classList.remove('hidden');
+      if (dot)  dot.classList.add('border-[#277777]');
+      selections[group] = btn.dataset.value;
+    }
+
+    // ── Sliders ──────────────────────────────────────────────────────────────────
+    function formatTxn(v)   { return parseInt(v).toLocaleString('en'); }
+    function formatSpend(v) { return `€${v}`; }
+
+    function updateSlider(sliderId, tooltipId, labelId, fmt) {
+      const slider  = document.getElementById(sliderId);
+      const tooltip = document.getElementById(tooltipId);
+      const label   = document.getElementById(labelId);
+      const pct = (slider.value - slider.min) / (slider.max - slider.min);
+      const val = parseInt(slider.value);
+      // Update track fill
+      slider.style.background = `linear-gradient(to right, #277777 0%, #277777 ${pct * 100}%, #e6ebeb ${pct * 100}%, #e6ebeb 100%)`;
+      // Position tooltip
+      tooltip.style.left = `calc(${pct * 100}% + ${(0.5 - pct) * 20}px)`;
+      tooltip.textContent = fmt(val);
+      label.textContent = sliderId === 'txn-slider'
+        ? `~${val.toLocaleString('en')} transactions / month`
+        : `~€${val} per transaction`;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSlider('txn-slider',   'txn-tooltip',   'txn-label',   formatTxn);
+      updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
+    });
+
+    // ── Recommendation scoring ───────────────────────────────────────────────────
+    function getRecommendation(answers) {
+      const scores = { 'tap-on-mobile': 0, 'link-2500': 0, 'ex8000': 0, 'saturn-1000f2': 0 };
+
+      if (answers.businessType === 'physical')     { scores['saturn-1000f2'] += 3; scores['ex8000'] += 1; }
+      else if (answers.businessType === 'online')  { scores['tap-on-mobile'] += 3; scores['link-2500'] += 1; }
+      else if (answers.businessType === 'popup')   { scores['link-2500'] += 3; scores['ex8000'] += 2; scores['tap-on-mobile'] += 1; }
+
+      if (answers.paymentMethod === 'link-only')              { scores['tap-on-mobile'] += 5; }
+      else if (answers.paymentMethod === 'terminal-link')     { scores['link-2500'] += 3; scores['ex8000'] += 2; scores['saturn-1000f2'] += 1; }
+      else if (answers.paymentMethod === 'online-terminal-link') { scores['ex8000'] += 2; scores['saturn-1000f2'] += 2; scores['link-2500'] += 1; }
+
+      const txn = answers.transactions;
+      if (txn < 5000)        { scores['tap-on-mobile'] += 3; scores['link-2500'] += 2; }
+      else if (txn < 15000)  { scores['link-2500'] += 3; scores['ex8000'] += 2; }
+      else if (txn < 30000)  { scores['ex8000'] += 3; scores['saturn-1000f2'] += 2; }
+      else                   { scores['saturn-1000f2'] += 4; scores['ex8000'] += 2; }
+
+      const spend = answers.avgSpend;
+      if (spend < 10)       { scores['tap-on-mobile'] += 1; }
+      else if (spend < 25)  { scores['link-2500'] += 2; }
+      else                  { scores['ex8000'] += 1; scores['saturn-1000f2'] += 2; }
+
+      if (answers.needsPrinter) {
+        scores['tap-on-mobile'] -= 10;
+        scores['link-2500'] += 2; scores['ex8000'] += 2; scores['saturn-1000f2'] += 2;
+      } else {
+        scores['tap-on-mobile'] += 2;
+      }
+
+      return Object.entries(scores).sort((a, b) => b[1] - a[1]).map(e => e[0]);
+    }
+
+    // ── Submit ───────────────────────────────────────────────────────────────────
+    function submitConfigurator() {
+      const errorEl = document.getElementById('form-error');
+      if (!selections.businessType || !selections.paymentMethod || !selections.receipts) {
+        errorEl.classList.remove('hidden');
+        errorEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        return;
+      }
+      errorEl.classList.add('hidden');
+      const answers = {
+        businessType:  selections.businessType,
+        paymentMethod: selections.paymentMethod,
+        transactions:  parseInt(document.getElementById('txn-slider').value),
+        avgSpend:      parseInt(document.getElementById('spend-slider').value),
+        needsPrinter:  selections.receipts === 'yes',
+      };
+      const ranked = getRecommendation(answers);
+      showResult(ranked, answers);
+    }
+
+    function buildSummaryText(answers) {
+      const typeMap = { physical: 'a physical store', online: 'an online store', popup: 'a pop-up / market stall' };
+      const payMap  = { 'link-only': 'pay by link only', 'terminal-link': 'a payment terminal + pay by link', 'online-terminal-link': 'online payments + terminal + pay by link' };
+      const biz  = typeMap[answers.businessType]  || 'your business';
+      const pay  = payMap[answers.paymentMethod]  || 'payments';
+      const txn  = answers.transactions >= 1000
+        ? `~${Math.round(answers.transactions / 1000)}k transactions/month`
+        : `${answers.transactions} transactions/month`;
+      const desc = document.getElementById('business-desc').value.trim();
+      if (desc) return `${desc} · ${txn} · ${pay}`;
+      return `Identified as ${biz} · ${txn} · ${pay}`;
+    }
+
+    function renderBullets(id, bullets, isBest) {
+      const bgClass    = isBest ? 'bg-[#277777]' : 'bg-[#121621]';
+      document.getElementById(id).innerHTML = bullets.map(b => `
+        <li class="flex items-center gap-3">
+          <span class="w-5 h-5 rounded-full ${bgClass} flex items-center justify-center flex-shrink-0">
+            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
+          </span>
+          <span class="text-sm text-[#121621]">${b}</span>
+        </li>
+      `).join('');
+    }
+
+    function renderCard(prefix, productId, product, isBest, answers) {
+      document.getElementById(`${prefix}-category`).textContent = product.category;
+      document.getElementById(`${prefix}-name`).textContent     = product.name;
+      document.getElementById(`${prefix}-price`).textContent    = product.price;
+      document.getElementById(`${prefix}-detail`).href          = `product.html?id=${productId}`;
+      renderBullets(`${prefix}-bullets`, product.bullets, isBest);
+
+      const addBtn = document.getElementById(`${prefix}-add`);
+      if (product.price === 'Contact sales') {
+        addBtn.textContent = 'Contact sales';
+      } else {
+        addBtn.textContent = `Add to basket`;
+        addBtn.onclick = () => addToCart(productId);
+      }
+
+      // Savings box (best match only)
+      if (isBest) {
+        const savingsEl = document.getElementById('rec-best-savings');
+        const savingsText = document.getElementById('rec-best-savings-text');
+        if (product.price === 'Contact sales' || product.price === '€0') {
+          savingsEl.classList.add('hidden');
+        } else {
+          const num = parseInt(product.price.replace('€', ''));
+          const monthly = Math.ceil(num / 12);
+          savingsText.innerHTML = `<strong>One-time payment</strong> &mdash; equivalent to ~€${monthly}/month over 12 months. No subscription.`;
+        }
+      }
+    }
+
+    let lastAnswers = null;
+
+    function showResult(ranked, answers) {
+      lastAnswers = answers;
+      const [bestId, altId] = ranked;
+
+      // AI summary bar
+      document.getElementById('rec-summary-text').textContent = buildSummaryText(answers);
+
+      // Render cards
+      renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers);
+      renderCard('rec-alt',  altId,  PRODUCTS[altId],  false, answers);
+
+      const resultEl = document.getElementById('result-section');
+      resultEl.classList.add('visible');
+      setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // TEMP: auto-submit for Figma capture
+    if (window.location.hash.includes('figmacapture')) {
+      window.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('[data-group="businessType"][data-value="popup"]').click();
+        document.querySelector('[data-group="paymentMethod"][data-value="terminal-link"]').click();
+        document.querySelector('[data-group="receipts"][data-value="yes"]').click();
+        document.getElementById('txn-slider').value = 12000;
+        document.getElementById('spend-slider').value = 22;
+        updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn);
+        updateSlider('spend-slider','spend-tooltip','spend-label',formatSpend);
+        setTimeout(submitConfigurator, 400);
+      });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product – Webshop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <script src="cart.js" defer></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  </style>
+</head>
+<body class="bg-white text-[#121621]">
+
+  <!-- Navigation bar -->
+  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative">
+    <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="index.html" class="text-sm font-medium text-[#277777] transition-colors">Products</a>
+      <a href="configurator.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Recommendation</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Solutions</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <div class="w-px h-5 bg-[#e6ebeb] mr-2"></div>
+      <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button aria-label="Profile" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <a href="basket.html" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors relative" aria-label="Shopping cart">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#121621] text-white text-[10px] font-medium rounded-full items-center justify-center hidden">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="max-w-[1440px] mx-auto px-24 py-3 border-b border-[#f3f4f6]">
+    <nav class="flex items-center gap-1.5" aria-label="Breadcrumb">
+      <a href="index.html" class="text-[13px] text-[#72706e] hover:text-[#277777] transition-colors flex items-center gap-1">
+        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        Products
+      </a>
+      <svg class="w-3.5 h-3.5 text-[#d1d5dc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <span id="breadcrumb-name" class="text-[13px] text-[#1a1a2e]"></span>
+    </nav>
+  </div>
+
+  <!-- Hero section -->
+  <section class="max-w-[1440px] mx-auto px-24 py-20">
+    <div class="flex gap-16 items-start">
+
+      <!-- Product image -->
+      <div class="w-[480px] flex-shrink-0">
+        <div class="bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.08)] h-[480px] flex items-center justify-center">
+          <img src="img-terminal.png" alt="" class="h-[360px] w-auto object-contain" />
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 flex flex-col gap-5 pt-2">
+        <p class="text-[13px] font-medium text-[#00b4aa] uppercase tracking-[0.12em]">Worldline</p>
+        <h1 id="hero-title" class="text-[36px] font-medium text-[#1a1a2e] leading-tight tracking-[-0.5px]"></h1>
+        <div class="h-px bg-[#f3f4f6]"></div>
+        <p id="hero-description" class="text-[15px] text-[#72706e] leading-[1.65]"></p>
+
+        <!-- Price -->
+        <div class="flex items-baseline gap-2.5">
+          <span id="price-display" class="text-[32px] font-medium text-[#1a1a2e] tracking-[-0.5px]"></span>
+          <span id="price-note-inline" class="text-[13px] text-[#72706e]"></span>
+        </div>
+
+        <!-- Feature bullets -->
+        <ul id="feat-bullets-hero" class="flex flex-col gap-2"></ul>
+
+        <!-- Payment methods -->
+        <div>
+          <p class="text-[13px] text-[#72706e] mb-2">Payment methods accepted</p>
+          <div id="pay-methods-hero" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center gap-3 pt-1">
+          <button id="hero-add-btn" class="h-11 px-6 rounded-[8px] bg-[#277777] text-white font-medium text-sm hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)] whitespace-nowrap"></button>
+          <a href="configurator.html" class="inline-flex items-center gap-2 h-11 px-5 rounded-[8px] border border-[#277777] text-[#277777] font-medium text-sm hover:bg-[#f0f7f7] transition-colors whitespace-nowrap">
+            Find your perfect solution
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Specs + tabs section -->
+  <section class="border-t border-[#f3f4f6]">
+    <div class="max-w-[1440px] mx-auto px-24">
+
+      <!-- Tab bar -->
+      <div class="flex gap-6 border-b border-[#e5e7eb]">
+        <button id="tab-specs" onclick="showTab('specs')" class="py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors">Specifications</button>
+        <button id="tab-payment" onclick="showTab('payment')" class="py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors">Payment Methods</button>
+      </div>
+
+      <!-- Specs panel -->
+      <div id="panel-specs" class="py-8 grid grid-cols-2 gap-x-16" id="specs-table"></div>
+
+      <!-- Payment methods panel -->
+      <div id="panel-payment" class="py-8 hidden">
+        <p class="text-[14px] text-[#72706e] mb-4">Accepted payment methods for this terminal:</p>
+        <div id="pay-methods-panel" class="flex flex-wrap gap-2"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Related products -->
+  <section class="border-t border-[#f3f4f6] py-12">
+    <div class="max-w-[1440px] mx-auto px-24">
+      <h2 class="text-[22px] font-medium text-[#1a1a2e] mb-8">Related Products</h2>
+      <div class="flex gap-5" id="related-products"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#121621] py-16">
+    <div class="max-w-[1440px] mx-auto px-24">
+      <p class="text-gray-500 text-sm text-center">&copy; 2026 Webshop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    const PRODUCTS = {
+      'tap-on-mobile': {
+        name: 'Tap on Mobile',
+        price: '€0',
+        priceDisplay: '€0',
+        priceNote: 'No upfront cost. Transaction fees apply.',
+        heroDescription: 'Turn your iPhone or Android device into a payment terminal. No extra hardware required. Accept contactless payments from customers instantly — wherever you are.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay'],
+        featBullets: ['NFC contactless built-in', 'Works on iOS & Android', 'No extra hardware required', 'Enterprise-grade encryption'],
+        specs: [
+          ['Compatibility', 'iOS 14+ and Android 8+'],
+          ['Connectivity', 'Uses device WiFi / 4G'],
+          ['Battery', 'Uses phone battery'],
+          ['Card Reader', 'Contactless (NFC)'],
+          ['Security', 'PCI DSS Level 1 certified'],
+          ['Setup', 'Download app and go'],
+          ['Fees', 'No upfront cost'],
+        ]
+      },
+      'link-2500': {
+        name: 'Link/2500',
+        price: '€79',
+        priceDisplay: '€79',
+        priceNote: '+ EUR 0.038 per transaction',
+        heroDescription: 'Lightweight, compact, mobile terminal ideal for retailers, caterers, service providers and businesses that accept payments on the go.',
+        payMethods: ['Samsung Pay', 'Contactless', 'MasterCard', 'Visa', 'V-Pay', 'AMEX', 'Maestro', 'Diners Club'],
+        featBullets: ['Compact & lightweight at 165 g', 'Touchscreen + physical keyboard', 'WiFi & 4G connectivity', 'Dynamic Currency Conversion'],
+        specs: [
+          ['Price', 'EUR 79'],
+          ['Cost per Transaction', 'EUR 0.038 per transaction'],
+          ['Weight', '165 g'],
+          ['Internet Connection', 'WiFi & 4G'],
+          ['Operating System', 'Android 10'],
+          ['Printer', 'No'],
+          ['Battery Life', '8 hours'],
+          ['Charging', 'USB-C, USB-A'],
+          ['Keyboard', 'Touchscreen + Keyboard'],
+          ['Screen Size', '2.4"'],
+        ]
+      },
+      'ex8000': {
+        name: 'EX8000',
+        price: '€238',
+        priceDisplay: '€238',
+        priceNote: 'One-time payment. No subscriptions.',
+        heroDescription: 'The EX8000 combines a slim, lightweight form factor with a large 5.5" touchscreen and a 12-hour battery. Ideal for merchants who need a compact, full-featured terminal for high-volume mobile use.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
+        featBullets: ['4G + WiFi dual connectivity', '12-hour battery life', 'Built-in receipt printer', '5.5" HD touchscreen display'],
+        specs: [
+          ['Connectivity', '4G/LTE, Wi-Fi, Bluetooth'],
+          ['Battery Life', 'Up to 12 hours'],
+          ['Printer', 'Built-in thermal'],
+          ['Screen', '5.5" HD color touchscreen'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Dimensions', '200 x 80 x 55 mm'],
+          ['Weight', '420g'],
+          ['Security', 'PCI PTS 5.x certified'],
+        ]
+      },
+      'saturn-1000f2': {
+        name: 'Saturn 1000F2',
+        price: 'Contact sales',
+        priceDisplay: 'Contact sales',
+        priceNote: 'Tailored pricing for your business.',
+        heroDescription: 'The Saturn 1000F2 is a high-performance countertop terminal built for busy retail environments. Plug-in powered and always on, it delivers fast, reliable payment processing for high-volume merchants.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Magnetic stripe', 'Apple Pay', 'Google Pay'],
+        featBullets: ['High-speed transaction processing', 'Built-in thermal printer', 'Large colour customer display', 'Plug-in powered — always on'],
+        specs: [
+          ['Connectivity', 'Ethernet, Wi-Fi, optional 4G'],
+          ['Power', 'Plug-in (mains powered)'],
+          ['Printer', 'Built-in high-speed thermal'],
+          ['Screen', '7" colour customer display'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Dimensions', '280 x 100 x 60 mm'],
+          ['Weight', '680g'],
+          ['Security', 'PCI PTS 6.x certified'],
+          ['Pricing', 'Contact sales team'],
+        ]
+      },
+      'newland-s30': {
+        name: 'Newland S30',
+        price: '€449',
+        priceDisplay: '€449',
+        priceNote: 'One-time payment. No subscriptions.',
+        heroDescription: 'The Newland S30 is a powerful Android 13 mobile terminal with 5G connectivity and a responsive touchscreen interface. Built for businesses that need speed, flexibility and the latest mobile network support.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
+        featBullets: ['Android 13 operating system', '5G / 4G / 3G / 2G connectivity', 'Touchscreen interface', 'Built-in receipt printer'],
+        specs: [
+          ['Operating System', 'Android 13'],
+          ['Connectivity', '5G, 4G, 3G, 2G, Wi-Fi, Bluetooth'],
+          ['Printer', 'Built-in thermal'],
+          ['Interface', 'Touchscreen'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Security', 'PCI PTS certified'],
+          ['Price', '€449 one-time'],
+        ]
+      },
+      'pay-by-link': {
+        name: 'Pay by Link',
+        price: 'From €0',
+        priceDisplay: 'From €0',
+        priceNote: 'Transaction fees apply.',
+        heroDescription: 'Accept payments remotely without any hardware. Send a payment link via email or SMS and let your customers pay instantly from any device — supporting Apple Pay, Google Pay, and all major cards.',
+        payMethods: ['Apple Pay', 'Google Pay', 'Visa', 'Mastercard', 'AMEX', 'Contactless'],
+        featBullets: ['No hardware required', 'Send links via email or SMS', 'Apple Pay & Google Pay support', 'Works on any device'],
+        specs: [
+          ['Hardware', 'None required'],
+          ['Delivery', 'Email or SMS'],
+          ['Setup', 'Instant'],
+          ['Payment Methods', 'All major cards + wallets'],
+          ['Pricing', 'From €0'],
+          ['Security', 'PCI DSS compliant'],
+        ]
+      }
+    };
+
+    function showTab(tab) {
+      document.getElementById('panel-specs').classList.toggle('hidden', tab !== 'specs');
+      document.getElementById('panel-payment').classList.toggle('hidden', tab !== 'payment');
+      document.getElementById('tab-specs').className = tab === 'specs'
+        ? 'py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors'
+        : 'py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors';
+      document.getElementById('tab-payment').className = tab === 'payment'
+        ? 'py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors'
+        : 'py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors';
+    }
+
+    function render() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const p = PRODUCTS[id];
+
+      if (!p) {
+        document.body.innerHTML = '<div class="flex items-center justify-center h-screen text-gray-400">Product not found. <a href="index.html" class="ml-2 underline text-[#277777]">Go back</a></div>';
+        return;
+      }
+
+      document.title = p.name + ' – Webshop';
+
+      document.getElementById('breadcrumb-name').textContent = p.name;
+      document.getElementById('hero-title').textContent = p.name;
+      document.getElementById('hero-description').textContent = p.heroDescription;
+      document.getElementById('price-display').textContent = p.priceDisplay;
+      document.getElementById('price-note-inline').textContent = p.priceNote;
+
+      // Feature bullets
+      document.getElementById('feat-bullets-hero').innerHTML = p.featBullets.map(b => `
+        <li class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#00b4aa] flex-shrink-0" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-[14px] text-[#403e3c]">${b}</span>
+        </li>
+      `).join('');
+
+      // Payment methods (hero)
+      document.getElementById('pay-methods-hero').innerHTML = p.payMethods.map(m =>
+        `<span class="bg-[#fafafa] border border-[#e5e7eb] text-[#1a1a2e] text-[13px] px-3 py-1 rounded-[6px]">${m}</span>`
+      ).join('');
+
+      // Payment methods (panel)
+      document.getElementById('pay-methods-panel').innerHTML = p.payMethods.map(m =>
+        `<span class="bg-[#fafafa] border border-[#e5e7eb] text-[#1a1a2e] text-[13px] px-3 py-1.5 rounded-[6px]">${m}</span>`
+      ).join('');
+
+      // Add to basket button
+      const addBtn = document.getElementById('hero-add-btn');
+      addBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : `Add to basket — ${p.price}`;
+      if (p.price !== 'Contact sales') {
+        addBtn.onclick = () => { addToCart(id); window.location.href = 'basket.html'; };
+      }
+
+      // Specs table (two-column grid)
+      document.getElementById('panel-specs').innerHTML = p.specs.map(row => `
+        <div class="flex items-center justify-between py-3 border-b border-[#f9fafb]">
+          <span class="text-[14px] text-[#72706e]">${row[0]}</span>
+          <span class="text-[14px] text-[#1a1a2e] text-right">${row[1]}</span>
+        </div>
+      `).join('');
+
+      // Related products
+      const others = Object.keys(PRODUCTS).filter(k => k !== id);
+      document.getElementById('related-products').innerHTML = others.map(k => `
+        <a href="product.html?id=${k}" class="flex flex-col gap-3 w-[160px] group">
+          <div class="bg-white border border-[#f3f4f6] rounded-[14px] h-[180px] flex items-center justify-center p-3 group-hover:border-[#e0e0e0] transition-colors">
+            <img src="img-terminal.png" alt="${PRODUCTS[k].name}" class="h-[140px] w-auto object-contain" />
+          </div>
+          <p class="text-[13px] text-[#403e3c] text-center">${PRODUCTS[k].name}</p>
+        </a>
+      `).join('');
+    }
+
+    render();
+  </script>
+</body>
+</html>

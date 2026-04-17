@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Basket – Webshop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <script>
+    if (window.location.hash.includes('figmacapture')) {
+      localStorage.setItem('ws_cart', JSON.stringify([
+        { id: 'link-2500', name: 'Link/2500', price: 79, priceLabel: '€79', category: 'Mobile Terminal', specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Printer: 'Included' }, qty: 1 }
+      ]));
+    }
+  </script>
+  <style>body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }</style>
+</head>
+<body class="bg-white text-[#121621]">
+
+  <!-- Nav -->
+  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative">
+    <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Products</a>
+      <a href="configurator.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Recommendation</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Solutions</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <div class="w-px h-5 bg-[#e6ebeb] mr-2"></div>
+      <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button aria-label="Profile" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <a href="basket.html" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors relative" aria-label="Shopping cart">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>
+        </svg>
+        <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#121621] text-white text-[10px] font-medium rounded-full items-center justify-center hidden">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="px-24 py-3 max-w-[1440px] mx-auto">
+    <nav class="flex items-center gap-1">
+      <a href="index.html" class="text-sm font-medium text-[#6b7676] hover:text-[#277777] transition-colors">Home</a>
+      <svg class="w-4 h-4 text-[#b4b7bc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <a href="index.html" class="text-sm font-medium text-[#6b7676] hover:text-[#277777] transition-colors">All devices</a>
+      <svg class="w-4 h-4 text-[#b4b7bc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-sm font-medium text-[#121621]">Basket</span>
+    </nav>
+  </div>
+
+  <!-- Main content -->
+  <div class="max-w-[1440px] mx-auto px-24 pb-16">
+    <div class="flex gap-8 items-start">
+
+      <!-- Left: cart items + add-ons -->
+      <div class="flex-1 flex flex-col gap-8">
+
+        <!-- Page title -->
+        <div class="border-b border-[#e6ebeb] pb-6 pt-4">
+          <h1 class="text-[48px] font-semibold text-[#121621] leading-[72px] tracking-[0.35px]">Your Basket</h1>
+          <p class="text-base text-[#86868b] tracking-[-0.3px]">Review your devices and complete your setup</p>
+        </div>
+
+        <!-- Cart items -->
+        <div id="cart-items" class="flex flex-col gap-4"></div>
+
+        <!-- Empty state -->
+        <div id="empty-state" class="hidden text-center py-24">
+          <svg class="w-16 h-16 text-gray-200 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+          <p class="text-xl font-medium text-gray-400 mb-2">Your basket is empty</p>
+          <a href="index.html" class="text-[#277777] underline text-base">Browse terminals</a>
+        </div>
+
+        <!-- AI upsell card -->
+        <div id="upsell-card" class="bg-[#f5f7f7] border border-[#e6ebeb] rounded-[12px] p-6 hidden">
+          <div class="flex gap-5 items-start">
+            <div class="w-14 h-14 rounded-full bg-[#6b7676] flex items-center justify-center flex-shrink-0">
+              <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M12 9v6"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1.5">
+                <p class="text-xl font-medium text-[#121621] tracking-[-0.45px]">Optimize your counter setup</p>
+                <span class="bg-[#86868b] text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span>
+              </div>
+              <p class="text-base text-[#424245] tracking-[-0.3px] mb-4">Complete your countertop solution with a premium docking stand and receipt printer for a professional checkout experience.</p>
+              <div class="flex gap-3 flex-wrap">
+                <button onclick="addAddonToCart('docking-stand','Premium Docking Stand',49,'€49')" class="bg-[#e6ebeb] border border-[#859090] text-[#121621] text-sm font-medium px-5 py-2.5 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add Premium Docking Stand</button>
+                <button onclick="addAddonToCart('receipt-printer','Thermal Receipt Printer',149,'€149')" class="bg-[#e6ebeb] border border-[#859090] text-[#121621] text-sm font-medium px-5 py-2.5 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add Thermal Receipt Printer</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Complete your setup -->
+        <div id="addons-section">
+          <div class="mb-6">
+            <h2 class="text-[32px] font-semibold text-[#121621] leading-10 mb-1">Complete your payment setup</h2>
+            <p class="text-base text-[#86868b]">Add hardware and services to enhance your terminal</p>
+          </div>
+
+          <!-- Hardware -->
+          <h3 class="text-xl font-medium text-[#121621] mb-4">Hardware Add-Ons</h3>
+          <div class="grid grid-cols-3 gap-4 mb-8">
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Premium Docking Stand</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Always charged, professional presentation</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€49</span>
+                <button onclick="addAddonToCart('docking-stand','Premium Docking Stand',49,'€49')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+              <span class="absolute top-4 right-4 bg-[#121621] text-white text-xs font-medium px-3 py-1 rounded-full">Most popular</span>
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Protective Carry Case</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Military-grade drop protection</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€29</span>
+                <button onclick="addAddonToCart('carry-case','Protective Carry Case',29,'€29')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Thermal Receipt Printer</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Print receipts in under 2 seconds</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€149</span>
+                <button onclick="addAddonToCart('receipt-printer','Thermal Receipt Printer',149,'€149')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Multi-Device Charging Hub</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Never run out of battery again</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€79</span>
+                <button onclick="addAddonToCart('charging-hub','Multi-Device Charging Hub',79,'€79')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Spare Battery</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Always have a backup ready</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€25</span>
+                <button onclick="addAddonToCart('spare-battery','Spare Battery',25,'€25')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Services -->
+          <h3 class="text-xl font-medium text-[#121621] mb-4">Service Add-Ons</h3>
+          <div class="grid grid-cols-3 gap-4 mb-8">
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+              <span class="absolute top-4 right-4 bg-[#121621] text-white text-xs font-medium px-3 py-1 rounded-full">Most popular</span>
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Extended Warranty (3 Years)</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Full coverage including accidental damage</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€99</span>
+                <button onclick="addAddonToCart('warranty-3yr','Extended Warranty (3 Years)',99,'€99')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">4G Connectivity Upgrade</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Stay connected anywhere</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">Free</span>
+                <button onclick="addAddonToCart('4g-upgrade','4G Connectivity Upgrade',0,'Free')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Advanced Reporting Portal</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Deep insights into your business</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€15<span class="text-sm font-normal text-[#86868b]">/mo</span></span>
+                <button onclick="addAddonToCart('reporting','Advanced Reporting Portal',15,'€15/mo')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+              <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
+              <div>
+                <p class="text-base font-medium text-[#121621]">Next Business Day Replacement</p>
+                <p class="text-sm text-[#86868b] mt-0.5">Minimal downtime guaranteed</p>
+              </div>
+              <div class="flex items-center justify-between mt-auto">
+                <span class="text-2xl font-medium text-[#121621]">€49</span>
+                <button onclick="addAddonToCart('nbd-replacement','Next Business Day Replacement',49,'€49')" class="bg-[#e6ebeb] border border-[#859090] text-sm font-medium text-[#121621] px-5 py-2 rounded-[8px] hover:bg-[#d0d5d5] transition-colors">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bundle banner -->
+          <div id="bundle-banner" class="bg-[#f5f7f7] border border-[#e6ebeb] rounded-[12px] px-6 py-6 flex items-center gap-5 hidden">
+            <div class="w-12 h-12 rounded-full bg-[#6b7676] flex items-center justify-center flex-shrink-0">
+              <svg class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+            </div>
+            <div>
+              <p class="text-xl font-medium text-[#121621] tracking-[-0.45px]">Bundle &amp; Save 10%</p>
+              <p class="text-base text-[#121621] opacity-80 tracking-[-0.3px]" id="bundle-msg">Spend €1 more to unlock bundle discount</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right: order summary -->
+      <div class="w-[370px] flex-shrink-0 sticky top-6">
+        <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-8 flex flex-col gap-6">
+          <h2 class="text-2xl font-medium text-[#121621] tracking-[0.07px]">Order Summary</h2>
+
+          <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+              <span class="text-base text-[#86868b] tracking-[-0.3px]">Subtotal</span>
+              <span id="summary-subtotal" class="text-base font-medium text-[#121621] tracking-[-0.3px]">€0</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base text-[#86868b] tracking-[-0.3px]">VAT (20%)</span>
+              <span id="summary-vat" class="text-base font-medium text-[#121621] tracking-[-0.3px]">€0</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-base text-[#86868b] tracking-[-0.3px]">Shipping</span>
+              <span class="text-base font-medium text-[#067647] tracking-[-0.3px]">Free</span>
+            </div>
+          </div>
+
+          <div class="border-t border-[#e6ebeb]"></div>
+
+          <div class="flex items-center justify-between">
+            <span class="text-2xl font-medium text-[#121621] tracking-[0.07px]">Total</span>
+            <span id="summary-total" class="text-[32px] font-medium text-[#121621] tracking-[0.4px]">€0</span>
+          </div>
+
+          <button class="w-full h-14 bg-[#277777] text-white font-medium text-base rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#1f5c5c] transition-colors tracking-[-0.3px] shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            Proceed to secure checkout
+          </button>
+
+          <div class="flex flex-col gap-3">
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-[#86868b] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              <span class="text-sm text-[#86868b] tracking-[-0.15px]">PCI compliant</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-[#86868b] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+              <span class="text-sm text-[#86868b] tracking-[-0.15px]">Secure encrypted payments</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <svg class="w-4 h-4 text-[#86868b] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7H4a2 2 0 00-2 2v10a2 2 0 002 2h16a2 2 0 002-2V9a2 2 0 00-2-2z"/><path stroke-linecap="round" d="M16 3h-8a2 2 0 00-2 2v2h12V5a2 2 0 00-2-2z"/></svg>
+              <span class="text-sm text-[#86868b] tracking-[-0.15px]">24/7 support</span>
+            </div>
+          </div>
+
+          <a href="index.html" class="text-sm font-medium text-[#121621] text-center tracking-[-0.15px] hover:underline">Continue shopping</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#121621] py-16 mt-8">
+    <div class="max-w-[1440px] mx-auto px-24">
+      <p class="text-gray-500 text-sm text-center">&copy; 2026 Webshop. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="cart.js"></script>
+  <script>
+    function renderBasket() {
+      const cart = getCart();
+      const itemsEl = document.getElementById('cart-items');
+      const emptyEl = document.getElementById('empty-state');
+      const upsellEl = document.getElementById('upsell-card');
+      const bundleEl = document.getElementById('bundle-banner');
+
+      itemsEl.innerHTML = '';
+
+      if (cart.length === 0) {
+        emptyEl.classList.remove('hidden');
+        updateSummary([]);
+        return;
+      }
+      emptyEl.classList.add('hidden');
+
+      // Show AI upsell if there are terminal items
+      const hasTerminal = cart.some(i => !i.addonId);
+      upsellEl.classList.toggle('hidden', !hasTerminal);
+
+      cart.forEach((item, idx) => {
+        const el = document.createElement('div');
+        el.className = 'bg-white border border-[#e6ebeb] rounded-[12px] p-6';
+        const specs = Object.entries(item.specs || {}).map(([k,v]) =>
+          `<p class="text-sm text-[#121621] whitespace-nowrap"><span class="font-medium">${k}:</span> <span class="text-[#86868b]">${v}</span></p>`
+        ).join('');
+        el.innerHTML = `
+          <div class="flex gap-6 items-start">
+            <!-- Image -->
+            <div class="w-32 h-32 bg-[#f5f7f7] rounded-[12px] flex items-center justify-center flex-shrink-0">
+              <div class="w-16 h-20 bg-[rgba(107,118,118,0.3)] rounded"></div>
+            </div>
+            <!-- Details -->
+            <div class="flex-1 min-w-0">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <p class="text-2xl font-medium text-[#121621] mb-1">${item.name}</p>
+                  <p class="text-base text-[#86868b] capitalize mb-3">${item.category}</p>
+                  <div class="flex flex-col gap-1 mb-3">${specs}</div>
+                  ${!item.addonId ? `<button class="flex items-center gap-1.5 text-sm font-medium text-[#121621] hover:underline">
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                    Edit configuration
+                  </button>` : ''}
+                </div>
+                <p class="text-[32px] font-medium text-[#121621] tracking-[-0.3px] flex-shrink-0">${item.priceLabel}</p>
+              </div>
+              <!-- Bottom row -->
+              <div class="border-t border-[#e6ebeb] mt-4 pt-4 flex items-center justify-between">
+                <!-- Qty stepper -->
+                <div class="border border-[#e6ebeb] rounded-[8px] flex items-center h-[42px] w-[130px]">
+                  <button onclick="changeQty(${idx}, -1)" class="w-10 h-10 flex items-center justify-center text-gray-400 hover:text-gray-600 transition-colors ${item.qty <= 1 ? 'opacity-30' : ''}">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M5 12h14"/></svg>
+                  </button>
+                  <span class="flex-1 text-center text-base font-medium text-[#121621] border-l border-r border-[#e6ebeb]">${item.qty}</span>
+                  <button onclick="changeQty(${idx}, 1)" class="w-10 h-10 flex items-center justify-center text-gray-600 hover:text-gray-900 transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+                  </button>
+                </div>
+                <button onclick="removeItem(${idx})" class="text-base font-medium text-[#121621] hover:underline tracking-[-0.3px]">Remove</button>
+              </div>
+            </div>
+          </div>
+        `;
+        itemsEl.appendChild(el);
+      });
+
+      // Bundle banner
+      const subtotal = cart.reduce((s, i) => s + (i.price || 0) * i.qty, 0);
+      const threshold = 100;
+      bundleEl.classList.remove('hidden');
+      const bundleMsg = document.getElementById('bundle-msg');
+      if (subtotal >= threshold) {
+        bundleMsg.textContent = '10% bundle discount applied!';
+      } else {
+        const diff = threshold - subtotal;
+        bundleMsg.textContent = `Spend €${diff} more to unlock bundle discount`;
+      }
+
+      updateSummary(cart);
+    }
+
+    function updateSummary(cart) {
+      const subtotal = cart.reduce((s, i) => s + (i.price || 0) * i.qty, 0);
+      const vat = Math.round(subtotal * 0.2);
+      const total = subtotal + vat;
+      document.getElementById('summary-subtotal').textContent = `€${subtotal}`;
+      document.getElementById('summary-vat').textContent = `€${vat}`;
+      document.getElementById('summary-total').textContent = `€${total}`;
+    }
+
+    function changeQty(idx, delta) {
+      const cart = getCart();
+      cart[idx].qty = Math.max(1, cart[idx].qty + delta);
+      saveCart(cart);
+      renderBasket();
+    }
+
+    function removeItem(idx) {
+      const cart = getCart();
+      cart.splice(idx, 1);
+      saveCart(cart);
+      renderBasket();
+    }
+
+    // Re-render on cart changes (e.g. add from another tab)
+    window.addEventListener('storage', renderBasket);
+
+    renderBasket();
+  </script>
+</body>
+</html>

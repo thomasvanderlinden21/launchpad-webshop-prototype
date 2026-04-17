@@ -1,0 +1,366 @@
+/*
+ * ============================================================
+ *  Aurora Design System — Official Design Tokens
+ *  Worldline brand · converted from JSON sources
+ * ============================================================
+ */
+
+
+/* ── 1. PRIMITIVE TOKENS ──────────────────────────────────── */
+
+:root {
+
+  /* Typography — Family */
+  --font-family-primary:   'Raleway', sans-serif;
+  --font-family-secondary: 'Inter',   sans-serif;
+
+  /* Typography — Weight */
+  --font-weight-light:    300;
+  --font-weight-regular:  400;
+  --font-weight-medium:   500;
+  --font-weight-semibold: 600;
+  --font-weight-bold:     700;
+
+  /* Typography — Size */
+  --font-size-6xs: 12px;
+  --font-size-5xs: 13px;
+  --font-size-4xs: 14px;
+  --font-size-3xs: 16px;
+  --font-size-2xs: 17px;
+  --font-size-xs:  18px;
+  --font-size-sm:  19px;
+  --font-size-md:  20px;
+  --font-size-lg:  22px;
+  --font-size-xl:  24px;
+  --font-size-2xl: 28px;
+  --font-size-3xl: 32px;
+  --font-size-4xl: 34px;
+  --font-size-5xl: 40px;
+  --font-size-6xl: 44px;
+  --font-size-7xl: 48px;
+  --font-size-8xl: 52px;
+  --font-size-9xl: 56px;
+
+  /* Typography — Line Height */
+  --line-height-6xs: 14px;
+  --line-height-5xs: 16px;
+  --line-height-4xs: 18px;
+  --line-height-3xs: 22px;
+  --line-height-2xs: 24px;
+  --line-height-xs:  26px;
+  --line-height-sm:  28px;
+  --line-height-md:  30px;
+  --line-height-lg:  32px;
+  --line-height-xl:  36px;
+  --line-height-2xl: 40px;
+  --line-height-3xl: 48px;
+  --line-height-4xl: 56px;
+  --line-height-5xl: 64px;
+
+  /* Letter Spacing */
+  --letter-spacing-none: 0px;
+
+  /* Dimension scale */
+  --dimension-0:    0px;
+  --dimension-1:    1px;
+  --dimension-2:    2px;
+  --dimension-4:    4px;
+  --dimension-8:    8px;
+  --dimension-12:  12px;
+  --dimension-16:  16px;
+  --dimension-20:  20px;
+  --dimension-24:  24px;
+  --dimension-32:  32px;
+  --dimension-40:  40px;
+  --dimension-48:  48px;
+  --dimension-52:  52px;
+  --dimension-56:  56px;
+  --dimension-64:  64px;
+  --dimension-72:  72px;
+  --dimension-80:  80px;
+  --dimension-88:  88px;
+  --dimension-96:  96px;
+  --dimension-128: 128px;
+  --dimension-max: 9999px;
+
+  /* Spacing */
+  --spacing-3xs:   2px;
+  --spacing-2xs:   4px;
+  --spacing-xs:    8px;
+  --spacing-sm:   12px;
+  --spacing-md:   16px;
+  --spacing-lg:   20px;
+  --spacing-xl:   24px;
+  --spacing-2xl:  32px;
+  --spacing-3xl:  40px;
+  --spacing-4xl:  48px;
+  --spacing-5xl:  64px;
+  --spacing-10xl: 96px;
+  --spacing-11xl: 128px;
+
+  /* Border Width */
+  --border-width-thin:   1px;
+  --border-width-medium: 2px;
+  --border-width-thick:  4px;
+
+  /* Border Radius */
+  --radius-none:    0px;
+  --radius-2xs:     2px;
+  --radius-xs:      4px;
+  --radius-sm:      8px;
+  --radius-md:     12px;
+  --radius-lg:     16px;
+  --radius-xl:     20px;
+  --radius-2xl:    24px;
+  --radius-rounded: 9999px;
+
+  /* Sizing */
+  --size-height-header: 72px;
+  --size-height-footer: 52px;
+}
+
+
+/* ── 2. SEMANTIC TOKENS — Light mode ──────────────────────── */
+
+:root,
+[data-theme="light"] {
+
+  /* Surface */
+  --surface-page:              #ffffff;
+  --surface-neutral-low:       #f5f7f7;
+  --surface-neutral-low-hover: #e6ebeb;
+  --surface-neutral-medium:    #ffffff;
+  --surface-neutral-high:      #e6ebeb;
+  --surface-brand-solid:       #277777;
+  --surface-brand-hover:       #1f5c5c;
+  --surface-brand-subtle:      #e6f0ef;
+  --surface-disabled:          #f5f7f7;
+  --surface-invert:            #ffffff;
+
+  --surface-info-subtle:    #dcf4fa;
+  --surface-success-subtle: #dcfae6;
+  --surface-warning-subtle: #fef0c7;
+  --surface-error-subtle:   #fee4e2;
+
+  /* Content */
+  --content-primary:    #121621;
+  --content-secondary:  #525d5d;
+  --content-tertiary:   #6b7676;
+  --content-placeholder: #6b7676;
+  --content-disabled:   #9ca4a6;
+  --content-brand:      #277777;
+  --content-on-brand:   #ffffff;
+  --content-invert:     #ffffff;
+  --content-info:       #066076;
+  --content-success:    #067647;
+  --content-warning:    #b54708;
+  --content-error:      #b42318;
+
+  /* Border */
+  --border-neutral-low:    #e6ebeb;
+  --border-neutral-medium: #b4b7bc;
+  --border-neutral-high:   #859090;
+  --border-disabled:       #b4b7bc;
+  --border-brand-solid:    #277777;
+  --border-brand-subtle:   #1b4f4f;
+  --border-neutral-mid:    #b4b7bc;
+
+  --border-info-subtle:    #75cae0;
+  --border-success-subtle: #75e0a7;
+  --border-warning-subtle: #fec84b;
+  --border-error-subtle:   #ffa9a3;
+  --border-error-solid:    #b42318;
+
+  /* Focus ring */
+  --focus-ring-outer: #277777;
+  --focus-ring-inner: #ffffff;
+
+  /* Button */
+  --btn-primary-bg:        #277777;
+  --btn-primary-border:    #1b4f4f;
+  --btn-primary-content:   #ffffff;
+  --btn-secondary-bg:      #f5f7f7;
+  --btn-secondary-border:  #859090;
+  --btn-secondary-content: #121621;
+  --btn-link-content:      #121621;
+
+  /* Chip */
+  --chip-success-bg:      #dcfae6;
+  --chip-success-content: #067647;
+  --chip-info-bg:         #dcf4fa;
+  --chip-info-content:    #066076;
+  --chip-neutral-bg:      #e6ebeb;
+  --chip-neutral-content: #525d5d;
+  --chip-warning-bg:      #fef0c7;
+  --chip-warning-content: #b54708;
+  --chip-error-bg:        #fee4e2;
+  --chip-error-content:   #b42318;
+
+  /* Input */
+  --input-error: #b42318;
+
+  /* Alert */
+  --alert-info-bg:         #dcf4fa;
+  --alert-info-border:     #75cae0;
+  --alert-info-content:    #066076;
+  --alert-success-bg:      #dcfae6;
+  --alert-success-border:  #75e0a7;
+  --alert-success-content: #067647;
+  --alert-warning-bg:      #fef0c7;
+  --alert-warning-border:  #fec84b;
+  --alert-warning-content: #b54708;
+  --alert-error-bg:        #fee4e2;
+  --alert-error-border:    #ffa9a3;
+  --alert-error-content:   #b42318;
+}
+
+
+/* ── 3. SEMANTIC TOKENS — Dark mode ───────────────────────── */
+
+[data-theme="dark"] {
+
+  --surface-page:              #121621;
+  --surface-neutral-low:       #181d27;
+  --surface-neutral-low-hover: #1f242d;
+  --surface-neutral-medium:    #1f242d;
+  --surface-neutral-high:      #2a2f38;
+  --surface-brand-solid:       #277777;
+  --surface-brand-hover:       #1f5c5c;
+  --surface-brand-subtle:      #121621;
+  --surface-disabled:          #1f242d;
+  --surface-invert:            #121621;
+
+  --surface-info-subtle:    #052a33;
+  --surface-success-subtle: #053321;
+  --surface-warning-subtle: #4e1d09;
+  --surface-error-subtle:   #55160c;
+
+  --content-primary:    #e9ebef;
+  --content-secondary:  #9da3b0;
+  --content-tertiary:   #9ca4a6;
+  --content-placeholder: #676d77;
+  --content-disabled:   #676d77;
+  --content-brand:      #91b9b9;
+  --content-on-brand:   #ffffff;
+  --content-invert:     #121621;
+  --content-info:       #47b2cd;
+  --content-success:    #47cd89;
+  --content-warning:    #fdb022;
+  --content-error:      #f97066;
+
+  --border-neutral-low:    #2a2f38;
+  --border-neutral-medium: #676d77;
+  --border-neutral-high:   #bdc1cb;
+  --border-disabled:       #2a2f38;
+  --border-brand-solid:    #277777;
+  --border-brand-subtle:   #6ea2a2;
+  --border-neutral-mid:    #676d77;
+
+  --border-info-subtle:    #066076;
+  --border-success-subtle: #067647;
+  --border-warning-subtle: #b54708;
+  --border-error-subtle:   #b42318;
+  --border-error-solid:    #f97066;
+
+  --focus-ring-outer: #277777;
+  --focus-ring-inner: #121621;
+
+  --btn-primary-bg:        #277777;
+  --btn-primary-border:    #6ea2a2;
+  --btn-primary-content:   #ffffff;
+  --btn-secondary-bg:      #181d27;
+  --btn-secondary-border:  #bdc1cb;
+  --btn-secondary-content: #e9ebef;
+  --btn-link-content:      #91b9b9;
+
+  --chip-success-bg:      #053321;
+  --chip-success-content: #47cd89;
+  --chip-info-bg:         #052a33;
+  --chip-info-content:    #47b2cd;
+  --chip-neutral-bg:      #2a2f38;
+  --chip-neutral-content: #9da3b0;
+  --chip-warning-bg:      #4e1d09;
+  --chip-warning-content: #fdb022;
+  --chip-error-bg:        #55160c;
+  --chip-error-content:   #f97066;
+
+  --input-error: #f97066;
+
+  --alert-info-bg:         #052a33;
+  --alert-info-border:     #066076;
+  --alert-info-content:    #47b2cd;
+  --alert-success-bg:      #053321;
+  --alert-success-border:  #067647;
+  --alert-success-content: #47cd89;
+  --alert-warning-bg:      #4e1d09;
+  --alert-warning-border:  #b54708;
+  --alert-warning-content: #fdb022;
+  --alert-error-bg:        #55160c;
+  --alert-error-border:    #b42318;
+  --alert-error-content:   #f97066;
+}
+
+
+/* ── 4. COMPOSITE TEXT-STYLE TOKENS ──────────────────────── */
+
+:root {
+
+  --text-hero-family:  var(--font-family-primary);
+  --text-hero-weight:  var(--font-weight-medium);
+  --text-hero-size:    var(--font-size-7xl);
+  --text-hero-lh:      var(--line-height-5xl);
+
+  --text-display-lg-family: var(--font-family-primary);
+  --text-display-lg-weight: var(--font-weight-medium);
+  --text-display-lg-size:   var(--font-size-5xl);
+  --text-display-lg-lh:     var(--line-height-3xl);
+
+  --text-display-md-family: var(--font-family-primary);
+  --text-display-md-weight: var(--font-weight-medium);
+  --text-display-md-size:   var(--font-size-3xl);
+  --text-display-md-lh:     var(--line-height-2xl);
+
+  --text-display-sm-family: var(--font-family-primary);
+  --text-display-sm-weight: var(--font-weight-medium);
+  --text-display-sm-size:   var(--font-size-xl);
+  --text-display-sm-lh:     var(--line-height-lg);
+
+  --text-title-lg-family: var(--font-family-secondary);
+  --text-title-lg-weight: var(--font-weight-medium);
+  --text-title-lg-size:   var(--font-size-xl);
+  --text-title-lg-lh:     var(--line-height-2xs);
+
+  --text-title-md-family: var(--font-family-secondary);
+  --text-title-md-weight: var(--font-weight-medium);
+  --text-title-md-size:   var(--font-size-lg);
+  --text-title-md-lh:     var(--line-height-lg);
+
+  --text-lg-family: var(--font-family-secondary);
+  --text-lg-weight: var(--font-weight-medium);
+  --text-lg-size:   var(--font-size-md);
+  --text-lg-lh:     var(--line-height-2xs);
+
+  --text-md-family: var(--font-family-secondary);
+  --text-md-weight: var(--font-weight-regular);
+  --text-md-size:   var(--font-size-3xs);
+  --text-md-lh:     var(--line-height-3xs);
+
+  --text-md-medium-family: var(--font-family-secondary);
+  --text-md-medium-weight: var(--font-weight-medium);
+  --text-md-medium-size:   var(--font-size-3xs);
+  --text-md-medium-lh:     var(--line-height-3xs);
+
+  --text-sm-family: var(--font-family-secondary);
+  --text-sm-weight: var(--font-weight-regular);
+  --text-sm-size:   var(--font-size-4xs);
+  --text-sm-lh:     var(--line-height-4xs);
+}
+
+
+/* ── 5. GLOBAL STYLE OVERRIDES ───────────────────────────── */
+/* Apply Aurora type scale to headings across the webshop     */
+
+h1, h2, h3 {
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-medium);
+}
