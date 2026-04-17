@@ -319,97 +319,100 @@
   <!-- Result section -->
   <div id="result-section">
 
-    <!-- Heading + AI summary bar -->
-    <section class="max-w-[1440px] mx-auto px-24 py-12 pb-6">
-      <h2 class="text-[56px] font-semibold text-[#121621] leading-[66px] mb-4">Your recommended setup</h2>
-      <p class="text-base text-[#6b7676] leading-7 mb-8 max-w-[560px]">Based on your answers, here are the two terminals that fit your business best. You can still browse all options below.</p>
+    <div class="bg-[#F5F8F7]">
 
-      <!-- AI summary bar -->
-      <div id="rec-summary-bar" class="flex items-center gap-4 h-[54px] px-6 rounded-[8px] border border-[rgba(39,119,119,0.25)] shadow-[0px_2px_16px_0px_rgba(39,119,119,0.08)] w-fit" style="background: linear-gradient(170deg, rgba(39,119,119,0.07) 0%, rgba(39,119,119,0.02) 100%);">
-        <span class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #277777 0%, rgba(39,119,119,0.65) 100%);">
-          <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
-        </span>
-        <span id="rec-summary-text" class="text-[#277777] font-medium text-sm tracking-[-0.01em]"></span>
-        <span class="flex items-center gap-1">
-          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
-          <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-60"></span>
-        </span>
-      </div>
-    </section>
+      <!-- Heading + AI summary bar -->
+      <section class="max-w-[1100px] mx-auto px-16 py-12 pb-6">
+        <h2 class="text-[42px] font-semibold text-[#121621] leading-[1.15] mb-4">Your recommended setup</h2>
+        <p class="text-base text-[#6b7676] leading-7 mb-8 max-w-[560px]">Based on your answers, here are the two terminals that fit your business best. You can still browse all options below.</p>
 
-    <!-- 2-column recommendation cards -->
-    <section class="max-w-[1440px] mx-auto px-24 py-6 pb-16">
-      <div class="grid grid-cols-2 gap-6">
-
-        <!-- Best match card -->
-        <div id="rec-best" class="relative bg-white border-2 border-[#277777] rounded-[12px] shadow-sm overflow-visible flex flex-col">
-          <!-- Floating badge -->
-          <div class="absolute -top-[14px] left-6 z-10">
-            <span class="bg-[#277777] text-white text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide shadow-sm">Best match</span>
-          </div>
-          <!-- Image -->
-          <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
-            <div class="w-[80px] h-[120px] bg-[rgba(107,118,118,0.3)] rounded"></div>
-          </div>
-          <!-- Content -->
-          <div class="p-8 flex flex-col flex-1">
-            <p id="rec-best-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
-            <h3 id="rec-best-name" class="text-[32px] font-semibold text-[#121621] leading-tight mb-1"></h3>
-            <p id="rec-best-price" class="text-[32px] font-medium text-[#121621] mb-6"></p>
-            <!-- Savings box -->
-            <div id="rec-best-savings" class="bg-[#f5f7f7] border border-[rgba(39,119,119,0.3)] rounded-[8px] px-5 py-4 mb-6 flex items-center justify-between">
-              <span id="rec-best-savings-text" class="text-sm text-[#277777] font-medium"></span>
-            </div>
-            <!-- Bullets -->
-            <ul id="rec-best-bullets" class="flex flex-col gap-3 mb-8"></ul>
-            <!-- Buttons -->
-            <div class="flex items-center gap-3 mt-auto flex-wrap">
-              <a id="rec-best-detail" href="#" class="h-[46px] px-6 rounded-[8px] bg-[#e6ebeb] border border-[#859090] text-[#121621] font-medium text-sm flex items-center hover:bg-[#d0d5d5] transition-colors">Learn more</a>
-              <button id="rec-best-add" class="h-[46px] px-6 rounded-[8px] bg-[#277777] text-white font-medium text-sm hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
-            </div>
-          </div>
+        <!-- AI summary bar -->
+        <div id="rec-summary-bar" class="flex items-center gap-4 h-[54px] px-6 rounded-[8px] border border-[rgba(39,119,119,0.25)] shadow-[0px_2px_16px_0px_rgba(39,119,119,0.08)] w-fit" style="background: linear-gradient(170deg, rgba(39,119,119,0.07) 0%, rgba(39,119,119,0.02) 100%);">
+          <span class="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0" style="background: linear-gradient(135deg, #277777 0%, rgba(39,119,119,0.65) 100%);">
+            <svg class="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+          </span>
+          <span id="rec-summary-text" class="text-[#277777] font-medium text-sm tracking-[-0.01em]"></span>
+          <span class="flex items-center gap-1">
+            <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-50"></span>
+            <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-60"></span>
+          </span>
         </div>
+      </section>
 
-        <!-- Best alternative card -->
-        <div id="rec-alt" class="relative bg-white border border-[#e6ebeb] rounded-[12px] overflow-visible flex flex-col">
-          <!-- Floating badge -->
-          <div class="absolute -top-[14px] left-6 z-10">
-            <span class="bg-[#f5f7f7] text-[#121621] text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide border border-[#e6ebeb]">Best alternative</span>
-          </div>
-          <!-- Image -->
-          <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
-            <div class="w-[80px] h-[120px] bg-[rgba(107,118,118,0.3)] rounded"></div>
-          </div>
-          <!-- Content -->
-          <div class="p-8 flex flex-col flex-1">
-            <p id="rec-alt-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
-            <h3 id="rec-alt-name" class="text-[32px] font-semibold text-[#121621] leading-tight mb-1"></h3>
-            <p id="rec-alt-price" class="text-[32px] font-medium text-[#121621] mb-6"></p>
-            <!-- Bullets -->
-            <ul id="rec-alt-bullets" class="flex flex-col gap-3 mb-8"></ul>
-            <!-- Buttons -->
-            <div class="flex items-center gap-3 mt-auto flex-wrap">
-              <a id="rec-alt-detail" href="#" class="h-[46px] px-6 rounded-[8px] bg-[#e6ebeb] border border-[#859090] text-[#121621] font-medium text-sm flex items-center hover:bg-[#d0d5d5] transition-colors">Learn more</a>
-              <button id="rec-alt-add" class="h-[46px] px-6 rounded-[8px] bg-[#277777] text-white font-medium text-sm hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
+      <!-- 2-column recommendation cards -->
+      <section class="max-w-[1100px] mx-auto px-16 py-6 pb-16">
+        <div class="grid grid-cols-2 gap-6">
+
+          <!-- Best match card -->
+          <div id="rec-best" class="relative bg-white border-2 border-[#277777] rounded-[12px] shadow-sm overflow-visible flex flex-col">
+            <!-- Floating badge -->
+            <div class="absolute -top-[14px] left-6 z-10">
+              <span class="bg-[#277777] text-white text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide shadow-sm">Best match</span>
+            </div>
+            <!-- Image -->
+            <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
+              <img src="img-terminal.png" alt="" class="h-[180px] w-auto object-contain" />
+            </div>
+            <!-- Content -->
+            <div class="p-8 flex flex-col flex-1">
+              <p id="rec-best-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
+              <h3 id="rec-best-name" class="text-[18px] font-medium text-[#121621] leading-tight mb-1"></h3>
+              <p id="rec-best-price" class="text-[16px] font-medium text-[#121621] mb-6"></p>
+              <!-- Savings box -->
+              <div id="rec-best-savings" class="bg-[#f5f7f7] border border-[rgba(39,119,119,0.3)] rounded-[8px] px-5 py-4 mb-6 flex items-center justify-between">
+                <span id="rec-best-savings-text" class="text-sm text-[#277777] font-medium"></span>
+              </div>
+              <!-- Bullets -->
+              <ul id="rec-best-bullets" class="flex flex-col gap-3 mb-8"></ul>
+              <!-- Buttons -->
+              <div class="flex items-center gap-2 mt-auto">
+                <button id="rec-best-add" class="flex-1 text-[13px] text-white bg-[#277777] rounded-[8px] px-4 py-2.5 font-medium hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
+                <a id="rec-best-detail" href="#" class="flex-1 text-center text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+              </div>
             </div>
           </div>
+
+          <!-- Best alternative card -->
+          <div id="rec-alt" class="relative bg-white border border-[#e6ebeb] rounded-[12px] overflow-visible flex flex-col">
+            <!-- Floating badge -->
+            <div class="absolute -top-[14px] left-6 z-10">
+              <span class="bg-[#f5f7f7] text-[#121621] text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide border border-[#e6ebeb]">Best alternative</span>
+            </div>
+            <!-- Image -->
+            <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
+              <img src="img-terminal.png" alt="" class="h-[180px] w-auto object-contain" />
+            </div>
+            <!-- Content -->
+            <div class="p-8 flex flex-col flex-1">
+              <p id="rec-alt-category" class="text-xs font-semibold text-[#6b7676] uppercase tracking-wider mb-2"></p>
+              <h3 id="rec-alt-name" class="text-[18px] font-medium text-[#121621] leading-tight mb-1"></h3>
+              <p id="rec-alt-price" class="text-[16px] font-medium text-[#121621] mb-6"></p>
+              <!-- Bullets -->
+              <ul id="rec-alt-bullets" class="flex flex-col gap-3 mb-8"></ul>
+              <!-- Buttons -->
+              <div class="flex items-center gap-2 mt-auto">
+                <button id="rec-alt-add" class="flex-1 text-[13px] text-white bg-[#277777] rounded-[8px] px-4 py-2.5 font-medium hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]"></button>
+                <a id="rec-alt-detail" href="#" class="flex-1 text-center text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+              </div>
+            </div>
+          </div>
+
         </div>
+      </section>
 
-      </div>
-
-    </section>
+    </div>
 
     <!-- Dark compare-all section -->
     <section class="bg-[#1b1c1e] py-20">
-      <div class="max-w-[1440px] mx-auto px-24">
+      <div class="max-w-[1100px] mx-auto px-16">
         <p class="text-sm font-semibold text-[#6b7676] uppercase tracking-widest mb-3">Compare all devices</p>
-        <h2 class="text-[40px] font-semibold text-white leading-tight mb-3">Or view our complete selection</h2>
+        <h2 class="text-[22px] font-medium text-white leading-tight mb-3">Or view our complete selection</h2>
         <p class="text-base text-[rgba(255,255,255,0.55)] leading-7 mb-12 max-w-[520px]">Not sure our recommendation is right? Browse all terminals and compare them side by side to find your perfect fit.</p>
         <div class="grid grid-cols-4 gap-5 mb-12">
           <a href="product.html?id=tap-on-mobile" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+              <img src="img-terminal.png" alt="Tap on Mobile" class="h-[80px] w-auto object-contain opacity-80" />
             </div>
             <div>
               <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Mobile Terminal</p>
@@ -419,7 +422,7 @@
           </a>
           <a href="product.html?id=link-2500" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+              <img src="img-terminal.png" alt="Link/2500" class="h-[80px] w-auto object-contain opacity-80" />
             </div>
             <div>
               <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Mobile Terminal</p>
@@ -429,7 +432,7 @@
           </a>
           <a href="product.html?id=ex8000" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+              <img src="img-terminal.png" alt="EX8000" class="h-[80px] w-auto object-contain opacity-80" />
             </div>
             <div>
               <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Portable Terminal</p>
@@ -439,7 +442,7 @@
           </a>
           <a href="product.html?id=saturn-1000f2" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <div class="w-10 h-14 bg-[rgba(255,255,255,0.15)] rounded"></div>
+              <img src="img-terminal.png" alt="Saturn 1000F2" class="h-[80px] w-auto object-contain opacity-80" />
             </div>
             <div>
               <p class="text-[10px] font-semibold text-[#6b7676] uppercase tracking-wider mb-1">Countertop Terminal</p>
@@ -650,14 +653,11 @@
       return `Identified as ${biz} · ${txn} · ${pay}`;
     }
 
-    function renderBullets(id, bullets, isBest) {
-      const bgClass    = isBest ? 'bg-[#277777]' : 'bg-[#121621]';
+    function renderBullets(id, bullets) {
       document.getElementById(id).innerHTML = bullets.map(b => `
-        <li class="flex items-center gap-3">
-          <span class="w-5 h-5 rounded-full ${bgClass} flex items-center justify-center flex-shrink-0">
-            <svg class="w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
-          </span>
-          <span class="text-sm text-[#121621]">${b}</span>
+        <li class="flex items-center gap-2">
+          <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="text-[13px] text-[#72706e]">${b}</span>
         </li>
       `).join('');
     }
@@ -667,7 +667,7 @@
       document.getElementById(`${prefix}-name`).textContent     = product.name;
       document.getElementById(`${prefix}-price`).textContent    = product.price;
       document.getElementById(`${prefix}-detail`).href          = `product.html?id=${productId}`;
-      renderBullets(`${prefix}-bullets`, product.bullets, isBest);
+      renderBullets(`${prefix}-bullets`, product.bullets);
 
       const addBtn = document.getElementById(`${prefix}-add`);
       if (product.price === 'Contact sales') {
