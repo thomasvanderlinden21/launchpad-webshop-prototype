@@ -178,7 +178,7 @@
               <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
             </span>
           </label>
-          <img src="img-terminal.png" alt="Tap on Mobile" class="h-[200px] w-auto object-contain" />
+          <img src="Tap on mobile.png" alt="Tap on Mobile" class="h-[200px] w-auto object-contain" />
         </div>
         <!-- Content -->
         <div class="p-5 flex flex-col gap-4">
@@ -354,7 +354,7 @@
   </div>
 
   <!-- ===================== COMPARE MODAL ===================== -->
-  <div id="compare-modal" class="fixed inset-0 z-50 items-center justify-center bg-black/50" onclick="closeModalOnBackdrop(event)">
+  <div id="compare-modal" class="fixed inset-0 z-[100000] items-center justify-center bg-black/50" onclick="closeModalOnBackdrop(event)">
     <div class="bg-white rounded-[12px] w-[960px] max-h-[90vh] flex flex-col relative shadow-2xl" onclick="event.stopPropagation()">
 
       <!-- Sticky modal header -->
@@ -396,7 +396,7 @@
       'tap-on-mobile': {
         name: 'Tap on Mobile',
         price: '€0 upfront',
-        image: 'img-terminal.png',
+        image: 'Tap on mobile.png',
         specs: {
           Overview: { 'Form Factor': 'Mobile app (SoftPOS)', 'Best For': 'Low-volume, on-the-go businesses', 'Upfront cost': '€0', 'Monthly fee': 'None' },
           Connectivity: { 'WiFi': 'Yes (device)', '4G/5G': 'Yes (device)', 'Bluetooth': 'No' },
@@ -556,13 +556,20 @@
           `;
         }).join('');
 
-      // Comparison table
+      // Comparison table — union of all sections/rows across selected products
       const tableEl = document.getElementById('modal-table');
-      const sections = Object.keys(products[0].specs);
+      const sectionMap = new Map();
+      products.forEach(p => {
+        Object.entries(p.specs).forEach(([section, rowObj]) => {
+          if (!sectionMap.has(section)) sectionMap.set(section, new Set());
+          Object.keys(rowObj).forEach(row => sectionMap.get(section).add(row));
+        });
+      });
+      const sections = Array.from(sectionMap.keys());
       let tableHTML = '';
 
       sections.forEach((section, sIdx) => {
-        const rows = Object.keys(products[0].specs[section]);
+        const rows = Array.from(sectionMap.get(section));
 
         // Section header row
         tableHTML += `
@@ -582,10 +589,12 @@
                 <p class="text-sm text-[#6b7676]">${row}</p>
               </div>
               ${products.map(p => {
-                const val = p.specs[section][row];
+                const val = p.specs[section] ? p.specs[section][row] : undefined;
                 const cell = val === 'Yes'
                   ? `<svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>`
-                  : `<span class="text-sm text-[#121621]">${val}</span>`;
+                  : val !== undefined
+                    ? `<span class="text-sm text-[#121621]">${val}</span>`
+                    : `<span class="text-sm text-[#c0c0c0]">—</span>`;
                 return `<div class="flex-1 flex items-center justify-center px-8 py-4">${cell}</div>`;
               }).join('')}
             </div>

@@ -86,7 +86,7 @@
       <!-- Product image -->
       <div class="w-[480px] flex-shrink-0 fade-up">
         <div class="bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.08)] h-[480px] flex items-center justify-center overflow-hidden">
-          <img src="img-terminal.png" alt="" class="h-[360px] w-auto object-contain product-image" />
+          <img id="hero-img" src="img-terminal.png" alt="" class="h-[360px] w-auto object-contain product-image" />
         </div>
       </div>
 
@@ -160,6 +160,7 @@
     const PRODUCTS = {
       'tap-on-mobile': {
         name: 'Tap on Mobile',
+        image: 'Tap on mobile.png',
         price: '€0',
         priceDisplay: '€0',
         priceNote: 'No monthly or activation fees. From €0.13 per debit transaction.',
@@ -302,6 +303,7 @@
       document.title = p.name + ' – Webshop';
 
       document.getElementById('hero-title').textContent = p.name;
+      if (p.image) document.getElementById('hero-img').src = p.image;
       document.getElementById('hero-description').textContent = p.heroDescription;
       document.getElementById('price-display').textContent = p.priceDisplay;
       document.getElementById('price-note-inline').textContent = p.priceNote;
