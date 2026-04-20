@@ -163,7 +163,7 @@ function showMiniCart() {
           position: fixed;
           top: 80px;
           right: 88px;
-          z-index: 9999;
+          z-index: 99999;
           width: 400px;
           background: #ffffff;
           border: 1px solid #e6ebeb;
