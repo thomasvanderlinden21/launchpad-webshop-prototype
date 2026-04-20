@@ -19,52 +19,91 @@
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
-      height: 8px;
+      height: 2px;
       background: linear-gradient(to right, #277777 0%, #277777 50%, #e6ebeb 50%, #e6ebeb 100%);
-      border-radius: 8px;
+      border-radius: 2px;
       outline: none;
       cursor: pointer;
     }
     input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       appearance: none;
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: #277777;
+      background: #ffffff;
+      border: 2px solid #277777;
       cursor: pointer;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+      transition: box-shadow 0.15s ease;
+    }
+    input[type="range"]::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 0 5px rgba(39,119,119,0.12);
     }
     input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: #277777;
+      background: #ffffff;
+      border: 2px solid #277777;
       cursor: pointer;
-      border: none;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 2px 4px rgba(0,0,0,0.1);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    }
+
+    /* Slider tooltip bubble */
+    .slider-bubble {
+      position: absolute;
+      transform: translateX(-50%);
+      background: #ffffff;
+      color: #277777;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+      border: 1.5px solid rgba(39,119,119,0.3);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+      white-space: nowrap;
+      pointer-events: none;
+      top: -34px;
     }
 
     /* Option card selected state */
+    .option-card {
+      transition: border-color 0.15s ease, box-shadow 0.2s ease, transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .option-card:hover  { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .option-card:active { transform: scale(0.98); }
     .option-card.selected {
       border-color: #277777 !important;
       border-width: 2.5px !important;
       background-color: #ffffff !important;
       box-shadow: 0px 4px 6px rgba(0,0,0,0.1), 0px 2px 4px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
     }
     .option-card.selected .radio-dot {
       border-color: #277777 !important;
     }
 
+    /* Entrance */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
     /* Result section */
     #result-section { display: none; }
     #result-section.visible { display: block; }
+    #result-section.visible #rec-best { animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+    #result-section.visible #rec-alt  { animation: fadeUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+
+    /* Button press */
+    button:active { transform: scale(0.97); transition: transform 0.08s ease; }
   </style>
 </head>
 <body class="bg-white text-[#121621]">
 
   <!-- Nav -->
-  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative">
+  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
     <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
       <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
     </a>
@@ -117,7 +156,7 @@
       <h2 class="text-[20px] font-medium text-[#121621]">What type of business do you have?</h2>
       <div class="grid grid-cols-3 gap-5">
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="businessType" data-value="physical" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -125,19 +164,12 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[100px] h-[96px] text-[#6b7676]" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1">
-              <rect x="6" y="20" width="36" height="22" rx="1.5" fill="#f0ebe4" stroke="#c4a882" stroke-width="1"/>
-              <path d="M6 20L24 8l18 12" stroke="#c4a882" stroke-width="1" stroke-linejoin="round"/>
-              <rect x="17" y="28" width="14" height="14" rx="1" fill="white" stroke="#c4a882" stroke-width="1"/>
-              <rect x="8" y="24" width="8" height="8" rx="1" fill="#e8d5b7" stroke="#c4a882" stroke-width="0.8"/>
-              <rect x="32" y="24" width="8" height="8" rx="1" fill="#e8d5b7" stroke="#c4a882" stroke-width="0.8"/>
-              <path d="M24 8v2" stroke="#c4a882" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
+            <img src="illustrations/Permanent physical location.png" alt="Permanent physical location" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Permanent physical location</p>
         </button>
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="businessType" data-value="online" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -145,20 +177,12 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[100px] h-[96px] text-[#6b7676]" fill="none" viewBox="0 0 48 48" stroke="currentColor" stroke-width="1">
-              <rect x="4" y="8" width="40" height="26" rx="3" fill="#ede8f5" stroke="#b09ad4" stroke-width="1"/>
-              <path d="M4 16h40" stroke="#b09ad4" stroke-width="1"/>
-              <rect x="10" y="20" width="12" height="8" rx="1" fill="#c8b8e8" stroke="#b09ad4" stroke-width="0.8"/>
-              <rect x="26" y="20" width="12" height="3" rx="0.5" fill="#b09ad4" stroke="none"/>
-              <rect x="26" y="25" width="8" height="3" rx="0.5" fill="#b09ad4" stroke="none"/>
-              <path d="M18 34h12M24 34v4" stroke="#b09ad4" stroke-width="1" stroke-linecap="round"/>
-              <rect x="16" y="38" width="16" height="2" rx="1" fill="#b09ad4" stroke="none"/>
-            </svg>
+            <img src="illustrations/Online store.png" alt="Online store" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Online store</p>
         </button>
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="businessType" data-value="popup" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -166,13 +190,7 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[100px] h-[96px]" fill="none" viewBox="0 0 48 48">
-              <path d="M8 30 L24 12 L40 30" stroke="#d4919f" stroke-width="1" stroke-linejoin="round" fill="#f5d5da"/>
-              <path d="M10 30 L10 40 L38 40 L38 30Z" fill="#f0d4d8" stroke="#d4919f" stroke-width="1"/>
-              <rect x="19" y="30" width="10" height="10" rx="1" fill="white" stroke="#d4919f" stroke-width="0.8"/>
-              <path d="M4 30h40" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
-              <path d="M8 30v3M40 30v3" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
-            </svg>
+            <img src="illustrations/Pop up.png" alt="Pop up / market stall" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Pop up / market stall</p>
         </button>
@@ -185,7 +203,7 @@
       <h2 class="text-[20px] font-medium text-[#121621]">How would you like to accept payments?</h2>
       <div class="grid grid-cols-3 gap-5">
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="paymentMethod" data-value="link-only" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -193,19 +211,12 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[90px] h-[90px]" fill="none" viewBox="0 0 48 48">
-              <rect x="12" y="4" width="24" height="40" rx="4" fill="#e8dfd4" stroke="#c4a882" stroke-width="1"/>
-              <rect x="15" y="10" width="18" height="22" rx="2" fill="white" stroke="#c4a882" stroke-width="0.8"/>
-              <circle cx="24" cy="38" r="2" fill="#c4a882"/>
-              <path d="M18 16h12M18 20h8M18 24h10" stroke="#c4a882" stroke-width="1" stroke-linecap="round"/>
-              <circle cx="34" cy="14" r="7" fill="#277777"/>
-              <path d="M31 14l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="illustrations/Only Pay by link.png" alt="Only Pay by link" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Only Pay by link</p>
         </button>
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="paymentMethod" data-value="terminal-link" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -213,20 +224,12 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[90px] h-[90px]" fill="none" viewBox="0 0 48 48">
-              <rect x="14" y="4" width="20" height="34" rx="3" fill="#ede8f5" stroke="#b09ad4" stroke-width="1"/>
-              <rect x="17" y="8" width="14" height="18" rx="1.5" fill="white" stroke="#b09ad4" stroke-width="0.8"/>
-              <path d="M20 34h8" stroke="#b09ad4" stroke-width="1.5" stroke-linecap="round"/>
-              <rect x="17" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
-              <rect x="22" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
-              <rect x="27" y="28" width="4" height="3" rx="0.5" fill="#b09ad4"/>
-              <path d="M36 20 C36 20 40 24 40 28 C40 32 36 36 32 36" stroke="#b09ad4" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
+            <img src="illustrations/Payment terminal &amp; pay by link.png" alt="Payment terminal &amp; pay by link" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Payment terminal &amp; pay by link</p>
         </button>
 
-        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[270px] text-left hover:border-[#b4b7bc] transition-colors"
+        <button class="option-card bg-white border border-[#e0e0e0] rounded-[16px] p-[22px] flex flex-col h-[230px] text-left hover:border-[#b4b7bc] transition-colors"
           data-group="paymentMethod" data-value="online-terminal-link" onclick="selectOption(this)">
           <div class="flex items-center justify-end mb-auto">
             <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c8c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
@@ -234,17 +237,7 @@
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
-            <svg class="w-[100px] h-[90px]" fill="none" viewBox="0 0 56 48">
-              <rect x="2" y="10" width="30" height="22" rx="2.5" fill="#f5d5da" stroke="#d4919f" stroke-width="1"/>
-              <path d="M2 16h30" stroke="#d4919f" stroke-width="1"/>
-              <rect x="6" y="20" width="8" height="6" rx="1" fill="#f0b8c0" stroke="#d4919f" stroke-width="0.7"/>
-              <path d="M16 32h8M20 32v3" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
-              <rect x="34" y="16" width="14" height="24" rx="2.5" fill="#f5d5da" stroke="#d4919f" stroke-width="1"/>
-              <rect x="36" y="19" width="10" height="14" rx="1" fill="white" stroke="#d4919f" stroke-width="0.7"/>
-              <path d="M38 37h6" stroke="#d4919f" stroke-width="1" stroke-linecap="round"/>
-              <circle cx="28" cy="14" r="6" fill="#277777"/>
-              <path d="M25 14l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
+            <img src="illustrations/Online payments, payment terminal &amp; pay by link.png" alt="Online payments, terminal &amp; pay by link" class="h-[96px] w-auto object-contain" />
           </div>
           <p class="text-[15px] font-medium text-[#121621] mt-2">Online payments, terminal &amp; pay by link</p>
         </button>
@@ -260,9 +253,9 @@
           <span>0 – 1,000</span>
           <span>50,000+</span>
         </div>
-        <div class="relative mb-14">
+        <div class="relative mb-10 mt-6">
           <input type="range" id="txn-slider" min="0" max="50000" step="500" value="25000" oninput="updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn)" />
-          <div id="txn-tooltip" class="absolute -translate-x-1/2 bg-[#277777] text-white text-[13px] font-medium px-3 py-1 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.1)] whitespace-nowrap pointer-events-none" style="top: 36px; left: 50%;">25,000</div>
+          <div id="txn-tooltip" class="slider-bubble" style="left: 50%;">25,000</div>
         </div>
         <p id="txn-label" class="text-sm text-[#6b7676]">~25,000 transactions / month</p>
       </div>
@@ -276,9 +269,9 @@
           <span>€0 – €5</span>
           <span>€50+</span>
         </div>
-        <div class="relative mb-14">
+        <div class="relative mb-10 mt-6">
           <input type="range" id="spend-slider" min="0" max="50" step="1" value="25" oninput="updateSlider('spend-slider','spend-tooltip','spend-label',formatSpend)" />
-          <div id="spend-tooltip" class="absolute -translate-x-1/2 bg-[#277777] text-white text-[13px] font-medium px-3 py-1 rounded-full shadow-[0_4px_6px_rgba(0,0,0,0.1)] whitespace-nowrap pointer-events-none" style="top: 36px; left: 50%;">€25</div>
+          <div id="spend-tooltip" class="slider-bubble" style="left: 50%;">€25</div>
         </div>
         <p id="spend-label" class="text-sm text-[#6b7676]">~€25 per transaction</p>
       </div>
@@ -471,8 +464,8 @@
         name: 'Tap on Mobile',
         category: 'Mobile Terminal',
         price: '€0',
-        description: 'Turn your iPhone or Android into a payment terminal. No extra hardware required — accept contactless payments wherever you are.',
-        bullets: ['No upfront hardware cost', 'Works on any iPhone or Android', 'NFC contactless built-in', 'Perfect for low-volume businesses'],
+        description: 'Accept cashless payments without a dedicated terminal. The Worldline Tap on Mobile app turns any Android 12+ device into a contactless payment terminal — no hardware investment, no monthly fees.',
+        bullets: ['No upfront cost — zero monthly or activation fees', 'NFC contactless + PIN for transactions over €50', 'Digital receipts via email or QR code', 'Up to 5 devices · next-business-day payouts'],
       },
       'link-2500': {
         name: 'Link/2500',
@@ -575,7 +568,7 @@
       // Update track fill
       slider.style.background = `linear-gradient(to right, #277777 0%, #277777 ${pct * 100}%, #e6ebeb ${pct * 100}%, #e6ebeb 100%)`;
       // Position tooltip
-      tooltip.style.left = `calc(${pct * 100}% + ${(0.5 - pct) * 20}px)`;
+      tooltip.style.left = `calc(${pct * 100}% + ${(0.5 - pct) * 18}px)`;
       tooltip.textContent = fmt(val);
       label.textContent = sliderId === 'txn-slider'
         ? `~${val.toLocaleString('en')} transactions / month`

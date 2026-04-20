@@ -13,12 +13,32 @@
   <script src="cart.js" defer></script>
   <style>
     body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    /* Entrance */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .fade-up-1 { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
+    .fade-up-2 { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both; }
+
+    /* Image hover */
+    .product-image { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .product-image:hover { transform: scale(1.03); }
+
+    /* Button press */
+    button:active { transform: scale(0.97); transition: transform 0.08s ease; }
+
+    /* Hide-on-scroll nav */
+    header { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+    #product-sticky-bar { transition: top 0.35s cubic-bezier(0.16,1,0.3,1); }
   </style>
 </head>
 <body class="bg-white text-[#121621]">
 
   <!-- Navigation bar -->
-  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative">
+  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
     <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
       <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
     </a>
@@ -44,31 +64,34 @@
     </div>
   </header>
 
-  <!-- Breadcrumb -->
-  <div class="max-w-[1440px] mx-auto px-24 py-3 border-b border-[#f3f4f6]">
-    <nav class="flex items-center gap-1.5" aria-label="Breadcrumb">
-      <a href="index.html" class="text-[13px] text-[#72706e] hover:text-[#277777] transition-colors flex items-center gap-1">
-        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
-        Products
-      </a>
-      <svg class="w-3.5 h-3.5 text-[#d1d5dc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
-      <span id="breadcrumb-name" class="text-[13px] text-[#1a1a2e]"></span>
-    </nav>
+  <!-- Sticky product bar -->
+  <div id="product-sticky-bar" class="sticky top-[72px] z-[10001] bg-white border-b border-[#e6ebeb]" style="box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+    <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between h-[48px]">
+      <!-- Back chevron + product name -->
+      <div class="flex items-center gap-3">
+        <a id="sticky-back-btn" href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#f5f7f7] transition-colors text-[#525d5d] hover:text-[#121621]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </a>
+        <span id="sticky-name" class="text-[14px] font-semibold text-[#121621] tracking-[-0.01em]"></span>
+      </div>
+      <!-- Primary CTA -->
+      <button id="sticky-add-btn" class="h-[34px] px-4 bg-[#277777] text-white text-[13px] font-medium rounded-[8px] hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)] whitespace-nowrap"></button>
+    </div>
   </div>
 
   <!-- Hero section -->
-  <section class="max-w-[1440px] mx-auto px-24 py-20">
+  <section id="section-overview" class="max-w-[1440px] mx-auto px-24 py-20">
     <div class="flex gap-16 items-start">
 
       <!-- Product image -->
-      <div class="w-[480px] flex-shrink-0">
-        <div class="bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.08)] h-[480px] flex items-center justify-center">
-          <img src="img-terminal.png" alt="" class="h-[360px] w-auto object-contain" />
+      <div class="w-[480px] flex-shrink-0 fade-up">
+        <div class="bg-white border border-[#f3f4f6] rounded-[16px] shadow-[0px_1px_3px_0px_rgba(0,0,0,0.08)] h-[480px] flex items-center justify-center overflow-hidden">
+          <img src="img-terminal.png" alt="" class="h-[360px] w-auto object-contain product-image" />
         </div>
       </div>
 
       <!-- Content -->
-      <div class="flex-1 flex flex-col gap-5 pt-2">
+      <div class="flex-1 flex flex-col gap-5 pt-2 fade-up-1">
         <p class="text-[13px] font-medium text-[#00b4aa] uppercase tracking-[0.12em]">Worldline</p>
         <h1 id="hero-title" class="text-[36px] font-medium text-[#1a1a2e] leading-tight tracking-[-0.5px]"></h1>
         <div class="h-px bg-[#f3f4f6]"></div>
@@ -102,25 +125,19 @@
     </div>
   </section>
 
-  <!-- Specs + tabs section -->
-  <section class="border-t border-[#f3f4f6]">
-    <div class="max-w-[1440px] mx-auto px-24">
+  <!-- Specs section -->
+  <section id="section-specs" class="border-t border-[#e6ebeb]">
+    <div class="max-w-[1440px] mx-auto px-24 py-12">
+      <h2 class="text-[18px] font-medium text-[#121621] mb-8">Specifications</h2>
+      <div id="panel-specs" class="grid grid-cols-2 gap-x-24"></div>
+    </div>
+  </section>
 
-      <!-- Tab bar -->
-      <div class="flex gap-6 border-b border-[#e5e7eb]">
-        <button id="tab-specs" onclick="showTab('specs')" class="py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors">Specifications</button>
-        <button id="tab-payment" onclick="showTab('payment')" class="py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors">Payment Methods</button>
-      </div>
-
-      <!-- Specs panel -->
-      <div id="panel-specs" class="py-8 grid grid-cols-2 gap-x-16" id="specs-table"></div>
-
-      <!-- Payment methods panel -->
-      <div id="panel-payment" class="py-8 hidden">
-        <p class="text-[14px] text-[#72706e] mb-4">Accepted payment methods for this terminal:</p>
-        <div id="pay-methods-panel" class="flex flex-wrap gap-2"></div>
-      </div>
-
+  <!-- Payment methods section -->
+  <section class="border-t border-[#e6ebeb]">
+    <div class="max-w-[1440px] mx-auto px-24 py-12">
+      <h2 class="text-[18px] font-medium text-[#121621] mb-6">Accepted payment methods</h2>
+      <div id="pay-methods-panel" class="flex flex-wrap gap-2"></div>
     </div>
   </section>
 
@@ -145,18 +162,32 @@
         name: 'Tap on Mobile',
         price: '€0',
         priceDisplay: '€0',
-        priceNote: 'No upfront cost. Transaction fees apply.',
-        heroDescription: 'Turn your iPhone or Android device into a payment terminal. No extra hardware required. Accept contactless payments from customers instantly — wherever you are.',
-        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay'],
-        featBullets: ['NFC contactless built-in', 'Works on iOS & Android', 'No extra hardware required', 'Enterprise-grade encryption'],
+        priceNote: 'No monthly or activation fees. From €0.13 per debit transaction.',
+        heroDescription: 'Accept cashless payments without a dedicated payment terminal. The Worldline Tap on Mobile app turns any Android 12+ device into a contactless payment terminal — no hardware investment, no monthly fees, and ready to go in minutes. PIN entry is supported for transactions over €50, and digital receipts are sent automatically via email or QR code.',
+        payMethods: ['Visa', 'Mastercard', 'Maestro', 'V Pay', 'Google Pay', 'Apple Pay'],
+        featBullets: [
+          'No upfront hardware cost — zero monthly or activation fees',
+          'NFC contactless payments with PIN support for amounts over €50',
+          'Digital receipts via email or QR code',
+          'Up to 5 devices per account',
+          'Next-business-day payouts',
+          'Built-in tip function',
+        ],
         specs: [
-          ['Compatibility', 'iOS 14+ and Android 8+'],
-          ['Connectivity', 'Uses device WiFi / 4G'],
-          ['Battery', 'Uses phone battery'],
-          ['Card Reader', 'Contactless (NFC)'],
-          ['Security', 'PCI DSS Level 1 certified'],
-          ['Setup', 'Download app and go'],
-          ['Fees', 'No upfront cost'],
+          ['Compatibility', 'Android 12+'],
+          ['Connectivity', 'Device WiFi / 4G'],
+          ['Card reader', 'NFC contactless'],
+          ['PIN support', 'Yes — required for transactions over €50'],
+          ['Receipts', 'Digital (email or QR code)'],
+          ['Tip function', 'Yes'],
+          ['Devices per account', 'Up to 5'],
+          ['Settlement', 'Next business day'],
+          ['Monthly fee', 'None'],
+          ['Debit card fee (domestic)', '€0.13 per transaction'],
+          ['Debit card fee (non-domestic)', '1.40%'],
+          ['Credit card fee', '1.40% + €0.10'],
+          ['Commercial card surcharge', '+1.20%'],
+          ['Chargeback fee', '€30'],
         ]
       },
       'link-2500': {
@@ -256,16 +287,7 @@
       }
     };
 
-    function showTab(tab) {
-      document.getElementById('panel-specs').classList.toggle('hidden', tab !== 'specs');
-      document.getElementById('panel-payment').classList.toggle('hidden', tab !== 'payment');
-      document.getElementById('tab-specs').className = tab === 'specs'
-        ? 'py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors'
-        : 'py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors';
-      document.getElementById('tab-payment').className = tab === 'payment'
-        ? 'py-3.5 text-[15px] font-medium text-[#00b4aa] border-b-2 border-[#00b4aa] -mb-px transition-colors'
-        : 'py-3.5 text-[15px] font-medium text-[#72706e] border-b-2 border-transparent -mb-px hover:text-[#1a1a2e] transition-colors';
-    }
+
 
     function render() {
       const params = new URLSearchParams(window.location.search);
@@ -279,7 +301,6 @@
 
       document.title = p.name + ' – Webshop';
 
-      document.getElementById('breadcrumb-name').textContent = p.name;
       document.getElementById('hero-title').textContent = p.name;
       document.getElementById('hero-description').textContent = p.heroDescription;
       document.getElementById('price-display').textContent = p.priceDisplay;
@@ -305,18 +326,26 @@
         `<span class="bg-[#fafafa] border border-[#e5e7eb] text-[#1a1a2e] text-[13px] px-3 py-1.5 rounded-[6px]">${m}</span>`
       ).join('');
 
-      // Add to basket button
+      // Hero add button
       const addBtn = document.getElementById('hero-add-btn');
       addBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : `Add to basket — ${p.price}`;
       if (p.price !== 'Contact sales') {
-        addBtn.onclick = () => { addToCart(id); window.location.href = 'basket.html'; };
+        addBtn.onclick = () => addToCart(id);
       }
 
-      // Specs table (two-column grid)
+      // Sticky bar
+      document.getElementById('sticky-name').textContent = p.name;
+      const stickyBtn = document.getElementById('sticky-add-btn');
+      stickyBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : 'Add to basket';
+      if (p.price !== 'Contact sales') {
+        stickyBtn.onclick = () => addToCart(id);
+      }
+
+      // Specs table
       document.getElementById('panel-specs').innerHTML = p.specs.map(row => `
-        <div class="flex items-center justify-between py-3 border-b border-[#f9fafb]">
-          <span class="text-[14px] text-[#72706e]">${row[0]}</span>
-          <span class="text-[14px] text-[#1a1a2e] text-right">${row[1]}</span>
+        <div class="flex items-center justify-between py-3.5 border-b border-[#f3f4f6]">
+          <span class="text-[13px] text-[#6b7676]">${row[0]}</span>
+          <span class="text-[13px] font-medium text-[#121621] text-right">${row[1]}</span>
         </div>
       `).join('');
 
@@ -333,6 +362,41 @@
     }
 
     render();
+
+    // Hide main nav on scroll-down, reveal on scroll-up.
+    // Product bar follows: top-0 when nav is hidden, top-72px when visible.
+    (function () {
+      const nav = document.querySelector('header');
+      const bar = document.getElementById('product-sticky-bar');
+      const NAV_H = 72;
+      let lastY  = window.scrollY;
+      let hidden = false;
+
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+
+        if (y > NAV_H) {
+          if (y > lastY && !hidden) {
+            // Scrolling down — hide nav, pull bar to top
+            nav.style.transform = 'translateY(-100%)';
+            bar.style.top = '0px';
+            hidden = true;
+          } else if (y < lastY && hidden) {
+            // Scrolling up — restore nav, push bar down
+            nav.style.transform = 'translateY(0)';
+            bar.style.top = NAV_H + 'px';
+            hidden = false;
+          }
+        } else if (hidden) {
+          // Back near the very top — always show nav
+          nav.style.transform = 'translateY(0)';
+          bar.style.top = NAV_H + 'px';
+          hidden = false;
+        }
+
+        lastY = y;
+      }, { passive: true });
+    })();
   </script>
 </body>
 </html>
