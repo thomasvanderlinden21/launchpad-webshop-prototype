@@ -13,7 +13,7 @@
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <script src="cart.js" defer></script>
   <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
     .category-scroll::-webkit-scrollbar { display: none; }
     .category-scroll { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -29,11 +29,11 @@
 
     /* Card hover lift */
     .product-card {
-      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s ease, border-color 0.15s ease;
+      transition: box-shadow 0.25s ease, border-color 0.2s ease;
     }
-    .product-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
-    .product-card img   { transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
-    .product-card:hover img { transform: scale(1.04); }
+    .product-card:hover { box-shadow: 0 12px 36px rgba(0,0,0,0.09); border-color: #d4dcdc; }
+    .product-card img   { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .product-card:hover img { transform: scale(1.03); }
 
     /* Button press */
     button:active { transform: scale(0.97); transition: transform 0.08s ease; }
@@ -72,13 +72,9 @@
       border-width: 2px;
     }
 
-    /* Grid cards: selected border on image only */
+    /* Grid cards: selected state */
     .product-card.selected.grid-card {
       border-width: 0;
-    }
-    .product-card.selected .grid-card-image {
-      outline: 2px solid #277777;
-      outline-offset: 0px;
     }
 
     /* Modal scroll */
@@ -94,22 +90,22 @@
 <body class="bg-white text-[#121621]">
 
   <!-- Navigation bar -->
-  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
+  <header class="bg-white/85 backdrop-blur-xl border-b border-black/[0.06] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
     <!-- Logo -->
-    <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
+    <a href="home.html" aria-label="Worldline" class="flex-shrink-0">
       <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
     </a>
     <!-- Centre: nav links -->
     <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
-      <a href="index.html" class="text-sm font-medium text-[#277777] transition-colors">Products</a>
-      <a href="configurator.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Recommendation</a>
-      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Solutions</a>
-      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="index.html" class="text-sm font-medium text-[#277777] transition-colors">Instore</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
+      <a href="pricing.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
       <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
     </nav>
     <!-- Right: icons -->
     <div class="ml-auto flex items-center gap-1">
-      <div class="w-px h-5 bg-[#e6ebeb] mr-2"></div>
+      <div class="w-px h-4 bg-black/[0.08] mr-3"></div>
       <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/>
@@ -129,163 +125,121 @@
     </div>
   </header>
 
-  <!-- Sticky in-page navigation -->
-  <nav id="inpage-nav" class="sticky top-[72px] z-[9999] bg-white border-b border-[#e6ebeb]">
-    <div class="max-w-[1440px] mx-auto px-24 flex items-center gap-1 h-12">
-      <button onclick="setCategory(this, 'all')" class="category-tab px-4 h-full text-sm font-medium text-[#277777] border-b-2 border-[#277777] transition-colors" data-category="all">All terminals</button>
-      <button onclick="setCategory(this, 'retail')" class="category-tab px-4 h-full text-sm font-medium text-[#6b7676] border-b-2 border-transparent hover:text-[#121621] transition-colors" data-category="retail">Retail</button>
-      <button onclick="setCategory(this, 'hospitality')" class="category-tab px-4 h-full text-sm font-medium text-[#6b7676] border-b-2 border-transparent hover:text-[#121621] transition-colors" data-category="hospitality">Hospitality</button>
-      <button onclick="setCategory(this, 'healthcare')" class="category-tab px-4 h-full text-sm font-medium text-[#6b7676] border-b-2 border-transparent hover:text-[#121621] transition-colors" data-category="healthcare">Healthcare</button>
-      <button onclick="setCategory(this, 'logistics')" class="category-tab px-4 h-full text-sm font-medium text-[#6b7676] border-b-2 border-transparent hover:text-[#121621] transition-colors" data-category="logistics">Logistics</button>
-      <button onclick="setCategory(this, 'ecommerce')" class="category-tab px-4 h-full text-sm font-medium text-[#6b7676] border-b-2 border-transparent hover:text-[#121621] transition-colors" data-category="ecommerce">E-commerce</button>
-    </div>
-  </nav>
-
   <!-- Hero section -->
-  <section class="max-w-[1440px] mx-auto px-24 py-28 flex items-center gap-12">
-    <div class="flex-1 max-w-[520px]">
-      <h1 class="text-[48px] font-semibold text-[#121621] leading-tight mb-5 fade-up">Power your business</h1>
-      <p class="text-base text-[#6b7676] leading-7 mb-4 fade-up-1">A payment setup for every type of merchant. From mobile terminals that travel with you to countertop systems built for high-volume retail, find the perfect match for how you do business.</p>
-      <p class="text-sm text-[#6b7676] leading-6 mb-8 fade-up-2">Every terminal comes with enterprise-grade security, contactless payment support, and seamless integration with your existing systems. No hidden fees. No long-term contracts.</p>
-      <a href="configurator.html" class="inline-flex items-center gap-2.5 h-12 px-6 rounded-[8px] bg-[#277777] text-white font-medium text-base hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)] fade-up-3">
+  <section class="max-w-[1440px] mx-auto px-24 py-32 flex items-center gap-16">
+    <div class="flex-1 max-w-[540px]">
+      <h1 class="text-[52px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-6 fade-up">Power your business</h1>
+      <p class="text-[17px] text-[#6b7676] leading-[1.7] mb-3 fade-up-1">A payment setup for every type of merchant. From mobile terminals that travel with you to countertop systems built for high-volume retail, find the perfect match for how you do business.</p>
+      <p class="text-[15px] text-[#8a9696] leading-[1.65] mb-10 fade-up-2">Every terminal comes with enterprise-grade security, contactless payment support, and seamless integration with your existing systems. No hidden fees. No long-term contracts.</p>
+      <a href="configurator.html" class="inline-flex items-center gap-2 h-12 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors fade-up-3">
         Find your perfect solution
         <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
       </a>
     </div>
     <div class="flex-1 flex justify-center items-center">
-      <img src="illustrations/hero-image.png" alt="Worldline payment terminals" class="w-full max-w-[540px] object-contain" />
+      <div class="w-full max-w-[540px] h-[380px] bg-[#ebebeb] rounded-[24px] flex items-center justify-center overflow-hidden">
+        <img src="assets/Terminal renders/1.png" alt="Worldline terminal" class="h-[300px] w-auto object-contain" />
+      </div>
     </div>
   </section>
 
   <!-- POS Systems section -->
-  <section class="bg-[#F5F8F7]">
-  <div class="max-w-[1440px] mx-auto px-24 py-12">
-    <div class="mb-10">
-      <h2 class="text-[32px] font-semibold text-[#121621] mb-3">Our range of POS systems</h2>
-      <p class="text-sm text-[#6b7676] leading-6 max-w-[700px]">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
+  <section class="bg-[#f7f9f9]">
+  <div class="max-w-[1440px] mx-auto px-24 py-16">
+    <div class="mb-12">
+      <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">Our range of POS systems</h2>
+      <p class="text-[16px] text-[#6b7676] leading-[1.65] max-w-[600px]">Every terminal includes enterprise-grade security, contactless support, and next-day payouts. No hidden fees. No lock-in.</p>
     </div>
 
-    <div class="grid grid-cols-3 gap-5 py-4 -my-4" id="product-grid">
+    <div class="grid grid-cols-4 gap-6 py-4 -my-4" id="product-grid">
 
       <!-- Product card: Tap on Mobile -->
-      <div class="product-card bg-white border border-[#e8e8e8] rounded-[16px] relative" data-id="tap-on-mobile">
-        <!-- Image area -->
-        <div class="relative h-[240px] bg-white flex items-center justify-center rounded-t-[16px]">
-          <!-- Checkbox -->
-          <label class="absolute top-3 right-3 z-10 cursor-pointer flex items-center justify-center">
-            <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="tap-on-mobile" />
-            <span class="checkbox-box w-4 h-4 rounded-[4px] border border-[#859090] bg-white flex items-center justify-center transition-colors">
-              <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
-            </span>
-          </label>
-          <img src="Tap on mobile.png" alt="Tap on Mobile" class="h-[200px] w-auto object-contain" />
+      <div class="product-card bg-white border border-[#ededed] rounded-[20px] relative shadow-[0_1px_4px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col" data-id="tap-on-mobile">
+        <!-- Compare checkbox -->
+        <label class="absolute top-4 right-4 z-10 cursor-pointer flex items-center justify-center">
+          <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="tap-on-mobile" />
+          <span class="checkbox-box w-5 h-5 rounded-[5px] border border-[#c8d0d0] bg-white flex items-center justify-center transition-colors">
+            <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
+          </span>
+        </label>
+        <!-- Image -->
+        <div class="h-[320px] bg-white flex items-center justify-center px-8 pt-8 pb-4">
+          <img src="assets/Terminal renders/1.png" alt="Tap on Mobile" class="h-[240px] w-auto object-contain" />
         </div>
         <!-- Content -->
-        <div class="p-5 flex flex-col gap-4">
-          <div>
-            <h3 class="text-[18px] font-medium text-[#1a1a2e] mb-1">Tap on Mobile</h3>
-            <div class="flex items-baseline gap-1.5">
-              <span class="text-[14px] font-semibold text-[#1a1a2e]">€0</span>
-              <span class="text-[13px] text-[#9a9a9a]">/one-time</span>
-            </div>
-          </div>
-          <ul class="flex flex-col gap-1.5">
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">No extra hardware required</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">Uses phone WiFi/4G</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">No monthly fees</span>
-            </li>
-          </ul>
-          <div class="flex items-center gap-2">
-            <button class="flex-1 text-[13px] text-white bg-[#277777] rounded-[8px] px-4 py-2.5 font-medium hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]" onclick="addToCart('tap-on-mobile')">Add to basket</button>
-            <a href="product.html?id=tap-on-mobile" class="flex-1 text-center text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+        <div class="px-5 pb-5 pt-2 flex flex-col flex-1 items-center text-center gap-1.5">
+          <p class="text-[12px] font-medium text-[#8a9696]">Tap on Mobile</p>
+          <h3 class="text-[17px] font-semibold text-[#121621] leading-snug tracking-[-0.02em]">Accept payments on any phone</h3>
+          <p class="text-[13px] text-[#8a9696]">€0 — no monthly fees</p>
+          <div class="flex items-center gap-2 mt-auto pt-4 w-full">
+            <a href="product.html?id=tap-on-mobile" class="flex-1 h-9 text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+            <a href="buy.html?id=tap-on-mobile" class="flex-1 h-9 text-[13px] font-medium text-white bg-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#1f5c5c] transition-colors">Buy now</a>
           </div>
         </div>
       </div>
 
       <!-- Product card: Link/2500 -->
-      <div class="product-card bg-white border border-[#e8e8e8] rounded-[16px] relative" data-id="link-2500">
-        <div class="relative h-[240px] bg-white flex items-center justify-center rounded-t-[16px]">
-          <label class="absolute top-3 right-3 z-10 cursor-pointer flex items-center justify-center">
-            <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="link-2500" />
-            <span class="checkbox-box w-4 h-4 rounded-[4px] border border-[#859090] bg-white flex items-center justify-center transition-colors">
-              <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
-            </span>
-          </label>
-          <img src="img-terminal.png" alt="Link/2500" class="h-[200px] w-auto object-contain" />
+      <div class="product-card bg-white border border-[#ededed] rounded-[20px] relative shadow-[0_1px_4px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col" data-id="link-2500">
+        <label class="absolute top-4 right-4 z-10 cursor-pointer flex items-center justify-center">
+          <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="link-2500" />
+          <span class="checkbox-box w-5 h-5 rounded-[5px] border border-[#c8d0d0] bg-white flex items-center justify-center transition-colors">
+            <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
+          </span>
+        </label>
+        <div class="h-[320px] bg-white flex items-center justify-center px-8 pt-8 pb-4">
+          <img src="assets/Terminal renders/2.png" alt="Link/2500" class="h-[240px] w-auto object-contain" />
         </div>
-        <div class="p-5 flex flex-col gap-4">
-          <div>
-            <h3 class="text-[18px] font-medium text-[#1a1a2e] mb-1">Link/2500</h3>
-            <div class="flex items-baseline gap-1.5">
-              <span class="text-[14px] font-semibold text-[#1a1a2e]">€79</span>
-              <span class="text-[13px] text-[#9a9a9a]">/one-time</span>
-            </div>
-          </div>
-          <ul class="flex flex-col gap-1.5">
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">4G/LTE, Wi-Fi, Bluetooth</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">Built-in receipt printer</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">Compact &amp; lightweight</span>
-            </li>
-          </ul>
-          <div class="flex items-center gap-2">
-            <button class="flex-1 text-[13px] text-white bg-[#277777] rounded-[8px] px-4 py-2.5 font-medium hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]" onclick="addToCart('link-2500')">Add to basket</button>
-            <a href="product.html?id=link-2500" class="flex-1 text-center text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+        <div class="px-5 pb-5 pt-2 flex flex-col flex-1 items-center text-center gap-1.5">
+          <p class="text-[12px] font-medium text-[#8a9696]">Link/2500</p>
+          <h3 class="text-[17px] font-semibold text-[#121621] leading-snug tracking-[-0.02em]">The compact terminal for every merchant</h3>
+          <p class="text-[13px] text-[#8a9696]">€79 one-time</p>
+          <div class="flex items-center gap-2 mt-auto pt-4 w-full">
+            <a href="product.html?id=link-2500" class="flex-1 h-9 text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+            <a href="buy.html?id=link-2500" class="flex-1 h-9 text-[13px] font-medium text-white bg-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#1f5c5c] transition-colors">Buy now</a>
           </div>
         </div>
       </div>
 
       <!-- Product card: EX8000 -->
-      <div class="product-card bg-white border border-[#e8e8e8] rounded-[16px] relative" data-id="ex8000">
-        <div class="relative h-[240px] bg-white flex items-center justify-center rounded-t-[16px]">
-          <label class="absolute top-3 right-3 z-10 cursor-pointer flex items-center justify-center">
-            <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="ex8000" />
-            <span class="checkbox-box w-4 h-4 rounded-[4px] border border-[#859090] bg-white flex items-center justify-center transition-colors">
-              <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
-            </span>
-          </label>
-          <img src="img-terminal.png" alt="EX8000" class="h-[200px] w-auto object-contain" />
+      <div class="product-card bg-white border border-[#ededed] rounded-[20px] relative shadow-[0_1px_4px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col" data-id="ex8000">
+        <label class="absolute top-4 right-4 z-10 cursor-pointer flex items-center justify-center">
+          <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="ex8000" />
+          <span class="checkbox-box w-5 h-5 rounded-[5px] border border-[#c8d0d0] bg-white flex items-center justify-center transition-colors">
+            <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
+          </span>
+        </label>
+        <div class="h-[320px] bg-white flex items-center justify-center px-8 pt-8 pb-4">
+          <img src="assets/Terminal renders/3.png" alt="EX8000" class="h-[240px] w-auto object-contain" />
         </div>
-        <div class="p-5 flex flex-col gap-4">
-          <div>
-            <h3 class="text-[18px] font-medium text-[#1a1a2e] mb-1">EX8000</h3>
-            <div class="flex items-baseline gap-1.5">
-              <span class="text-[14px] font-semibold text-[#1a1a2e]">€238</span>
-              <span class="text-[13px] text-[#9a9a9a]">/one-time</span>
-            </div>
+        <div class="px-5 pb-5 pt-2 flex flex-col flex-1 items-center text-center gap-1.5">
+          <p class="text-[12px] font-medium text-[#8a9696]">EX8000</p>
+          <h3 class="text-[17px] font-semibold text-[#121621] leading-snug tracking-[-0.02em]">Full-featured power, built to move</h3>
+          <p class="text-[13px] text-[#8a9696]">€238 one-time</p>
+          <div class="flex items-center gap-2 mt-auto pt-4 w-full">
+            <a href="product.html?id=ex8000" class="flex-1 h-9 text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+            <a href="buy.html?id=ex8000" class="flex-1 h-9 text-[13px] font-medium text-white bg-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#1f5c5c] transition-colors">Buy now</a>
           </div>
-          <ul class="flex flex-col gap-1.5">
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">4G/LTE, Wi-Fi</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">Built-in receipt printer</span>
-            </li>
-            <li class="flex items-center gap-2">
-              <svg class="w-3.5 h-3.5 text-[#00b4aa] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <span class="text-[13px] text-[#72706e]">Long battery life</span>
-            </li>
-          </ul>
-          <div class="flex items-center gap-2">
-            <button class="flex-1 text-[13px] text-white bg-[#277777] rounded-[8px] px-4 py-2.5 font-medium hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]" onclick="addToCart('ex8000')">Add to basket</button>
-            <a href="product.html?id=ex8000" class="flex-1 text-center text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+        </div>
+      </div>
+
+      <!-- Product card: Saturn 1000F2 -->
+      <div class="product-card bg-white border border-[#ededed] rounded-[20px] relative shadow-[0_1px_4px_rgba(0,0,0,0.04)] overflow-hidden flex flex-col" data-id="saturn-1000f2">
+        <label class="absolute top-4 right-4 z-10 cursor-pointer flex items-center justify-center">
+          <input type="checkbox" class="product-checkbox sr-only" onchange="handleCheckbox(this)" data-id="saturn-1000f2" />
+          <span class="checkbox-box w-5 h-5 rounded-[5px] border border-[#c8d0d0] bg-white flex items-center justify-center transition-colors">
+            <svg class="hidden w-3 h-3 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2 6l3 3 5-5"/></svg>
+          </span>
+        </label>
+        <div class="h-[320px] bg-white flex items-center justify-center px-8 pt-8 pb-4">
+          <img src="assets/Terminal renders/4.png" alt="Saturn 1000F2" class="h-[240px] w-auto object-contain" />
+        </div>
+        <div class="px-5 pb-5 pt-2 flex flex-col flex-1 items-center text-center gap-1.5">
+          <p class="text-[12px] font-medium text-[#8a9696]">Saturn 1000F2</p>
+          <h3 class="text-[17px] font-semibold text-[#121621] leading-snug tracking-[-0.02em]">Built for the busiest counters</h3>
+          <p class="text-[13px] text-[#8a9696]">Contact sales</p>
+          <div class="flex items-center gap-2 mt-auto pt-4 w-full">
+            <a href="product.html?id=saturn-1000f2" class="flex-1 h-9 text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#f0f7f7] transition-colors">Learn more</a>
+            <a href="buy.html?id=saturn-1000f2" class="flex-1 h-9 text-[13px] font-medium text-white bg-[#277777] rounded-[8px] flex items-center justify-center whitespace-nowrap hover:bg-[#1f5c5c] transition-colors">Buy now</a>
           </div>
         </div>
       </div>
@@ -297,10 +251,10 @@
   
   <!-- Solutions section -->
   <section class="bg-white">
-  <div class="max-w-[1440px] mx-auto px-24 py-16">
-    <h2 class="text-[32px] font-semibold text-[#121621] mb-3">Solutions built for modern commerce</h2>
-    <p class="text-sm text-[#6b7676] leading-6 mb-12 max-w-[500px]">Every Worldline terminal comes with powerful capabilities designed to help your business grow.</p>
-    <div class="grid grid-cols-3 gap-x-16 gap-y-10">
+  <div class="max-w-[1440px] mx-auto px-24 py-20">
+    <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">Solutions built for modern commerce</h2>
+    <p class="text-[16px] text-[#6b7676] leading-[1.65] mb-16 max-w-[500px]">Every Worldline terminal comes with powerful capabilities designed to help your business grow.</p>
+    <div class="grid grid-cols-3 gap-x-20 gap-y-12">
       <div>
         <div class="w-10 h-10 mb-4"><svg class="w-8 h-8 text-[#6b7676]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><rect x="2" y="5" width="20" height="14" rx="2" stroke="currentColor" fill="none"/><path stroke-linecap="round" d="M2 10h20"/></svg></div>
         <h3 class="font-semibold text-[#121621] mb-2">Universal acceptance</h3>
@@ -336,9 +290,15 @@
   </section>
 
   <!-- Footer -->
-  <footer class="bg-[#121621] py-16 mt-8">
-    <div class="max-w-[1440px] mx-auto px-24">
-      <p class="text-gray-500 text-sm text-center">&copy; 2026 Webshop. All rights reserved.</p>
+  <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12 mt-8">
+    <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between">
+      <img src="logo.svg" alt="Worldline" width="120" height="14" style="display:block;opacity:0.4">
+      <p class="text-[#4a5555] text-sm">&copy; 2026 Worldline. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Privacy</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Terms</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
+      </div>
     </div>
   </footer>
 
@@ -615,7 +575,7 @@
           <div class="${LABEL_W}"></div>
           ${ids.map(id => `
             <div class="flex-1 px-8">
-              <a href="product.html?id=${id}" class="block text-center text-[13px] font-medium text-white bg-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]">Order now</a>
+              <a href="buy.html?id=${id}" class="block text-center text-[13px] font-medium text-white bg-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#1f5c5c] transition-colors">Buy now</a>
             </div>
           `).join('')}
         </div>

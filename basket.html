@@ -17,24 +17,24 @@
       ]));
     }
   </script>
-  <style>body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }</style>
+  <style>body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }</style>
 </head>
 <body class="bg-white text-[#121621]">
 
   <!-- Nav -->
-  <header class="bg-white border-b border-[#e6ebeb] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
-    <a href="index.html" aria-label="Worldline" class="flex-shrink-0">
+  <header class="bg-white/85 backdrop-blur-xl border-b border-black/[0.06] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
+    <a href="home.html" aria-label="Worldline" class="flex-shrink-0">
       <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
     </a>
     <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
-      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Products</a>
-      <a href="configurator.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Recommendation</a>
-      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Solutions</a>
-      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Instore</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
+      <a href="pricing.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
       <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
     </nav>
     <div class="ml-auto flex items-center gap-1">
-      <div class="w-px h-5 bg-[#e6ebeb] mr-2"></div>
+      <div class="w-px h-4 bg-black/[0.08] mr-3"></div>
       <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
       </button>
@@ -69,13 +69,13 @@
       <div class="flex-1 flex flex-col gap-8">
 
         <!-- Page title -->
-        <div class="border-b border-[#e6ebeb] pb-6 pt-4">
-          <h1 class="text-[42px] font-semibold text-[#121621] leading-[1.15]">Your Basket</h1>
-          <p class="text-base text-[#6b7676]">Review your devices and complete your setup</p>
+        <div class="border-b border-black/[0.06] pb-8 pt-6">
+          <h1 class="text-[44px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em]">Your Basket</h1>
+          <p class="text-[16px] text-[#6b7676] mt-1">Review your devices and complete your setup</p>
         </div>
 
         <!-- Cart items -->
-        <div id="cart-items" class="flex flex-col gap-4"></div>
+        <div id="cart-items" class="flex flex-col gap-3"></div>
 
         <!-- Empty state -->
         <div id="empty-state" class="hidden text-center py-24">
@@ -85,7 +85,7 @@
         </div>
 
         <!-- AI upsell card -->
-        <div id="upsell-card" class="bg-[#f5f7f7] border border-[#e6ebeb] rounded-[12px] p-6 hidden">
+        <div id="upsell-card" class="bg-[#f7f9f9] border border-black/[0.06] rounded-[16px] p-6 hidden">
           <div class="flex gap-5 items-start">
             <div class="w-14 h-14 rounded-full bg-[#6b7676] flex items-center justify-center flex-shrink-0">
               <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M12 9v6"/></svg>
@@ -107,14 +107,14 @@
         <!-- Complete your setup -->
         <div id="addons-section">
           <div class="mb-6">
-            <h2 class="text-[22px] font-medium text-[#121621] mb-1">Complete your payment setup</h2>
+            <h2 class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em] mb-1">Complete your payment setup</h2>
             <p class="text-sm text-[#6b7676]">Add hardware and services to enhance your terminal</p>
           </div>
 
           <!-- Hardware -->
-          <h3 class="text-sm font-semibold text-[#6b7676] uppercase tracking-widest mb-4">Hardware Add-Ons</h3>
+          <h3 class="text-[13px] font-semibold text-[#277777] mb-4">Hardware add-ons</h3>
           <div class="grid grid-cols-3 gap-4 mb-8">
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3 relative">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Premium Docking Stand</p>
@@ -125,7 +125,7 @@
                 <button onclick="addAddonToCart('docking-stand','Premium Docking Stand',49,'€49')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3 relative">
               <span class="absolute top-4 right-4 bg-[#121621] text-white text-xs font-medium px-3 py-1 rounded-full">Most popular</span>
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
@@ -137,7 +137,7 @@
                 <button onclick="addAddonToCart('carry-case','Protective Carry Case',29,'€29')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Thermal Receipt Printer</p>
@@ -148,7 +148,7 @@
                 <button onclick="addAddonToCart('receipt-printer','Thermal Receipt Printer',149,'€149')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Multi-Device Charging Hub</p>
@@ -159,7 +159,7 @@
                 <button onclick="addAddonToCart('charging-hub','Multi-Device Charging Hub',79,'€79')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Spare Battery</p>
@@ -173,9 +173,9 @@
           </div>
 
           <!-- Services -->
-          <h3 class="text-sm font-semibold text-[#6b7676] uppercase tracking-widest mb-4">Service Add-Ons</h3>
+          <h3 class="text-[13px] font-semibold text-[#277777] mb-4">Service add-ons</h3>
           <div class="grid grid-cols-3 gap-4 mb-8">
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3 relative">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3 relative">
               <span class="absolute top-4 right-4 bg-[#121621] text-white text-xs font-medium px-3 py-1 rounded-full">Most popular</span>
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
@@ -187,7 +187,7 @@
                 <button onclick="addAddonToCart('warranty-3yr','Extended Warranty (3 Years)',99,'€99')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">4G Connectivity Upgrade</p>
@@ -198,7 +198,7 @@
                 <button onclick="addAddonToCart('4g-upgrade','4G Connectivity Upgrade',0,'Free')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Advanced Reporting Portal</p>
@@ -209,7 +209,7 @@
                 <button onclick="addAddonToCart('reporting','Advanced Reporting Portal',15,'€15/mo')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>
               </div>
             </div>
-            <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-5 flex flex-col gap-3">
+            <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3">
               <div class="w-16 h-16 bg-[#f5f7f7] rounded-[12px]"></div>
               <div>
                 <p class="text-base font-medium text-[#121621]">Next Business Day Replacement</p>
@@ -237,9 +237,9 @@
       </div>
 
       <!-- Right: order summary -->
-      <div class="w-[370px] flex-shrink-0 sticky top-6">
-        <div class="bg-white border border-[#e6ebeb] rounded-[12px] p-8 flex flex-col gap-6">
-          <h2 class="text-[18px] font-medium text-[#121621]">Order Summary</h2>
+      <div class="w-[380px] flex-shrink-0 sticky top-6">
+        <div class="bg-white border border-[#ebebeb] rounded-[20px] p-8 flex flex-col gap-6 shadow-[0_2px_12px_rgba(0,0,0,0.05)]">
+          <h2 class="text-[20px] font-semibold text-[#121621] tracking-[-0.015em]">Order Summary</h2>
 
           <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between">
@@ -263,7 +263,7 @@
             <span id="summary-total" class="text-[24px] font-semibold text-[#121621]">€0</span>
           </div>
 
-          <button class="w-full h-11 bg-[#277777] text-white font-medium text-sm rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#1f5c5c] transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.16)]">
+          <button class="w-full h-12 bg-[#277777] text-white font-medium text-[15px] rounded-[8px] flex items-center justify-center gap-2 hover:bg-[#1f5c5c] transition-colors">
             <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
             Proceed to secure checkout
           </button>
@@ -291,9 +291,15 @@
   </div>
 
   <!-- Footer -->
-  <footer class="bg-[#121621] py-16 mt-8">
-    <div class="max-w-[1440px] mx-auto px-24">
-      <p class="text-gray-500 text-sm text-center">&copy; 2026 Webshop. All rights reserved.</p>
+  <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12 mt-8">
+    <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between">
+      <img src="logo.svg" alt="Worldline" width="120" height="14" style="display:block;opacity:0.4">
+      <p class="text-[#4a5555] text-sm">&copy; 2026 Worldline. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Privacy</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Terms</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
+      </div>
     </div>
   </footer>
 
@@ -321,7 +327,7 @@
 
       cart.forEach((item, idx) => {
         const el = document.createElement('div');
-        el.className = 'bg-white border border-[#e6ebeb] rounded-[12px] p-6';
+        el.className = 'bg-white border border-[#ebebeb] rounded-[20px] p-6 shadow-[0_1px_4px_rgba(0,0,0,0.04)]';
         const specs = Object.entries(item.specs || {}).map(([k,v]) =>
           `<p class="text-sm text-[#121621] whitespace-nowrap"><span class="font-medium">${k}:</span> <span class="text-[#6b7676]">${v}</span></p>`
         ).join('');

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pricing – Worldline</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="cart.js" defer></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+    .fade-up-1 { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.07s both; }
+    .fade-up-2 { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.13s both; }
+    .fade-up-3 { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.19s both; }
+
+    /* Header hide-on-scroll */
+    header { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+
+    /* Toggle */
+    .rate-tab { transition: background 0.18s, color 0.18s; }
+    .rate-tab.active { background: #277777; color: #fff; }
+
+    /* FAQ accordion */
+    details summary { cursor: pointer; list-style: none; }
+    details summary::-webkit-details-marker { display: none; }
+    details[open] summary .chev { transform: rotate(180deg); }
+    .chev { transition: transform 0.2s ease; }
+
+    button:active { transform: scale(0.97); transition: transform 0.08s ease; }
+  </style>
+</head>
+<body class="bg-white text-[#121621]">
+
+  <!-- Nav -->
+  <header id="main-header" class="bg-white/85 backdrop-blur-xl border-b border-black/[0.06] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
+    <a href="home.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Instore</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
+      <a href="pricing.html" class="text-sm font-medium text-[#277777]">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <div class="w-px h-4 bg-black/[0.08] mr-3"></div>
+      <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button aria-label="Profile" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <a href="basket.html" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors relative" id="cart-icon-btn" aria-label="Basket">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#121621] text-white text-[10px] font-medium rounded-full items-center justify-center hidden">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="max-w-[1100px] mx-auto px-24 pt-20 pb-16 flex items-center gap-16">
+    <div class="flex-1 max-w-[520px]">
+      <p class="text-[13px] font-semibold text-[#277777] mb-3 fade-up">Pricing</p>
+      <h1 class="text-[44px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-5 fade-up-1">Transparent pricing.<br>Flexible for every business.</h1>
+      <p class="text-[17px] text-[#6b7676] leading-[1.7] mb-8 fade-up-2">One all-in rate per transaction — no hidden fees, no setup costs, no minimum volumes. Scale from your first sale to millions of transactions on the same platform.</p>
+      <div class="flex items-center gap-3 fade-up-3">
+        <a href="configurator.html" class="inline-flex items-center gap-2 h-11 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors">
+          Find my solution
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        <a href="mailto:sales@worldline.com" class="inline-flex items-center h-11 px-7 rounded-[8px] border border-[#d4d8d8] text-[#121621] font-medium text-[15px] hover:border-[#277777] hover:text-[#277777] transition-colors">Talk to sales</a>
+      </div>
+    </div>
+    <!-- Trust stats -->
+    <div class="flex-1 grid grid-cols-2 gap-4">
+      <div class="border border-[#e6ebeb] rounded-[16px] p-6">
+        <p class="text-[32px] font-semibold text-[#121621] mb-1">1.2M+</p>
+        <p class="text-sm text-[#6b7676]">Merchants across Europe trust Worldline</p>
+      </div>
+      <div class="border border-[#e6ebeb] rounded-[16px] p-6">
+        <p class="text-[32px] font-semibold text-[#121621] mb-1">€0</p>
+        <p class="text-sm text-[#6b7676]">Setup fee, activation fee or monthly minimum</p>
+      </div>
+      <div class="border border-[#e6ebeb] rounded-[16px] p-6">
+        <p class="text-[32px] font-semibold text-[#121621] mb-1">T+1</p>
+        <p class="text-sm text-[#6b7676]">Next business day payouts to your bank account</p>
+      </div>
+      <div class="border border-[#e6ebeb] rounded-[16px] p-6">
+        <p class="text-[32px] font-semibold text-[#121621] mb-1">40+</p>
+        <p class="text-sm text-[#6b7676]">Payment methods accepted globally</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Plans -->
+  <section class="bg-[#F5F8F7] py-20">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="mb-12">
+        <p class="text-[13px] font-semibold text-[#277777] mb-2 uppercase tracking-widest">Plans</p>
+        <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">Choose what fits your volume</h2>
+        <p class="text-sm text-[#6b7676] leading-6 max-w-[580px]">Start free and upgrade when the maths works in your favour. All plans include the same enterprise-grade security, compliance, and support.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-5">
+
+        <!-- Starter -->
+        <div class="bg-white border border-[#ededed] rounded-[20px] p-8 flex flex-col shadow-[0_1px_4px_rgba(0,0,0,0.04)]">
+          <div class="mb-6">
+            <p class="text-[13px] font-semibold text-[#277777] mb-3">Starter</p>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-[34px] font-semibold text-[#121621]">€0</span>
+              <span class="text-sm text-[#6b7676]">/ month</span>
+            </div>
+            <p class="text-sm text-[#6b7676] leading-5">Pay only per transaction. Ideal for getting started with no commitment.</p>
+          </div>
+          <a href="configurator.html" class="text-center text-[14px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-3 hover:bg-[#f0f7f7] transition-colors mb-8">Get started free</a>
+          <ul class="flex flex-col gap-3 flex-1">
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Blended rate from 1.20% per transaction
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Tap on Mobile included at no cost
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Pay by link
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Real-time dashboard &amp; reporting
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Next business day payouts
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Email support
+            </li>
+          </ul>
+        </div>
+
+        <!-- Growth – highlighted -->
+        <div class="bg-white border-2 border-[#277777] rounded-[20px] p-8 flex flex-col relative shadow-[0_8px_32px_rgba(39,119,119,0.12)]">
+          <div class="absolute -top-3.5 left-1/2 -translate-x-1/2">
+            <span class="bg-[#277777] text-white text-xs font-semibold px-4 py-1.5 rounded-full">Most popular</span>
+          </div>
+          <div class="mb-6">
+            <p class="text-[13px] font-semibold text-[#277777] mb-3">Growth</p>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-[34px] font-semibold text-[#121621]">€19</span>
+              <span class="text-sm text-[#6b7676]">/ month</span>
+            </div>
+            <p class="text-sm text-[#6b7676] leading-5">Lower transaction rates that pay for themselves at around €700/month turnover.</p>
+          </div>
+          <a href="configurator.html" class="text-center text-[14px] font-medium text-white bg-[#277777] rounded-[8px] px-4 py-3 hover:bg-[#1f5c5c] transition-colors mb-8">Start with Growth</a>
+          <ul class="flex flex-col gap-3 flex-1">
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Blended rate from 0.85% + €0.10
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Everything in Starter
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Recurring &amp; subscription payments
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Advanced analytics &amp; exports
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Multi-location management
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[#3d4d4d]">
+              <svg class="w-4 h-4 text-[#277777] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Priority phone &amp; chat support
+            </li>
+          </ul>
+        </div>
+
+        <!-- Enterprise -->
+        <div class="bg-[#0d1117] border border-[#0d1117] rounded-[20px] p-8 flex flex-col">
+          <div class="mb-6">
+            <p class="text-[13px] font-semibold text-[#5bc4c4] mb-3">Enterprise</p>
+            <div class="flex items-baseline gap-1 mb-2">
+              <span class="text-[34px] font-semibold text-white">Custom</span>
+            </div>
+            <p class="text-sm text-[rgba(255,255,255,0.55)] leading-5">Negotiated volume rates and a dedicated team for large or complex operations.</p>
+          </div>
+          <a href="mailto:sales@worldline.com" class="text-center text-[14px] font-medium text-white border border-white/20 rounded-[8px] px-4 py-3 hover:bg-white/10 transition-colors mb-8">Talk to sales</a>
+          <ul class="flex flex-col gap-3 flex-1">
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Negotiated interchange-plus (IC+) rates
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Everything in Growth
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Dedicated account manager
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              SLA &amp; uptime guarantees
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Custom API &amp; ERP integrations
+            </li>
+            <li class="flex items-start gap-2.5 text-sm text-[rgba(255,255,255,0.75)]">
+              <svg class="w-4 h-4 text-[#5bc4c4] mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+              Country-specific acquiring rates
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Transaction fees -->
+  <section class="py-20">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="mb-12">
+        <p class="text-[13px] font-semibold text-[#277777] mb-2 uppercase tracking-widest">Transaction fees</p>
+        <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">In-person payments</h2>
+        <p class="text-sm text-[#6b7676] leading-6 max-w-[580px]">All rates are all-in (blended) — interchange, acquirer fees, and scheme fees in one simple number. No surprises on your statement.</p>
+      </div>
+
+      <!-- Plan toggle -->
+      <div class="inline-flex bg-[#f5f7f7] rounded-[8px] p-1 mb-8 border border-[#e6ebeb]">
+        <button id="tab-starter" class="rate-tab active text-[13px] font-medium px-5 py-2 rounded-[6px]" onclick="switchRate('starter')">Starter</button>
+        <button id="tab-growth" class="rate-tab text-[13px] font-medium text-[#6b7676] px-5 py-2 rounded-[6px]" onclick="switchRate('growth')">Growth</button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-5 mb-4">
+
+        <div class="border border-[#ededed] rounded-[18px] p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center flex-shrink-0">
+              <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+            </div>
+            <div>
+              <p class="text-[15px] font-medium text-[#121621]">Domestic consumer cards</p>
+              <p class="text-sm text-[#6b7676]">Visa &amp; Mastercard issued in your country</p>
+            </div>
+          </div>
+          <span id="r-domestic" class="text-[15px] font-semibold text-[#277777] whitespace-nowrap ml-4">1.20%</span>
+        </div>
+
+        <div class="border border-[#ededed] rounded-[18px] p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center flex-shrink-0">
+              <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div>
+              <p class="text-[15px] font-medium text-[#121621]">Other EEA consumer cards</p>
+              <p class="text-sm text-[#6b7676]">Visa &amp; Mastercard from other EEA countries</p>
+            </div>
+          </div>
+          <span id="r-eea" class="text-[15px] font-semibold text-[#277777] whitespace-nowrap ml-4">1.80%</span>
+        </div>
+
+        <div class="border border-[#ededed] rounded-[18px] p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center flex-shrink-0">
+              <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 014 0v2"/></svg>
+            </div>
+            <div>
+              <p class="text-[15px] font-medium text-[#121621]">Commercial &amp; corporate cards</p>
+              <p class="text-sm text-[#6b7676]">Business cards, purchasing cards</p>
+            </div>
+          </div>
+          <span id="r-commercial" class="text-[15px] font-semibold text-[#277777] whitespace-nowrap ml-4">2.90%</span>
+        </div>
+
+        <div class="border border-[#ededed] rounded-[18px] p-6 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center flex-shrink-0">
+              <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M14 15h4"/><path d="M6 15h2"/></svg>
+            </div>
+            <div>
+              <p class="text-[15px] font-medium text-[#121621]">American Express</p>
+              <p class="text-sm text-[#6b7676]">All Amex cards</p>
+            </div>
+          </div>
+          <span id="r-amex" class="text-[15px] font-semibold text-[#277777] whitespace-nowrap ml-4">2.10%</span>
+        </div>
+
+      </div>
+      <p class="text-xs text-[#9aabab]">Blended pricing combines interchange, acquirer, and scheme fees into a single rate. Apple Pay and Google Pay transactions use the underlying card rate.</p>
+    </div>
+  </section>
+
+  <!-- Online & digital -->
+  <section class="py-20 bg-[#F5F8F7]">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="mb-12">
+        <p class="text-[13px] font-semibold text-[#277777] mb-2 uppercase tracking-widest">Online &amp; pay by link</p>
+        <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">Digital payment fees</h2>
+        <p class="text-sm text-[#6b7676] leading-6 max-w-[580px]">Accept payments on your webshop or send a payment link — no terminal required.</p>
+      </div>
+
+      <div class="grid grid-cols-3 gap-5">
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h4"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">EEA consumer cards</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">1.80% <span class="text-sm font-medium text-[#6b7676]">+ €0.25</span></p>
+          <p class="text-sm text-[#6b7676]">Visa &amp; Mastercard from EEA countries</p>
+        </div>
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 014 0v2"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">EEA commercial cards</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">2.60% <span class="text-sm font-medium text-[#6b7676]">+ €0.25</span></p>
+          <p class="text-sm text-[#6b7676]">Business &amp; corporate cards from EEA</p>
+        </div>
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">Non-EEA cards</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">3.25% <span class="text-sm font-medium text-[#6b7676]">+ €0.25</span></p>
+          <p class="text-sm text-[#6b7676]">Cards issued outside the EEA</p>
+        </div>
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">Pay by link</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">1.50% <span class="text-sm font-medium text-[#6b7676]">+ €0.10</span></p>
+          <p class="text-sm text-[#6b7676]">Send payment links via email, SMS or WhatsApp</p>
+        </div>
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path d="M3 10h18M3 14h18M10 3v18M14 3v18"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">SEPA Direct Debit</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">€0.35 <span class="text-sm font-medium text-[#6b7676]">flat</span></p>
+          <p class="text-sm text-[#6b7676]">Recurring bank account debits (SEPA)</p>
+        </div>
+
+        <div class="bg-white border border-[#ededed] rounded-[18px] p-6">
+          <div class="w-10 h-10 rounded-[8px] bg-[#f5f7f7] flex items-center justify-center mb-4">
+            <svg style="width:18px;height:18px;" class="text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+          </div>
+          <p class="text-[15px] font-medium text-[#121621] mb-1">Digital wallets</p>
+          <p class="text-[22px] font-semibold text-[#121621] mb-1">Card rate <span class="text-sm font-medium text-[#6b7676]">applies</span></p>
+          <p class="text-sm text-[#6b7676]">Apple Pay &amp; Google Pay use the underlying card rate</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Hardware -->
+  <section class="py-20">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="mb-12">
+        <p class="text-[13px] font-semibold text-[#277777] mb-2 uppercase tracking-widest">Hardware</p>
+        <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em] mb-3">Payment terminals</h2>
+        <p class="text-sm text-[#6b7676] leading-6 max-w-[580px]">One-time device cost — no monthly rental fees. All terminals come with Worldline's enterprise-grade security and PCI DSS compliance.</p>
+      </div>
+      <div class="grid grid-cols-4 gap-5">
+
+        <a href="product.html?id=tap-on-mobile" class="product-card bg-white border border-[#e8e8e8] rounded-[16px] flex flex-col overflow-hidden hover:border-[#277777] transition-all" style="transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease, border-color 0.15s ease;">
+          <div class="h-[140px] bg-[#f5f7f7] flex items-center justify-center">
+            <img src="Tap on mobile.png" alt="Tap on Mobile" class="h-[110px] w-auto object-contain" style="transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);" />
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <p class="text-[10px] font-medium text-[#6b7676] mb-1">Mobile</p>
+            <p class="text-[15px] font-medium text-[#121621] mb-auto">Tap on Mobile</p>
+            <div class="mt-4">
+              <p class="text-[18px] font-semibold text-[#277777]">€0</p>
+              <p class="text-xs text-[#6b7676]">App only · no hardware</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="product.html?id=link-2500" class="product-card bg-white border border-[#e8e8e8] rounded-[16px] flex flex-col overflow-hidden hover:border-[#277777] transition-all" style="transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease, border-color 0.15s ease;">
+          <div class="h-[140px] bg-[#f5f7f7] flex items-center justify-center">
+            <img src="img-terminal.png" alt="Link/2500" class="h-[110px] w-auto object-contain" style="transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);" />
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <p class="text-[10px] font-medium text-[#6b7676] mb-1">Mobile terminal</p>
+            <p class="text-[15px] font-medium text-[#121621] mb-auto">Link/2500</p>
+            <div class="mt-4">
+              <p class="text-[18px] font-semibold text-[#121621]">€79</p>
+              <p class="text-xs text-[#6b7676]">One-time purchase</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="product.html?id=ex8000" class="product-card bg-white border border-[#e8e8e8] rounded-[16px] flex flex-col overflow-hidden hover:border-[#277777] transition-all" style="transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease, border-color 0.15s ease;">
+          <div class="h-[140px] bg-[#f5f7f7] flex items-center justify-center">
+            <img src="img-terminal.png" alt="EX8000" class="h-[110px] w-auto object-contain" style="transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);" />
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <p class="text-[10px] font-medium text-[#6b7676] mb-1">Portable terminal</p>
+            <p class="text-[15px] font-medium text-[#121621] mb-auto">EX8000</p>
+            <div class="mt-4">
+              <p class="text-[18px] font-semibold text-[#121621]">€238</p>
+              <p class="text-xs text-[#6b7676]">One-time purchase</p>
+            </div>
+          </div>
+        </a>
+
+        <a href="product.html?id=saturn-1000f2" class="product-card bg-white border border-[#e8e8e8] rounded-[16px] flex flex-col overflow-hidden hover:border-[#277777] transition-all" style="transition: transform 0.25s cubic-bezier(0.16,1,0.3,1), box-shadow 0.25s ease, border-color 0.15s ease;">
+          <div class="h-[140px] bg-[#f5f7f7] flex items-center justify-center">
+            <img src="img-terminal.png" alt="Saturn 1000F2" class="h-[110px] w-auto object-contain" style="transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);" />
+          </div>
+          <div class="p-5 flex flex-col flex-1">
+            <p class="text-[10px] font-medium text-[#6b7676] mb-1">Countertop terminal</p>
+            <p class="text-[15px] font-medium text-[#121621] mb-auto">Saturn 1000F2</p>
+            <div class="mt-4">
+              <p class="text-[15px] font-semibold text-[#121621]">Contact sales</p>
+              <p class="text-xs text-[#6b7676]">Volume pricing available</p>
+            </div>
+          </div>
+        </a>
+
+      </div>
+      <div class="mt-6 text-center">
+        <a href="index.html" class="inline-flex items-center gap-2 text-sm font-medium text-[#277777] hover:underline">
+          View all terminals &amp; compare
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Dark section: Compare all devices -->
+  <section class="bg-[#0d1117] py-20">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="grid grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-[13px] font-semibold text-[#5bc4c4] mb-3">Payouts</p>
+          <h2 class="text-[28px] font-semibold text-white mb-4 leading-snug">Your money. Your schedule.</h2>
+          <p class="text-[rgba(255,255,255,0.55)] text-[15px] leading-7 mb-8">Worldline pays out funds directly to your business bank account on a schedule that suits you. No third-party delays, no holding periods for compliant merchants.</p>
+          <div class="flex flex-col gap-4">
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 bg-white/[0.06] rounded-[8px] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg style="width:16px;height:16px;" class="text-[#5bc4c4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-white mb-0.5">Next business day (T+1)</p>
+                <p class="text-sm text-[rgba(255,255,255,0.45)]">Standard for all plans at no extra cost</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 bg-white/[0.06] rounded-[8px] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg style="width:16px;height:16px;" class="text-[#5bc4c4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-white mb-0.5">Weekly or monthly</p>
+                <p class="text-sm text-[rgba(255,255,255,0.45)]">Choose your own frequency at no extra cost</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <div class="w-9 h-9 bg-white/[0.06] rounded-[8px] flex items-center justify-center flex-shrink-0 mt-0.5">
+                <svg style="width:16px;height:16px;" class="text-[#5bc4c4]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              </div>
+              <div>
+                <p class="text-sm font-medium text-white mb-0.5">Multi-currency</p>
+                <p class="text-sm text-[rgba(255,255,255,0.45)]">12 supported currencies · 1% FX conversion fee</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-4">
+          <div class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-6">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-sm font-medium text-white">Net settlement amount</p>
+              <p class="text-sm font-semibold text-white">€3,842.10</p>
+            </div>
+            <p class="text-xs text-[rgba(255,255,255,0.35)]">12 March 2025 · 214 transactions</p>
+          </div>
+          <div class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-6">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-sm font-medium text-white">Net settlement amount</p>
+              <p class="text-sm font-semibold text-white">€5,119.88</p>
+            </div>
+            <p class="text-xs text-[rgba(255,255,255,0.35)]">11 March 2025 · 287 transactions</p>
+          </div>
+          <div class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-6">
+            <div class="flex items-center justify-between mb-1">
+              <p class="text-sm font-medium text-white">Net settlement amount</p>
+              <p class="text-sm font-semibold text-white">€2,206.44</p>
+            </div>
+            <p class="text-xs text-[rgba(255,255,255,0.35)]">10 March 2025 · 131 transactions</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20">
+    <div class="max-w-[1100px] mx-auto px-24">
+      <div class="mb-12">
+        <p class="text-[13px] font-semibold text-[#277777] mb-2 uppercase tracking-widest">FAQ</p>
+        <h2 class="text-[38px] font-semibold text-[#121621] tracking-[-0.025em]">Common questions</h2>
+      </div>
+      <div class="grid grid-cols-2 gap-x-16 gap-y-0 max-w-full divide-y-0">
+        <div class="flex flex-col divide-y divide-[#e6ebeb]">
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">What is blended pricing?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">Blended pricing rolls interchange, acquirer, and card scheme fees into a single transparent rate. You see one number on every transaction — no itemised breakdown of what Visa, your bank, or Worldline each charged. Simple to budget, simple to reconcile.</p>
+          </details>
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">Are there any setup or monthly fees?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">On the Starter plan: no monthly fees, no activation fees, no minimum volume. You only pay per transaction processed. The Growth plan (€19/month) unlocks lower per-transaction rates — it typically covers itself at around €700/month in card turnover.</p>
+          </details>
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">When do I receive payouts?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">By default, funds settle to your bank account the next business day (T+1). You can switch to weekly or monthly payouts from your dashboard — there's no extra charge for any schedule.</p>
+          </details>
+
+        </div>
+        <div class="flex flex-col divide-y divide-[#e6ebeb]">
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">Is there a contract or lock-in period?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">No. Starter and Growth are month-to-month — cancel at any time with no penalty. There are no minimum turnover requirements and no cancellation fees. Hardware purchases are final but independent of your service agreement.</p>
+          </details>
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">Can I accept multiple currencies?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">Yes — Worldline supports 12 currencies. Non-euro transactions are converted at the daily interbank rate plus a 1% FX fee. Payouts are settled in euros by default; multi-currency settlement accounts are available for Enterprise merchants.</p>
+          </details>
+
+          <details class="py-5">
+            <summary class="flex items-center justify-between gap-4">
+              <span class="text-[15px] font-medium text-[#121621]">What's included in the Enterprise plan?</span>
+              <svg class="chev w-4 h-4 text-[#6b7676] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </summary>
+            <p class="text-sm text-[#6b7676] leading-6 mt-3">Enterprise is a fully custom engagement. You get negotiated interchange-plus (IC+) rates, a dedicated account manager, custom SLAs, ERP/POS integrations, and country-specific acquiring optimisation. Pricing is agreed during onboarding based on your volume and mix.</p>
+          </details>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="bg-[#0d1117] py-24">
+    <div class="max-w-[1100px] mx-auto px-24 flex items-center justify-between">
+      <div>
+        <p class="text-[13px] font-semibold text-[#5bc4c4] mb-2 uppercase tracking-widest">Get started</p>
+        <h2 class="text-[32px] font-semibold text-white mb-2 tracking-[-0.025em]">Ready to accept payments?</h2>
+        <p class="text-white/45 text-[16px] leading-[1.6]">Set up your account in minutes. No paperwork, no waiting.</p>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="configurator.html" class="h-12 px-7 flex items-center text-[15px] font-medium text-white bg-[#277777] rounded-[8px] hover:bg-[#1f5c5c] transition-colors">Find my terminal</a>
+        <a href="mailto:sales@worldline.com" class="h-12 px-7 flex items-center text-[15px] font-medium text-white border border-white/20 rounded-[8px] hover:bg-white/5 transition-colors">Talk to sales</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    // Hide-on-scroll nav
+    (function() {
+      const hdr = document.getElementById('main-header');
+      let last = 0, ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const y = window.scrollY;
+            hdr.style.transform = (y > last && y > 80) ? 'translateY(-100%)' : 'translateY(0)';
+            last = y;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+    })();
+
+    // Rate toggle
+    const rates = {
+      starter: { domestic: '1.20%', eea: '1.80%', commercial: '2.90%', amex: '2.10%' },
+      growth:  { domestic: '0.85% + €0.10', eea: '1.45% + €0.10', commercial: '2.50% + €0.10', amex: '1.75% + €0.10' },
+    };
+    function switchRate(plan) {
+      ['starter','growth'].forEach(p => {
+        document.getElementById('tab-' + p).classList.toggle('active', p === plan);
+        document.getElementById('tab-' + p).classList.toggle('text-[#6b7676]', p !== plan);
+      });
+      const r = rates[plan];
+      document.getElementById('r-domestic').textContent   = r.domestic;
+      document.getElementById('r-eea').textContent        = r.eea;
+      document.getElementById('r-commercial').textContent = r.commercial;
+      document.getElementById('r-amex').textContent       = r.amex;
+    }
+  </script>
+
+</body>
+</html>

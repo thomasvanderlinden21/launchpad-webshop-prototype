@@ -54,6 +54,34 @@ const PRODUCT_DATA = {
 
 const VAT_RATE = 0.21;
 
+// Compatible products shown in the "added to cart" modal
+const COMPATIBLE = {
+  'tap-on-mobile': ['link-2500', 'pay-by-link'],
+  'link-2500':     ['ex8000', 'pay-by-link'],
+  'ex8000':        ['link-2500', 'newland-s30'],
+  'saturn-1000f2': ['ex8000', 'newland-s30'],
+  'newland-s30':   ['ex8000', 'saturn-1000f2'],
+  'pay-by-link':   ['tap-on-mobile', 'link-2500'],
+};
+
+const PRODUCT_DESCRIPTIONS = {
+  'tap-on-mobile': 'Turn any Android 12+ phone into a contactless terminal — no hardware, no monthly fees.',
+  'link-2500':     'Compact 165g mobile terminal with touchscreen, physical keyboard, and 8-hour battery.',
+  'ex8000':        '5.5" HD touchscreen, 12-hour battery, built-in printer. Built for high-volume mobile use.',
+  'saturn-1000f2': 'High-performance countertop terminal with 7" display and high-speed thermal printer.',
+  'newland-s30':   'Android 13, 5G connectivity, and built-in printer in one future-proof mobile device.',
+  'pay-by-link':   'Send a payment link by email or SMS. No hardware. Works on any device.',
+};
+
+const PRODUCT_RENDERS = {
+  'tap-on-mobile': 'assets/Terminal renders/1.png',
+  'link-2500':     'assets/Terminal renders/2.png',
+  'ex8000':        'assets/Terminal renders/3.png',
+  'saturn-1000f2': 'assets/Terminal renders/4.png',
+  'newland-s30':   'assets/Terminal renders/1.png',
+  'pay-by-link':   'assets/Terminal renders/2.png',
+};
+
 function getCart() {
   try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; }
 }
@@ -76,7 +104,7 @@ function addToCart(productId) {
   saveCart(cart);
   revealNav();
   animateCartIcon();
-  showMiniCart();
+  showAddedModal(productId);
 }
 
 function addAddonToCart(addonId, name, price, priceLabel) {
@@ -87,7 +115,232 @@ function addAddonToCart(addonId, name, price, priceLabel) {
   }
   saveCart(cart);
   animateCartIcon();
-  showMiniCart();
+  showAddedToast(name, priceLabel);
+}
+
+function showAddedModal(productId) {
+  const product = PRODUCT_DATA[productId];
+  if (!product) return;
+
+  // Inject styles once
+  if (!document.getElementById('added-modal-styles')) {
+    const s = document.createElement('style');
+    s.id = 'added-modal-styles';
+    s.textContent = `
+      #added-modal-overlay {
+        position: fixed; inset: 0; z-index: 99999;
+        background: rgba(18,22,33,0.45);
+        display: flex; align-items: center; justify-content: center;
+        padding: 24px;
+        opacity: 0; transition: opacity 0.25s ease;
+      }
+      #added-modal-overlay.visible { opacity: 1; }
+
+      #added-modal {
+        background: #fff; border-radius: 20px;
+        width: 100%; max-width: 600px; max-height: 88vh;
+        overflow-y: auto; position: relative;
+        box-shadow: 0 24px 80px rgba(18,22,33,0.18);
+        transform: translateY(16px) scale(0.98);
+        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+      }
+      #added-modal-overlay.visible #added-modal {
+        transform: translateY(0) scale(1);
+      }
+      #added-modal::-webkit-scrollbar { width: 4px; }
+      #added-modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+
+      .am-close {
+        position: absolute; top: 16px; right: 16px;
+        width: 32px; height: 32px; border-radius: 50%;
+        background: #f5f7f7; border: none; cursor: pointer;
+        display: flex; align-items: center; justify-content: center;
+        color: #6b7676; transition: background 0.15s, color 0.15s;
+      }
+      .am-close:hover { background: #e6ebeb; color: #121621; }
+
+      .am-top {
+        padding: 40px 40px 28px; text-align: center;
+        border-bottom: 1px solid #f0f0f0;
+      }
+      .am-check {
+        width: 48px; height: 48px; background: #e8f4f4; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+      }
+      .am-heading {
+        font-size: 22px; font-weight: 600; color: #121621;
+        letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 16px;
+      }
+      .am-view-cart {
+        display: inline-flex; align-items: center; height: 40px; padding: 0 20px;
+        border: 1.5px solid #277777; border-radius: 8px;
+        font-size: 13px; font-weight: 500; color: #277777;
+        text-decoration: none; transition: background 0.15s;
+      }
+      .am-view-cart:hover { background: #f0f7f7; }
+
+      .am-compatible { padding: 24px 40px 32px; }
+      .am-compatible-heading {
+        font-size: 13px; color: #8a9696; text-align: center; margin-bottom: 20px;
+      }
+
+      .am-product {
+        display: flex; gap: 20px; align-items: center;
+        border: 1px solid #ededed; border-radius: 16px;
+        padding: 20px; margin-bottom: 12px;
+        background: #fafafa;
+      }
+      .am-product-img {
+        width: 120px; height: 120px; flex-shrink: 0;
+        background: #fff; border-radius: 12px;
+        display: flex; align-items: center; justify-content: center;
+        border: 1px solid #f0f0f0;
+      }
+      .am-product-img img { width: 90px; height: 90px; object-fit: contain; }
+      .am-product-body { flex: 1; min-width: 0; }
+      .am-product-name { font-size: 17px; font-weight: 600; color: #121621; letter-spacing: -0.02em; margin-bottom: 4px; }
+      .am-product-desc { font-size: 13px; color: #6b7676; line-height: 1.6; margin-bottom: 12px; }
+      .am-product-price { font-size: 15px; font-weight: 600; color: #121621; margin-bottom: 14px; }
+      .am-product-actions { display: flex; gap: 8px; }
+      .am-btn-add {
+        height: 36px; padding: 0 16px; background: #277777; color: #fff;
+        border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
+        cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap;
+      }
+      .am-btn-add:hover { background: #1f5c5c; }
+      .am-btn-info {
+        height: 36px; padding: 0 16px;
+        border: 1.5px solid #d4d8d8; border-radius: 8px;
+        font-size: 13px; font-weight: 500; color: #525d5d;
+        text-decoration: none; display: inline-flex; align-items: center;
+        transition: border-color 0.15s, color 0.15s; white-space: nowrap;
+        background: transparent;
+      }
+      .am-btn-info:hover { border-color: #277777; color: #277777; }
+    `;
+    document.head.appendChild(s);
+  }
+
+  // Remove any existing modal
+  const existing = document.getElementById('added-modal-overlay');
+  if (existing) existing.remove();
+
+  const compatIds = (COMPATIBLE[productId] || []).slice(0, 2);
+  const compatHtml = compatIds.map(id => {
+    const p = PRODUCT_DATA[id];
+    if (!p) return '';
+    const img = PRODUCT_RENDERS[id] || 'img-terminal.png';
+    const desc = PRODUCT_DESCRIPTIONS[id] || '';
+    const addAction = p.price !== null
+      ? `<button class="am-btn-add" onclick="addToCart('${id}'); hideAddedModal();">Add to basket</button>`
+      : `<a href="buy.html?id=${id}" class="am-btn-add" style="text-decoration:none;display:inline-flex;align-items:center;" onclick="hideAddedModal();">Get a quote</a>`;
+    return `
+      <div class="am-product">
+        <div class="am-product-img"><img src="${img}" alt="${p.name}" /></div>
+        <div class="am-product-body">
+          <div class="am-product-name">${p.name}</div>
+          <div class="am-product-desc">${desc}</div>
+          <div class="am-product-price">${p.priceLabel}</div>
+          <div class="am-product-actions">
+            ${addAction}
+            <a href="product.html?id=${id}" class="am-btn-info" onclick="hideAddedModal();">More info</a>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const overlay = document.createElement('div');
+  overlay.id = 'added-modal-overlay';
+  overlay.innerHTML = `
+    <div id="added-modal">
+      <button class="am-close" onclick="hideAddedModal()" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      <div class="am-top">
+        <div class="am-check">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277777" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+        </div>
+        <h2 class="am-heading">The item was added to<br>your cart.</h2>
+        <a href="basket.html" class="am-view-cart" onclick="hideAddedModal();">View your cart</a>
+      </div>
+      ${compatHtml ? `
+      <div class="am-compatible">
+        <p class="am-compatible-heading">These products go well with ${product.name}</p>
+        ${compatHtml}
+      </div>` : ''}
+    </div>
+  `;
+
+  overlay.addEventListener('click', e => { if (e.target === overlay) hideAddedModal(); });
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
+
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
+}
+
+function hideAddedModal() {
+  const overlay = document.getElementById('added-modal-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('visible');
+  document.body.style.overflow = '';
+  setTimeout(() => overlay.remove(), 250);
+}
+
+let _toastTimer = null;
+function showAddedToast(name, price) {
+  if (!document.getElementById('mc-toast-styles')) {
+    const s = document.createElement('style');
+    s.id = 'mc-toast-styles';
+    s.textContent = `
+      #mc-toast {
+        position: fixed; top: 88px; right: 24px; z-index: 99999;
+        background: #ffffff; border: 1px solid #e6ebeb;
+        border-radius: 8px; padding: 14px 18px;
+        box-shadow: 0 8px 24px rgba(18,22,33,0.10);
+        font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+        display: flex; align-items: center; gap: 12px; min-width: 260px;
+        opacity: 0; transform: translateY(-8px);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+      #mc-toast.visible { opacity: 1; transform: translateY(0); }
+      #mc-toast-icon { width: 32px; height: 32px; background: #e8f4f4; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+      #mc-toast-body { flex: 1; min-width: 0; }
+      #mc-toast-label { font-size: 11px; font-weight: 500; color: #277777; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1px; }
+      #mc-toast-name { font-size: 13px; font-weight: 500; color: #121621; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      #mc-toast-price { font-size: 13px; font-weight: 600; color: #121621; flex-shrink: 0; }
+    `;
+    document.head.appendChild(s);
+  }
+
+  let toast = document.getElementById('mc-toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'mc-toast';
+    toast.innerHTML = `
+      <div id="mc-toast-icon">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#277777" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+      </div>
+      <div id="mc-toast-body">
+        <div id="mc-toast-label">Added to basket</div>
+        <div id="mc-toast-name"></div>
+      </div>
+      <div id="mc-toast-price"></div>
+    `;
+    document.body.appendChild(toast);
+  }
+
+  document.getElementById('mc-toast-name').textContent = name;
+  document.getElementById('mc-toast-price').textContent = price;
+
+  clearTimeout(_toastTimer);
+  toast.classList.remove('visible');
+  requestAnimationFrame(() => requestAnimationFrame(() => toast.classList.add('visible')));
+  _toastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    setTimeout(() => toast.remove(), 220);
+  }, 3000);
 }
 
 function revealNav() {
@@ -187,7 +440,7 @@ function showMiniCart() {
       .mc-header-count { font-size: 13px; color: #6b7676; margin-top: 3px; display: block; }
       .mc-close-btn {
         width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-        background: #f5f7f7; border: none; border-radius: 50%; cursor: pointer; flex-shrink: 0;
+        background: #f5f7f7; border: none; border-radius: 8px; cursor: pointer; flex-shrink: 0;
         transition: background 0.15s; color: #6b7676;
       }
       .mc-close-btn:hover { background: #e6ebeb; color: #121621; }
@@ -201,7 +454,7 @@ function showMiniCart() {
         border-bottom: 1px solid #f3f4f6; align-items: flex-start;
       }
       .mc-item-img {
-        width: 72px; height: 72px; background: #f5f7f7; border-radius: 10px;
+        width: 72px; height: 72px; background: #f5f7f7; border-radius: 8px;
         flex-shrink: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;
       }
       .mc-item-img img { width: 54px; height: 54px; object-fit: contain; }
@@ -234,17 +487,17 @@ function showMiniCart() {
       .mc-item-remove:hover { color: #121621; text-decoration: underline; }
 
       .mc-ai-card {
-        margin: 14px 20px; background: #f5f7f7; border: 1px solid #e6ebeb; border-radius: 14px; padding: 16px;
+        margin: 14px 20px; background: #f5f7f7; border: 1px solid #e6ebeb; border-radius: 12px; padding: 16px;
       }
       .mc-ai-top { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 12px; }
       .mc-ai-icon {
-        width: 38px; height: 38px; background: #3d4d4d; border-radius: 50%;
+        width: 38px; height: 38px; background: #3d4d4d; border-radius: 8px;
         display: flex; align-items: center; justify-content: center; flex-shrink: 0;
       }
       .mc-ai-text { flex: 1; min-width: 0; }
       .mc-ai-title-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
       .mc-ai-title { font-size: 13px; font-weight: 600; color: #121621; }
-      .mc-ai-badge { font-size: 10px; font-weight: 600; color: #ffffff; background: #277777; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.02em; flex-shrink: 0; }
+      .mc-ai-badge { font-size: 10px; font-weight: 600; color: #ffffff; background: #277777; padding: 2px 8px; border-radius: 4px; letter-spacing: 0.02em; flex-shrink: 0; }
       .mc-ai-desc { font-size: 12px; color: #6b7676; line-height: 1.55; }
       .mc-ai-cta {
         width: 100%; background: transparent; border: 1px solid #c8d0d0;
@@ -268,12 +521,13 @@ function showMiniCart() {
       .mc-footer { padding: 16px 20px 24px; border-top: 1px solid #e6ebeb; flex-shrink: 0; }
       .mc-cta {
         display: flex; align-items: center; justify-content: center; gap: 10px;
-        width: 100%; background: #121621; color: #ffffff;
+        width: 100%; background: #277777; color: #ffffff;
         font-size: 14px; font-weight: 500; padding: 15px 20px;
-        border-radius: 100px; text-decoration: none; border: none; cursor: pointer;
+        border-radius: 8px; text-decoration: none; border: none; cursor: pointer;
         font-family: inherit; transition: background 0.15s; box-sizing: border-box;
+        box-shadow: inset 0px -2px 0px 0px rgba(0,0,0,0.16);
       }
-      .mc-cta:hover { background: #1e2a2a; }
+      .mc-cta:hover { background: #1f5c5c; }
       .mc-trust { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 14px; }
       .mc-trust-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6b7676; padding: 0 10px; }
       .mc-trust-item + .mc-trust-item { border-left: 1px solid #e6ebeb; }
@@ -454,12 +708,9 @@ function renderCartBadge() {
 document.addEventListener('DOMContentLoaded', () => {
   renderCartBadge();
 
-  // Open drawer on cart icon hover or click
+  // Open drawer on cart icon click
   const cartIcon = document.querySelector('[aria-label="Shopping cart"]');
   if (cartIcon) {
-    cartIcon.addEventListener('mouseenter', () => {
-      if (getCart().length > 0) showMiniCart();
-    });
     cartIcon.addEventListener('click', (e) => {
       e.preventDefault();
       if (getCart().length > 0) showMiniCart();

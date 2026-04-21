@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buy – Webshop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <script src="cart.js" defer></script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
+    .fade-up-1 { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.07s both; }
+    .fade-up-2 { animation: fadeUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.13s both; }
+
+    .product-image { transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+    .product-image:hover { transform: scale(1.03); }
+
+    button:active { transform: scale(0.97); transition: transform 0.08s ease; }
+
+    header { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+    #product-sticky-bar { transition: top 0.35s cubic-bezier(0.16,1,0.3,1); }
+  </style>
+</head>
+<body class="bg-white text-[#121621]">
+
+  <!-- Navigation bar -->
+  <header class="bg-white/85 backdrop-blur-xl border-b border-black/[0.06] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
+    <a href="home.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
+      <a href="index.html" class="text-sm font-medium text-[#277777] transition-colors">Instore</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
+      <a href="pricing.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
+      <a href="#" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
+    </nav>
+    <div class="ml-auto flex items-center gap-1">
+      <div class="w-px h-4 bg-black/[0.08] mr-3"></div>
+      <button aria-label="Search" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button aria-label="Profile" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </button>
+      <a href="basket.html" class="w-9 h-9 flex items-center justify-center text-[#525d5d] hover:text-[#277777] transition-colors relative" aria-label="Shopping cart">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/></svg>
+        <span data-cart-badge class="absolute -top-0.5 -right-0.5 w-4 h-4 bg-[#121621] text-white text-[10px] font-medium rounded-full items-center justify-center hidden">0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- Sticky product bar -->
+  <div id="product-sticky-bar" class="sticky top-[72px] z-[10001] bg-white/90 backdrop-blur-xl border-b border-black/[0.06]" style="box-shadow:0 1px 0 rgba(0,0,0,0.04);">
+    <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between h-[48px]">
+      <div class="flex items-center gap-3">
+        <a id="sticky-back-btn" href="index.html" class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-[#f5f7f7] transition-colors text-[#525d5d] hover:text-[#121621]">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+        </a>
+        <span id="sticky-name" class="text-[14px] font-semibold text-[#121621] tracking-[-0.01em]"></span>
+      </div>
+      <div class="flex items-center gap-4">
+        <a id="sticky-learn-link" href="#" class="text-[13px] font-medium text-[#277777] hover:text-[#1f5c5c] transition-colors">Learn more</a>
+        <button id="sticky-add-btn" class="h-[34px] px-4 bg-[#277777] text-white text-[13px] font-medium rounded-[8px] hover:bg-[#1f5c5c] transition-colors whitespace-nowrap"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero section -->
+  <section class="max-w-[1440px] mx-auto px-24 py-20">
+    <div class="flex gap-20 items-start">
+
+      <!-- Product image carousel -->
+      <div class="w-[500px] flex-shrink-0 fade-up">
+        <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[24px] h-[500px] overflow-hidden relative" id="carousel-track-wrap">
+          <!-- Slides -->
+          <div id="carousel-track" class="flex h-full" style="transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);">
+            <div class="min-w-full h-full flex items-center justify-center p-10">
+              <img src="assets/Terminal renders/1.png" alt="" class="h-[380px] w-auto object-contain" />
+            </div>
+            <div class="min-w-full h-full flex items-center justify-center p-10">
+              <img src="assets/Terminal renders/2.png" alt="" class="h-[380px] w-auto object-contain" />
+            </div>
+            <div class="min-w-full h-full flex items-center justify-center p-10">
+              <img src="assets/Terminal renders/3.png" alt="" class="h-[380px] w-auto object-contain" />
+            </div>
+            <div class="min-w-full h-full flex items-center justify-center p-10">
+              <img src="assets/Terminal renders/4.png" alt="" class="h-[380px] w-auto object-contain" />
+            </div>
+          </div>
+
+          <!-- Prev / Next arrows -->
+          <button onclick="carouselMove(-1)" aria-label="Previous" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow flex items-center justify-center text-[#525d5d] hover:text-[#121621] hover:bg-white transition-colors">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button onclick="carouselMove(1)" aria-label="Next" class="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow flex items-center justify-center text-[#525d5d] hover:text-[#121621] hover:bg-white transition-colors">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Dot indicators -->
+        <div class="flex items-center justify-center gap-2 mt-4" id="carousel-dots">
+          <button onclick="carouselGo(0)" class="carousel-dot w-2 h-2 rounded-full bg-[#121621] transition-all"></button>
+          <button onclick="carouselGo(1)" class="carousel-dot w-2 h-2 rounded-full bg-[#c8d0d0] transition-all"></button>
+          <button onclick="carouselGo(2)" class="carousel-dot w-2 h-2 rounded-full bg-[#c8d0d0] transition-all"></button>
+          <button onclick="carouselGo(3)" class="carousel-dot w-2 h-2 rounded-full bg-[#c8d0d0] transition-all"></button>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="flex-1 flex flex-col gap-5 pt-4 fade-up-1">
+        <p class="text-[13px] font-semibold text-[#277777] tracking-wide uppercase">Worldline</p>
+        <h1 id="hero-title" class="text-[40px] font-semibold text-[#121621] leading-tight tracking-[-0.03em]"></h1>
+        <div class="h-px bg-black/[0.06]"></div>
+        <p id="hero-description" class="text-[16px] text-[#6b7676] leading-[1.7]"></p>
+
+        <!-- Price -->
+        <div class="flex items-baseline gap-2.5">
+          <span id="price-display" class="text-[36px] font-semibold text-[#121621] tracking-[-0.03em]"></span>
+          <span id="price-note-inline" class="text-[14px] text-[#8a9696]"></span>
+        </div>
+
+        <!-- Feature bullets -->
+        <ul id="feat-bullets-hero" class="flex flex-col gap-2.5"></ul>
+
+        <!-- Payment methods -->
+        <div>
+          <p class="text-[13px] text-[#8a9696] mb-2.5">Payment methods accepted</p>
+          <div id="pay-methods-hero" class="flex flex-wrap gap-2"></div>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex items-center gap-3 pt-2">
+          <button id="hero-add-btn" class="h-12 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors whitespace-nowrap"></button>
+          <a id="hero-learn-link" href="#" class="inline-flex items-center gap-2 h-12 px-6 rounded-[8px] border border-[#d4d8d8] text-[#525d5d] font-medium text-[15px] hover:border-[#277777] hover:text-[#277777] transition-colors whitespace-nowrap">
+            Learn more
+            <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="flex items-center gap-6 pt-4 border-t border-black/[0.06]">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="text-[13px] text-[#525d5d]">PCI-certified security</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="text-[13px] text-[#525d5d]">Next-day payouts</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span class="text-[13px] text-[#525d5d]">Dedicated support</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Specs section -->
+  <section class="border-t border-black/[0.06]">
+    <div class="max-w-[1440px] mx-auto px-24 py-14">
+      <h2 class="text-[22px] font-semibold text-[#121621] tracking-[-0.015em] mb-10">Specifications</h2>
+      <div id="panel-specs" class="grid grid-cols-2 gap-x-24"></div>
+    </div>
+  </section>
+
+  <!-- Payment methods section -->
+  <section class="border-t border-black/[0.06] bg-[#f7f9f9]">
+    <div class="max-w-[1440px] mx-auto px-24 py-14">
+      <h2 class="text-[22px] font-semibold text-[#121621] tracking-[-0.015em] mb-8">Accepted payment methods</h2>
+      <div id="pay-methods-panel" class="flex flex-wrap gap-2"></div>
+    </div>
+  </section>
+
+  <!-- Related products -->
+  <section class="border-t border-black/[0.06] py-16">
+    <div class="max-w-[1440px] mx-auto px-24">
+      <h2 class="text-[26px] font-semibold text-[#121621] tracking-[-0.02em] mb-10">Related Products</h2>
+      <div class="flex gap-5" id="related-products"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12">
+    <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between">
+      <img src="logo.svg" alt="Worldline" width="120" height="14" style="display:block;opacity:0.4">
+      <p class="text-[#4a5555] text-sm">&copy; 2026 Worldline. All rights reserved.</p>
+      <div class="flex items-center gap-6">
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Privacy</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Terms</a>
+        <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const PRODUCTS = {
+      'tap-on-mobile': {
+        name: 'Tap on Mobile',
+        image: 'Tap on mobile.png',
+        price: '€0',
+        priceDisplay: '€0',
+        priceNote: 'No monthly or activation fees. From €0.13 per debit transaction.',
+        heroDescription: 'Accept cashless payments without a dedicated payment terminal. The Worldline Tap on Mobile app turns any Android 12+ device into a contactless payment terminal — no hardware investment, no monthly fees, and ready to go in minutes.',
+        payMethods: ['Visa', 'Mastercard', 'Maestro', 'V Pay', 'Google Pay', 'Apple Pay'],
+        featBullets: [
+          'No upfront hardware cost — zero monthly or activation fees',
+          'NFC contactless payments with PIN support for amounts over €50',
+          'Digital receipts via email or QR code',
+          'Up to 5 devices per account',
+          'Next-business-day payouts',
+          'Built-in tip function',
+        ],
+        specs: [
+          ['Compatibility', 'Android 12+'],
+          ['Connectivity', 'Device WiFi / 4G'],
+          ['Card reader', 'NFC contactless'],
+          ['PIN support', 'Yes — required for transactions over €50'],
+          ['Receipts', 'Digital (email or QR code)'],
+          ['Tip function', 'Yes'],
+          ['Devices per account', 'Up to 5'],
+          ['Settlement', 'Next business day'],
+          ['Monthly fee', 'None'],
+          ['Debit card fee (domestic)', '€0.13 per transaction'],
+          ['Debit card fee (non-domestic)', '1.40%'],
+          ['Credit card fee', '1.40% + €0.10'],
+          ['Commercial card surcharge', '+1.20%'],
+          ['Chargeback fee', '€30'],
+        ]
+      },
+      'link-2500': {
+        name: 'Link/2500',
+        price: '€79',
+        priceDisplay: '€79',
+        priceNote: '+ EUR 0.038 per transaction',
+        heroDescription: 'Lightweight, compact, mobile terminal ideal for retailers, caterers, service providers and businesses that accept payments on the go.',
+        payMethods: ['Samsung Pay', 'Contactless', 'MasterCard', 'Visa', 'V-Pay', 'AMEX', 'Maestro', 'Diners Club'],
+        featBullets: ['Compact & lightweight at 165 g', 'Touchscreen + physical keyboard', 'WiFi & 4G connectivity', 'Dynamic Currency Conversion'],
+        specs: [
+          ['Price', 'EUR 79'],
+          ['Cost per Transaction', 'EUR 0.038 per transaction'],
+          ['Weight', '165 g'],
+          ['Internet Connection', 'WiFi & 4G'],
+          ['Operating System', 'Android 10'],
+          ['Printer', 'No'],
+          ['Battery Life', '8 hours'],
+          ['Charging', 'USB-C, USB-A'],
+          ['Keyboard', 'Touchscreen + Keyboard'],
+          ['Screen Size', '2.4"'],
+        ]
+      },
+      'ex8000': {
+        name: 'EX8000',
+        price: '€238',
+        priceDisplay: '€238',
+        priceNote: 'One-time payment. No subscriptions.',
+        heroDescription: 'The EX8000 combines a slim, lightweight form factor with a large 5.5" touchscreen and a 12-hour battery. Ideal for merchants who need a compact, full-featured terminal for high-volume mobile use.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
+        featBullets: ['4G + WiFi dual connectivity', '12-hour battery life', 'Built-in receipt printer', '5.5" HD touchscreen display'],
+        specs: [
+          ['Connectivity', '4G/LTE, Wi-Fi, Bluetooth'],
+          ['Battery Life', 'Up to 12 hours'],
+          ['Printer', 'Built-in thermal'],
+          ['Screen', '5.5" HD color touchscreen'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Dimensions', '200 x 80 x 55 mm'],
+          ['Weight', '420g'],
+          ['Security', 'PCI PTS 5.x certified'],
+        ]
+      },
+      'saturn-1000f2': {
+        name: 'Saturn 1000F2',
+        price: 'Contact sales',
+        priceDisplay: 'Contact sales',
+        priceNote: 'Tailored pricing for your business.',
+        heroDescription: 'The Saturn 1000F2 is a high-performance countertop terminal built for busy retail environments. Plug-in powered and always on, it delivers fast, reliable payment processing for high-volume merchants.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Magnetic stripe', 'Apple Pay', 'Google Pay'],
+        featBullets: ['High-speed transaction processing', 'Built-in thermal printer', 'Large colour customer display', 'Plug-in powered — always on'],
+        specs: [
+          ['Connectivity', 'Ethernet, Wi-Fi, optional 4G'],
+          ['Power', 'Plug-in (mains powered)'],
+          ['Printer', 'Built-in high-speed thermal'],
+          ['Screen', '7" colour customer display'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Dimensions', '280 x 100 x 60 mm'],
+          ['Weight', '680g'],
+          ['Security', 'PCI PTS 6.x certified'],
+          ['Pricing', 'Contact sales team'],
+        ]
+      },
+      'newland-s30': {
+        name: 'Newland S30',
+        price: '€449',
+        priceDisplay: '€449',
+        priceNote: 'One-time payment. No subscriptions.',
+        heroDescription: 'The Newland S30 is a powerful Android 13 mobile terminal with 5G connectivity and a responsive touchscreen interface. Built for businesses that need speed, flexibility and the latest mobile network support.',
+        payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
+        featBullets: ['Android 13 operating system', '5G / 4G / 3G / 2G connectivity', 'Touchscreen interface', 'Built-in receipt printer'],
+        specs: [
+          ['Operating System', 'Android 13'],
+          ['Connectivity', '5G, 4G, 3G, 2G, Wi-Fi, Bluetooth'],
+          ['Printer', 'Built-in thermal'],
+          ['Interface', 'Touchscreen'],
+          ['Card Reader', 'Contactless, chip & PIN, magstripe'],
+          ['Security', 'PCI PTS certified'],
+          ['Price', '€449 one-time'],
+        ]
+      },
+      'pay-by-link': {
+        name: 'Pay by Link',
+        price: 'From €0',
+        priceDisplay: 'From €0',
+        priceNote: 'Transaction fees apply.',
+        heroDescription: 'Accept payments remotely without any hardware. Send a payment link via email or SMS and let your customers pay instantly from any device — supporting Apple Pay, Google Pay, and all major cards.',
+        payMethods: ['Apple Pay', 'Google Pay', 'Visa', 'Mastercard', 'AMEX', 'Contactless'],
+        featBullets: ['No hardware required', 'Send links via email or SMS', 'Apple Pay & Google Pay support', 'Works on any device'],
+        specs: [
+          ['Hardware', 'None required'],
+          ['Delivery', 'Email or SMS'],
+          ['Setup', 'Instant'],
+          ['Payment Methods', 'All major cards + wallets'],
+          ['Pricing', 'From €0'],
+          ['Security', 'PCI DSS compliant'],
+        ]
+      }
+    };
+
+    function render() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const p = PRODUCTS[id];
+
+      if (!p) {
+        document.body.innerHTML = '<div class="flex items-center justify-center h-screen text-gray-400">Product not found. <a href="index.html" class="ml-2 underline text-[#277777]">Go back</a></div>';
+        return;
+      }
+
+      document.title = 'Buy ' + p.name + ' – Webshop';
+
+      document.getElementById('hero-title').textContent = p.name;
+      if (p.image) document.getElementById('hero-img').src = p.image;
+      document.getElementById('hero-description').textContent = p.heroDescription;
+      document.getElementById('price-display').textContent = p.priceDisplay;
+      document.getElementById('price-note-inline').textContent = p.priceNote;
+
+      // Learn more links → product.html
+      const learnUrl = `product.html?id=${id}`;
+      document.getElementById('hero-learn-link').href = learnUrl;
+      document.getElementById('sticky-learn-link').href = learnUrl;
+
+      // Feature bullets
+      document.getElementById('feat-bullets-hero').innerHTML = p.featBullets.map(b => `
+        <li class="flex items-center gap-2">
+          <svg class="w-4 h-4 text-[#00b4aa] flex-shrink-0" viewBox="0 0 16 16" fill="none">
+            <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="text-[14px] text-[#403e3c]">${b}</span>
+        </li>
+      `).join('');
+
+      // Payment methods (hero)
+      document.getElementById('pay-methods-hero').innerHTML = p.payMethods.map(m =>
+        `<span class="bg-white border border-[#e8e8e8] text-[#525d5d] text-[13px] px-3.5 py-1.5 rounded-full">${m}</span>`
+      ).join('');
+
+      // Payment methods (panel)
+      document.getElementById('pay-methods-panel').innerHTML = p.payMethods.map(m =>
+        `<span class="bg-white border border-[#e8e8e8] text-[#525d5d] text-[13px] px-3.5 py-1.5 rounded-full">${m}</span>`
+      ).join('');
+
+      // Hero add button
+      const addBtn = document.getElementById('hero-add-btn');
+      addBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : `Add to basket — ${p.price}`;
+      if (p.price !== 'Contact sales') {
+        addBtn.onclick = () => addToCart(id);
+      }
+
+      // Sticky bar
+      document.getElementById('sticky-name').textContent = p.name;
+      const stickyBtn = document.getElementById('sticky-add-btn');
+      stickyBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : 'Add to basket';
+      if (p.price !== 'Contact sales') {
+        stickyBtn.onclick = () => addToCart(id);
+      }
+
+      // Specs table
+      document.getElementById('panel-specs').innerHTML = p.specs.map(row => `
+        <div class="flex items-center justify-between py-4 border-b border-black/[0.05]">
+          <span class="text-[14px] text-[#8a9696]">${row[0]}</span>
+          <span class="text-[14px] font-medium text-[#121621] text-right">${row[1]}</span>
+        </div>
+      `).join('');
+
+      // Related products
+      const others = Object.keys(PRODUCTS).filter(k => k !== id);
+      document.getElementById('related-products').innerHTML = others.map(k => `
+        <a href="product.html?id=${k}" class="flex flex-col gap-3 w-[172px] group">
+          <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[18px] h-[180px] flex items-center justify-center p-3 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-shadow">
+            <img src="img-terminal.png" alt="${PRODUCTS[k].name}" class="h-[140px] w-auto object-contain" />
+          </div>
+          <p class="text-[13px] text-[#525d5d] text-center font-medium">${PRODUCTS[k].name}</p>
+        </a>
+      `).join('');
+    }
+
+    render();
+
+    // Carousel
+    let carouselIndex = 0;
+    const CAROUSEL_TOTAL = 4;
+
+    function carouselUpdate() {
+      document.getElementById('carousel-track').style.transform = `translateX(-${carouselIndex * 100}%)`;
+      document.querySelectorAll('.carousel-dot').forEach((dot, i) => {
+        dot.style.background = i === carouselIndex ? '#121621' : '#c8d0d0';
+        dot.style.width = i === carouselIndex ? '20px' : '8px';
+        dot.style.borderRadius = '99px';
+      });
+    }
+
+    function carouselMove(dir) {
+      carouselIndex = (carouselIndex + dir + CAROUSEL_TOTAL) % CAROUSEL_TOTAL;
+      carouselUpdate();
+    }
+
+    function carouselGo(i) {
+      carouselIndex = i;
+      carouselUpdate();
+    }
+
+    // Auto-advance
+    setInterval(() => carouselMove(1), 4000);
+
+    (function () {
+      const nav = document.querySelector('header');
+      const bar = document.getElementById('product-sticky-bar');
+      const NAV_H = 72;
+      let lastY  = window.scrollY;
+      let hidden = false;
+
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y > NAV_H) {
+          if (y > lastY && !hidden) {
+            nav.style.transform = 'translateY(-100%)';
+            bar.style.top = '0px';
+            hidden = true;
+          } else if (y < lastY && hidden) {
+            nav.style.transform = 'translateY(0)';
+            bar.style.top = NAV_H + 'px';
+            hidden = false;
+          }
+        } else if (hidden) {
+          nav.style.transform = 'translateY(0)';
+          bar.style.top = NAV_H + 'px';
+          hidden = false;
+        }
+        lastY = y;
+      }, { passive: true });
+    })();
+  </script>
+</body>
+</html>
