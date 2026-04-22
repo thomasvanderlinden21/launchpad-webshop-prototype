@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=390px, initial-scale=1.0" />
+  <title>Tap on Mobile – Learn more</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      background: #ffffff;
+      color: #121621;
+      width: 390px;
+      min-height: 100vh;
+    }
+
+    /* Safe area bottom spacing */
+    .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 16px); }
+  </style>
+</head>
+<body>
+
+  <!-- ── Mobile Header ── -->
+  <header style="position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,0.07);">
+    <div style="display:flex;align-items:center;justify-content:space-between;height:52px;padding:0 16px;">
+      <!-- Back button -->
+      <a href="index.html" style="display:flex;align-items:center;gap:4px;color:#277777;text-decoration:none;font-size:14px;font-weight:500;min-width:44px;min-height:44px;margin:-8px -4px;padding:8px 4px;">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back
+      </a>
+      <!-- Logo centred -->
+      <img src="logo.svg" alt="Worldline" width="108" height="12" style="display:block;position:absolute;left:50%;transform:translateX(-50%);" />
+      <!-- Cart -->
+      <a href="basket.html" style="display:flex;align-items:center;justify-content:center;color:#525d5d;min-width:44px;min-height:44px;margin:-8px -4px;padding:8px 4px;position:relative;">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- ── Hero ── -->
+  <section style="background:#f7f9f9;padding:32px 20px 0;text-align:center;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 10px;">Tap on Mobile</p>
+    <h1 style="font-size:28px;font-weight:700;color:#121621;line-height:1.15;letter-spacing:-0.02em;margin:0 0 12px;">Your phone is your<br>payment terminal</h1>
+    <p style="font-size:15px;color:#6b7676;line-height:1.65;margin:0 0 24px;padding:0 4px;">No hardware. No setup. Accept contactless payments on any Android 12+ phone instantly — with zero upfront cost.</p>
+
+    <!-- CTAs -->
+    <div style="display:flex;gap:10px;margin-bottom:28px;">
+      <a href="buy.html?id=tap-on-mobile" style="flex:1;display:flex;align-items:center;justify-content:center;height:46px;background:#277777;color:#fff;font-size:14px;font-weight:600;border-radius:10px;text-decoration:none;gap:6px;">
+        Buy now
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="configurator.html" style="flex:1;display:flex;align-items:center;justify-content:center;height:46px;border:1.5px solid #c8d4d4;color:#525d5d;font-size:14px;font-weight:500;border-radius:10px;text-decoration:none;">
+        Compare
+      </a>
+    </div>
+
+    <!-- Hero product image -->
+    <div style="background:#fff;border-radius:24px 24px 0 0;box-shadow:0 -6px 40px rgba(0,0,0,0.06);padding:28px 28px 0;display:flex;align-items:flex-end;justify-content:center;min-height:220px;">
+      <img src="Tap on mobile.png" alt="Tap on Mobile" style="height:190px;width:auto;object-fit:contain;display:block;" />
+    </div>
+  </section>
+
+  <!-- ── Price badge strip ── -->
+  <section style="background:#fff;border-bottom:1px solid #f0f0f0;padding:16px 20px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <p style="font-size:11px;color:#8a9696;margin:0 0 2px;font-weight:500;">From</p>
+        <p style="font-size:24px;font-weight:700;color:#121621;margin:0;letter-spacing:-0.02em;">€0</p>
+        <p style="font-size:11px;color:#8a9696;margin:2px 0 0;">No monthly fees</p>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <span style="background:#f0f7f4;color:#277777;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid #c5e0da;">PCI Certified</span>
+        <span style="background:#f0f7f4;color:#277777;font-size:11px;font-weight:600;padding:4px 10px;border-radius:20px;border:1px solid #c5e0da;">Android 12+</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Highlights grid ── -->
+  <section style="padding:28px 20px;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 6px;">Why choose this</p>
+    <h2 style="font-size:22px;font-weight:700;color:#121621;letter-spacing:-0.02em;margin:0 0 20px;line-height:1.2;">Built for how you<br>do business</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+
+      <!-- Card 1 -->
+      <div style="background:#f7f9f9;border:1px solid #ebebeb;border-radius:16px;padding:16px;">
+        <div style="width:36px;height:36px;background:rgba(39,119,119,0.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#277777" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+          </svg>
+        </div>
+        <p style="font-size:13px;font-weight:600;color:#121621;margin:0 0 4px;">Any Android device</p>
+        <p style="font-size:12px;color:#6b7676;line-height:1.55;margin:0;">Works on any Android 12+ smartphone.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div style="background:#f7f9f9;border:1px solid #ebebeb;border-radius:16px;padding:16px;">
+        <div style="width:36px;height:36px;background:rgba(39,119,119,0.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#277777" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+          </svg>
+        </div>
+        <p style="font-size:13px;font-weight:600;color:#121621;margin:0 0 4px;">€0 to start</p>
+        <p style="font-size:12px;color:#6b7676;line-height:1.55;margin:0;">No monthly or activation fees.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div style="background:#f7f9f9;border:1px solid #ebebeb;border-radius:16px;padding:16px;">
+        <div style="width:36px;height:36px;background:rgba(39,119,119,0.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#277777" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <p style="font-size:13px;font-weight:600;color:#121621;margin:0 0 4px;">Ready in minutes</p>
+        <p style="font-size:12px;color:#6b7676;line-height:1.55;margin:0;">Download, connect, start accepting.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div style="background:#f7f9f9;border:1px solid #ebebeb;border-radius:16px;padding:16px;">
+        <div style="width:36px;height:36px;background:rgba(39,119,119,0.1);border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="#277777" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+          </svg>
+        </div>
+        <p style="font-size:13px;font-weight:600;color:#121621;margin:0 0 4px;">Bank-grade security</p>
+        <p style="font-size:12px;color:#6b7676;line-height:1.55;margin:0;">PCI-certified, end-to-end encrypted.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Feature A ── -->
+  <section style="background:#f7f9f9;padding:28px 20px;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 8px;">Simplicity</p>
+    <h2 style="font-size:22px;font-weight:700;color:#121621;letter-spacing:-0.02em;margin:0 0 12px;line-height:1.2;">Accept payments without a terminal</h2>
+    <p style="font-size:14px;color:#6b7676;line-height:1.7;margin:0 0 20px;">Tap on Mobile transforms any NFC-enabled Android smartphone into a fully certified payment terminal. Ideal for on-the-go sellers, pop-up shops, and growing businesses that want flexibility without hardware investment.</p>
+
+    <!-- Bullet list -->
+    <ul style="list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:10px;">
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Zero hardware cost</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Supports all major contactless cards and wallets</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Up to 5 devices per account</span>
+      </li>
+    </ul>
+
+    <!-- Image card -->
+    <div style="background:#fff;border-radius:20px;box-shadow:0 2px 20px rgba(0,0,0,0.05);padding:24px;display:flex;align-items:center;justify-content:center;min-height:180px;">
+      <img src="Tap on mobile.png" alt="Tap on Mobile" style="height:140px;width:auto;object-fit:contain;display:block;" />
+    </div>
+  </section>
+
+  <!-- ── Feature B ── -->
+  <section style="background:#fff;padding:28px 20px;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 8px;">Connectivity</p>
+    <h2 style="font-size:22px;font-weight:700;color:#121621;letter-spacing:-0.02em;margin:0 0 12px;line-height:1.2;">Next-day payouts, every time</h2>
+    <p style="font-size:14px;color:#6b7676;line-height:1.7;margin:0 0 20px;">Funds settle directly to your bank account on the next business day. Track every transaction from the dashboard, send digital receipts instantly, and let customers tip right at checkout.</p>
+
+    <!-- Bullet list -->
+    <ul style="list-style:none;margin:0 0 24px;padding:0;display:flex;flex-direction:column;gap:10px;">
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Next-business-day payouts</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Digital receipts via email or QR code</span>
+      </li>
+      <li style="display:flex;align-items:center;gap:10px;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="#277777" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span style="font-size:14px;color:#525d5d;">Built-in tip function</span>
+      </li>
+    </ul>
+
+    <!-- Stats row -->
+    <div style="display:flex;gap:10px;">
+      <div style="flex:1;background:#f7f9f9;border:1px solid #ebebeb;border-radius:14px;padding:16px;text-align:center;">
+        <p style="font-size:24px;font-weight:700;color:#277777;margin:0 0 2px;letter-spacing:-0.02em;">D+1</p>
+        <p style="font-size:11px;color:#8a9696;margin:0;">Settlement</p>
+      </div>
+      <div style="flex:1;background:#f7f9f9;border:1px solid #ebebeb;border-radius:14px;padding:16px;text-align:center;">
+        <p style="font-size:24px;font-weight:700;color:#277777;margin:0 0 2px;letter-spacing:-0.02em;">5</p>
+        <p style="font-size:11px;color:#8a9696;margin:0;">Devices / account</p>
+      </div>
+      <div style="flex:1;background:#f7f9f9;border:1px solid #ebebeb;border-radius:14px;padding:16px;text-align:center;">
+        <p style="font-size:24px;font-weight:700;color:#277777;margin:0 0 2px;letter-spacing:-0.02em;">€0</p>
+        <p style="font-size:11px;color:#8a9696;margin:0;">Monthly fee</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Payment methods ── -->
+  <section style="background:#f7f9f9;border-top:1px solid #f0f0f0;padding:28px 20px;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 6px;">Flexibility</p>
+    <h2 style="font-size:20px;font-weight:700;color:#121621;letter-spacing:-0.02em;margin:0 0 16px;">Accepted payment methods</h2>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;">
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">Visa</span>
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">Mastercard</span>
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">Maestro</span>
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">V Pay</span>
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">Google Pay</span>
+      <span style="background:#fff;border:1px solid #e0e4e4;color:#525d5d;font-size:13px;font-weight:500;padding:7px 14px;border-radius:8px;">Apple Pay</span>
+    </div>
+  </section>
+
+  <!-- ── Specs ── -->
+  <section style="background:#fff;border-top:1px solid #f0f0f0;padding:28px 20px;">
+    <p style="font-size:11px;font-weight:600;color:#277777;letter-spacing:0.07em;text-transform:uppercase;margin:0 0 6px;">Technical details</p>
+    <h2 style="font-size:20px;font-weight:700;color:#121621;letter-spacing:-0.02em;margin:0 0 20px;">Specifications</h2>
+    <div style="display:flex;flex-direction:column;">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Compatibility</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Android 12+</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Connectivity</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Device WiFi / 4G</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Card reader</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">NFC contactless</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">PIN support</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Yes (amounts over €50)</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Receipts</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Digital (email or QR)</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Tip function</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Yes</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Devices per account</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Up to 5</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Settlement</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">Next business day</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Monthly fee</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">None</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Debit card fee (domestic)</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">€0.13 / transaction</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f4f4;">
+        <span style="font-size:13px;color:#8a9696;">Credit card fee</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">1.40% + €0.10</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 0;">
+        <span style="font-size:13px;color:#8a9696;">Chargeback fee</span>
+        <span style="font-size:13px;font-weight:500;color:#121621;">€30</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Dark CTA ── -->
+  <section style="background:#0d1117;padding:36px 20px;text-align:center;">
+    <h2 style="font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.025em;margin:0 0 10px;line-height:1.2;">Start accepting payments<br>today — for free</h2>
+    <p style="font-size:14px;color:rgba(255,255,255,0.45);margin:0 0 28px;line-height:1.6;">No hardware. No commitment.<br>Just payments.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <a href="buy.html?id=tap-on-mobile" style="display:flex;align-items:center;justify-content:center;height:50px;background:#277777;color:#fff;font-size:15px;font-weight:600;border-radius:10px;text-decoration:none;gap:8px;">
+        Buy now
+        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+      <a href="configurator.html" style="display:flex;align-items:center;justify-content:center;height:50px;border:1.5px solid rgba(255,255,255,0.18);color:rgba(255,255,255,0.65);font-size:15px;font-weight:500;border-radius:10px;text-decoration:none;">
+        Find my terminal
+      </a>
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer style="background:#0d1117;border-top:1px solid rgba(255,255,255,0.06);padding:20px 20px 28px;">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;">
+      <img src="logo.svg" alt="Worldline" width="96" height="11" style="display:block;opacity:0.35;" />
+      <div style="display:flex;gap:20px;">
+        <a href="#" style="font-size:12px;color:#4a5555;text-decoration:none;">Privacy</a>
+        <a href="#" style="font-size:12px;color:#4a5555;text-decoration:none;">Terms</a>
+        <a href="#" style="font-size:12px;color:#4a5555;text-decoration:none;">Contact</a>
+      </div>
+      <p style="font-size:11px;color:#4a5555;margin:0;">© 2026 Worldline. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ── Sticky bottom Buy bar ── -->
+  <div style="position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.95);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid rgba(0,0,0,0.08);padding:12px 16px 20px;" id="sticky-buy">
+    <div style="display:flex;gap:10px;align-items:center;">
+      <div style="flex:1;">
+        <p style="font-size:11px;color:#8a9696;margin:0;">Tap on Mobile</p>
+        <p style="font-size:16px;font-weight:700;color:#121621;margin:0;letter-spacing:-0.01em;">€0 — free to start</p>
+      </div>
+      <a href="buy.html?id=tap-on-mobile" style="display:flex;align-items:center;justify-content:center;height:44px;padding:0 20px;background:#277777;color:#fff;font-size:14px;font-weight:600;border-radius:10px;text-decoration:none;white-space:nowrap;gap:6px;">
+        Buy now
+        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Spacer for fixed bottom bar -->
+  <div style="height:84px;"></div>
+
+</body>
+</html>

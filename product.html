@@ -90,32 +90,39 @@
   </div>
 
   <!-- ═══════════════════ HERO ═══════════════════ -->
-  <section id="section-overview" class="bg-[#f7f9f9] pt-20 pb-0 overflow-hidden">
-    <div class="max-w-[960px] mx-auto px-8 text-center fade-up">
-      <p id="hero-eyebrow" class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-5"></p>
-      <h1 id="hero-tagline" class="text-[52px] font-semibold text-[#121621] leading-[1.1] tracking-[-0.03em] mb-6"></h1>
-      <p id="hero-description" class="text-[18px] text-[#6b7676] leading-[1.7] max-w-[640px] mx-auto mb-10"></p>
-      <div class="flex items-center justify-center gap-4 mb-16 fade-up-1">
-        <a id="hero-buy-link" href="#" class="inline-flex items-center h-12 px-7 bg-[#277777] text-white font-medium text-[15px] rounded-[8px] hover:bg-[#1f5c5c] transition-colors">
+  <section id="section-overview" class="relative" style="background:#f8f9f9; padding-top:80px; padding-bottom:300px; z-index:1;">
+
+    <!-- Glow blobs — subtle, anchored to bottom -->
+    <div aria-hidden="true" style="position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;">
+      <div style="position:absolute;bottom:-60px;left:50%;transform:translateX(-50%);width:860px;height:440px;background:radial-gradient(ellipse at 50% 80%, rgba(39,119,119,0.13) 0%, rgba(80,195,175,0.07) 50%, transparent 72%);filter:blur(64px);"></div>
+      <div style="position:absolute;bottom:-80px;left:50%;transform:translateX(-46%);width:580px;height:320px;background:radial-gradient(ellipse at 50% 75%, rgba(110,215,200,0.08) 0%, transparent 70%);filter:blur(80px);"></div>
+    </div>
+
+    <!-- Text block -->
+    <div class="max-w-[860px] mx-auto px-8 text-center fade-up" style="position:relative;z-index:20;">
+      <p id="hero-eyebrow" class="text-[12px] font-semibold text-[#277777] tracking-[0.1em] uppercase mb-5"></p>
+      <h1 id="hero-tagline" class="text-[54px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-5"></h1>
+      <p id="hero-description" class="text-[17px] text-[#6b7676] leading-[1.75] max-w-[540px] mx-auto mb-10"></p>
+      <div class="flex items-center justify-center gap-3 fade-up-1">
+        <a id="hero-buy-link" href="#" class="inline-flex items-center h-11 px-6 bg-[#277777] text-white font-medium text-[14px] rounded-[8px] hover:bg-[#1f5c5c] transition-colors">
           Buy now
-          <svg class="w-3.5 h-3.5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          <svg class="w-3 h-3 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <a href="configurator.html" class="inline-flex items-center h-12 px-6 border border-[#d4d8d8] text-[#525d5d] font-medium text-[15px] rounded-[8px] hover:border-[#277777] hover:text-[#277777] transition-colors">
+        <a href="configurator.html" class="inline-flex items-center h-11 px-6 border border-[#c8d0d0] bg-white/60 backdrop-blur-sm text-[#525d5d] font-medium text-[14px] rounded-[8px] hover:border-[#277777] hover:text-[#277777] transition-colors">
           Find your perfect solution
         </a>
       </div>
     </div>
 
-    <!-- Hero image — large, centered, floating above next section -->
-    <div class="max-w-[700px] mx-auto px-8 fade-up-2">
-      <div class="bg-white rounded-t-[32px] shadow-[0_-8px_60px_rgba(0,0,0,0.06)] pt-16 px-20 flex items-end justify-center min-h-[380px]">
-        <img id="hero-img" src="assets/Terminal renders/1.png" alt="" class="h-[320px] w-auto object-contain hero-img" />
-      </div>
+    <!-- Hero image — absolutely positioned, bleeds into next section -->
+    <div id="hero-img-wrap" style="position:absolute;bottom:-140px;left:50%;transform:translateX(-50%);z-index:2;will-change:transform;">
+      <img id="hero-img" src="" alt="" class="fade-up-2"
+        style="height:400px;width:auto;object-fit:contain;filter:drop-shadow(0 24px 48px rgba(0,0,0,0.12));display:block;" />
     </div>
   </section>
 
   <!-- ═══════════════════ HIGHLIGHTS GRID ═══════════════════ -->
-  <section id="section-features" class="py-24">
+  <section id="section-features" class="bg-white" style="position:relative;z-index:10;padding-top:180px;padding-bottom:96px;">
     <div class="max-w-[1440px] mx-auto px-24">
       <div class="text-center mb-16 reveal">
         <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-3">Why choose this</p>
@@ -296,7 +303,7 @@
         name: 'Link/2500',
         eyebrow: 'Link/2500',
         tagline: 'Lightweight payments, anywhere you go',
-        image: null,
+        image: 'assets/Terminal renders/2.png',
         price: '€79',
         priceDisplay: '€79',
         heroDescription: 'The compact go-anywhere terminal. Pocket-sized, always connected, and built for merchants on the move.',
@@ -354,7 +361,7 @@
         name: 'EX8000',
         eyebrow: 'EX8000',
         tagline: 'Power and portability in one',
-        image: null,
+        image: 'assets/Terminal renders/3.png',
         price: '€238',
         priceDisplay: '€238',
         heroDescription: 'A 5.5" HD touchscreen, 12-hour battery, and built-in printer — all in a sleek mobile form factor built for high-volume use.',
@@ -410,7 +417,7 @@
         name: 'Saturn 1000F2',
         eyebrow: 'Saturn 1000F2',
         tagline: 'Built for the busiest counters',
-        image: null,
+        image: 'assets/Terminal renders/4.png',
         price: 'Contact sales',
         priceDisplay: 'Contact sales',
         heroDescription: 'High-performance countertop terminal. Plug-in powered, always on, and ready for non-stop retail environments.',
@@ -467,7 +474,7 @@
         name: 'Newland S30',
         eyebrow: 'Newland S30',
         tagline: '5G speed meets modern commerce',
-        image: null,
+        image: 'assets/Terminal renders/2.png',
         price: '€449',
         priceDisplay: '€449',
         heroDescription: 'Future-proof mobile payments. Android 13, 5G connectivity, and a premium touchscreen in one powerful device.',
@@ -522,7 +529,7 @@
         name: 'Pay by Link',
         eyebrow: 'Pay by Link',
         tagline: 'Get paid without the hardware',
-        image: null,
+        image: 'assets/Terminal renders/1.png',
         price: 'From €0',
         priceDisplay: 'From €0',
         heroDescription: 'Send a payment link by email or SMS. Your customer clicks, pays, and you are done — no terminal, no app, no friction.',
@@ -604,7 +611,7 @@
       document.getElementById('hero-tagline').textContent = p.tagline;
       document.getElementById('hero-description').textContent = p.heroDescription;
       document.getElementById('hero-buy-link').href = buyUrl;
-      // renders are set as defaults in HTML
+      document.getElementById('hero-img').src = p.image;
 
       // Sticky
       document.getElementById('sticky-name').textContent = p.name;
@@ -655,11 +662,19 @@
       document.getElementById('cta-buy-link').href = buyUrl;
 
       // Related products
+      const RELATED_IMAGES = {
+        'tap-on-mobile':  'Tap on mobile.png',
+        'link-2500':      'assets/Terminal renders/2.png',
+        'ex8000':         'assets/Terminal renders/3.png',
+        'saturn-1000f2':  'assets/Terminal renders/4.png',
+        'newland-s30':    'assets/Terminal renders/2.png',
+        'pay-by-link':    'assets/Terminal renders/1.png',
+      };
       const others = Object.keys(PRODUCTS).filter(k => k !== id);
       document.getElementById('related-products').innerHTML = others.map(k => `
         <a href="product.html?id=${k}" class="flex flex-col gap-3 w-[172px] group">
           <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[18px] h-[180px] flex items-center justify-center p-3 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-shadow">
-            <img src="img-terminal.png" alt="${PRODUCTS[k].name}" class="h-[140px] w-auto object-contain" />
+            <img src="${RELATED_IMAGES[k]}" alt="${PRODUCTS[k].name}" class="h-[140px] w-auto object-contain" />
           </div>
           <p class="text-[13px] text-[#525d5d] text-center font-medium">${PRODUCTS[k].name}</p>
         </a>
@@ -679,6 +694,23 @@
         window.scrollTo({ top, behavior: 'smooth' });
       });
     });
+
+    // Hero image parallax
+    (function () {
+      const wrap = document.getElementById('hero-img-wrap');
+      if (!wrap) return;
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            const y = window.scrollY;
+            wrap.style.transform = `translateX(-50%) translateY(${y * -0.12}px)`;
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+    })();
 
     // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
