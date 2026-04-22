@@ -601,13 +601,13 @@
               <p class="text-sm text-[rgba(255,255,255,0.45)]">€79</p>
             </div>
           </a>
-          <a href="product.html?id=ex8000" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
+          <a href="product.html?id=ex4000" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <img src="assets/Terminal renders/3.png" alt="EX8000" class="h-[80px] w-auto object-contain" />
+              <img src="assets/Terminal renders/3.png" alt="EX4000" class="h-[80px] w-auto object-contain" />
             </div>
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Portable Terminal</p>
-              <p class="text-base font-semibold text-white mb-1">EX8000</p>
+              <p class="text-base font-semibold text-white mb-1">EX4000</p>
               <p class="text-sm text-[rgba(255,255,255,0.45)]">€238</p>
             </div>
           </a>
@@ -646,7 +646,7 @@
     const PRODUCT_IMAGES = {
       'tap-on-mobile':  'Tap on mobile.png',
       'link-2500':      'assets/Terminal renders/2.png',
-      'ex8000':         'assets/Terminal renders/3.png',
+      'ex4000':         'assets/Terminal renders/3.png',
       'saturn-1000f2':  'assets/Terminal renders/4.png',
     };
 
@@ -666,8 +666,8 @@
         description: 'Lightweight mobile terminal with built-in 4G, integrated receipt printer, and an 8-hour battery. Ideal for on-the-go merchants.',
         bullets: ['Built-in 4G connectivity', '8-hour battery life', 'Integrated receipt printer', 'Rugged, drop-resistant design'],
       },
-      'ex8000': {
-        name: 'EX8000',
+      'ex4000': {
+        name: 'EX4000',
         category: 'Portable Terminal',
         price: '€238',
         description: 'Slim, full-featured portable terminal with a 5.5" touchscreen and 12-hour battery. Built for high-volume mobile use.',
@@ -811,37 +811,37 @@
 
     // ── Recommendation scoring ───────────────────────────────────────────────────
     function getRecommendation(answers) {
-      const scores = { 'tap-on-mobile': 0, 'link-2500': 0, 'ex8000': 0, 'saturn-1000f2': 0 };
+      const scores = { 'tap-on-mobile': 0, 'link-2500': 0, 'ex4000': 0, 'saturn-1000f2': 0 };
 
       const hasPhysical = answers.businessTypes.includes('physical');
       const hasPopup    = answers.businessTypes.includes('popup');
       const hasOnlineBiz = answers.businessTypes.includes('online');
-      if (hasPhysical)  { scores['saturn-1000f2'] += 2; scores['ex8000'] += 2; scores['link-2500'] += 1; }
-      if (hasPopup)     { scores['link-2500'] += 2; scores['ex8000'] += 2; scores['tap-on-mobile'] += 1; }
+      if (hasPhysical)  { scores['saturn-1000f2'] += 2; scores['ex4000'] += 2; scores['link-2500'] += 1; }
+      if (hasPopup)     { scores['link-2500'] += 2; scores['ex4000'] += 2; scores['tap-on-mobile'] += 1; }
       if (hasOnlineBiz) { scores['tap-on-mobile'] += 2; scores['link-2500'] += 1; }
 
       const hasTerminal = answers.paymentMethods.includes('terminal');
       const hasLink     = answers.paymentMethods.includes('pay-by-link');
       const hasOnline   = answers.paymentMethods.includes('online');
-      if (hasTerminal) { scores['link-2500'] += 2; scores['ex8000'] += 2; scores['saturn-1000f2'] += 2; }
+      if (hasTerminal) { scores['link-2500'] += 2; scores['ex4000'] += 2; scores['saturn-1000f2'] += 2; }
       if (hasLink)     { scores['tap-on-mobile'] += 3; scores['link-2500'] += 1; }
-      if (hasOnline)   { scores['ex8000'] += 2; scores['saturn-1000f2'] += 2; }
+      if (hasOnline)   { scores['ex4000'] += 2; scores['saturn-1000f2'] += 2; }
       if (!hasTerminal && !hasOnline) { scores['tap-on-mobile'] += 3; }
 
       const txn = answers.transactions;
       if (txn < 1000)        { scores['tap-on-mobile'] += 3; scores['link-2500'] += 2; }
-      else if (txn < 5000)   { scores['link-2500'] += 3; scores['ex8000'] += 2; }
-      else if (txn < 12000)  { scores['ex8000'] += 3; scores['saturn-1000f2'] += 2; }
-      else                   { scores['saturn-1000f2'] += 4; scores['ex8000'] += 2; }
+      else if (txn < 5000)   { scores['link-2500'] += 3; scores['ex4000'] += 2; }
+      else if (txn < 12000)  { scores['ex4000'] += 3; scores['saturn-1000f2'] += 2; }
+      else                   { scores['saturn-1000f2'] += 4; scores['ex4000'] += 2; }
 
       const spend = answers.avgSpend;
       if (spend < 50)        { scores['tap-on-mobile'] += 1; }
       else if (spend < 150)  { scores['link-2500'] += 2; }
-      else                   { scores['ex8000'] += 1; scores['saturn-1000f2'] += 2; }
+      else                   { scores['ex4000'] += 1; scores['saturn-1000f2'] += 2; }
 
       if (answers.needsPrinter) {
         scores['tap-on-mobile'] -= 10;
-        scores['link-2500'] += 2; scores['ex8000'] += 2; scores['saturn-1000f2'] += 2;
+        scores['link-2500'] += 2; scores['ex4000'] += 2; scores['saturn-1000f2'] += 2;
       } else {
         scores['tap-on-mobile'] += 2;
       }

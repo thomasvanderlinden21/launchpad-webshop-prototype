@@ -18,8 +18,8 @@ const PRODUCT_DATA = {
     image: 'img-link-2500.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Printer: 'Included' }
   },
-  'ex8000': {
-    name: 'EX8000',
+  'ex4000': {
+    name: 'EX4000',
     price: 238,
     priceLabel: '€238',
     category: 'Portable Terminal',
@@ -57,17 +57,17 @@ const VAT_RATE = 0.21;
 // Compatible products shown in the "added to cart" modal
 const COMPATIBLE = {
   'tap-on-mobile': ['link-2500', 'pay-by-link'],
-  'link-2500':     ['ex8000', 'pay-by-link'],
-  'ex8000':        ['link-2500', 'newland-s30'],
-  'saturn-1000f2': ['ex8000', 'newland-s30'],
-  'newland-s30':   ['ex8000', 'saturn-1000f2'],
+  'link-2500':     ['ex4000', 'pay-by-link'],
+  'ex4000':        ['link-2500', 'newland-s30'],
+  'saturn-1000f2': ['ex4000', 'newland-s30'],
+  'newland-s30':   ['ex4000', 'saturn-1000f2'],
   'pay-by-link':   ['tap-on-mobile', 'link-2500'],
 };
 
 const PRODUCT_DESCRIPTIONS = {
   'tap-on-mobile': 'Turn any Android 12+ phone into a contactless terminal — no hardware, no monthly fees.',
   'link-2500':     'Compact 165g mobile terminal with touchscreen, physical keyboard, and 8-hour battery.',
-  'ex8000':        '5.5" HD touchscreen, 12-hour battery, built-in printer. Built for high-volume mobile use.',
+  'ex4000':        '5.5" HD touchscreen, 12-hour battery, built-in printer. Built for high-volume mobile use.',
   'saturn-1000f2': 'High-performance countertop terminal with 7" display and high-speed thermal printer.',
   'newland-s30':   'Android 13, 5G connectivity, and built-in printer in one future-proof mobile device.',
   'pay-by-link':   'Send a payment link by email or SMS. No hardware. Works on any device.',
@@ -76,7 +76,7 @@ const PRODUCT_DESCRIPTIONS = {
 const PRODUCT_RENDERS = {
   'tap-on-mobile': 'assets/Terminal renders/1.png',
   'link-2500':     'assets/Terminal renders/2.png',
-  'ex8000':        'assets/Terminal renders/3.png',
+  'ex4000':        'assets/Terminal renders/3.png',
   'saturn-1000f2': 'assets/Terminal renders/4.png',
   'newland-s30':   'assets/Terminal renders/1.png',
   'pay-by-link':   'assets/Terminal renders/2.png',
@@ -118,138 +118,131 @@ function addAddonToCart(addonId, name, price, priceLabel) {
   showAddedToast(name, priceLabel);
 }
 
+function _injectModalStyles() {
+  if (document.getElementById('added-modal-styles')) return;
+  const s = document.createElement('style');
+  s.id = 'added-modal-styles';
+  s.textContent = `
+    #added-modal-overlay {
+      position: fixed; inset: 0; z-index: 99999;
+      background: rgba(18,22,33,0.45);
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px;
+      opacity: 0; transition: opacity 0.25s ease;
+    }
+    #added-modal-overlay.visible { opacity: 1; }
+
+    #added-modal {
+      background: #fff; border-radius: 20px;
+      width: 100%; max-width: 600px; max-height: 88vh;
+      overflow-y: auto; position: relative;
+      box-shadow: 0 24px 80px rgba(18,22,33,0.18);
+      transform: translateY(16px) scale(0.98);
+      transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+      font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
+    }
+    #added-modal-overlay.visible #added-modal { transform: translateY(0) scale(1); }
+    #added-modal::-webkit-scrollbar { width: 4px; }
+    #added-modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+
+    .am-close {
+      position: absolute; top: 16px; right: 16px;
+      width: 32px; height: 32px; border-radius: 50%;
+      background: #f5f7f7; border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #6b7676; transition: background 0.15s, color 0.15s;
+    }
+    .am-close:hover { background: #e6ebeb; color: #121621; }
+
+    .am-top { padding: 40px 40px 36px; text-align: center; }
+    .am-check {
+      width: 48px; height: 48px; background: #e8f4f4; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
+    }
+    .am-heading {
+      font-size: 22px; font-weight: 600; color: #121621;
+      letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 8px;
+    }
+    .am-sub { font-size: 14px; color: #6b7676; margin-bottom: 24px; }
+    .am-actions { display: flex; gap: 10px; justify-content: center; }
+    .am-view-cart {
+      display: inline-flex; align-items: center; height: 40px; padding: 0 20px;
+      border: 1.5px solid #277777; border-radius: 8px;
+      font-size: 13px; font-weight: 500; color: #277777;
+      text-decoration: none; transition: background 0.15s;
+    }
+    .am-view-cart:hover { background: #f0f7f7; }
+    .am-continue {
+      display: inline-flex; align-items: center; height: 40px; padding: 0 20px;
+      background: #277777; border-radius: 8px;
+      font-size: 13px; font-weight: 500; color: #fff;
+      text-decoration: none; transition: background 0.15s; border: none; cursor: pointer; font-family: inherit;
+    }
+    .am-continue:hover { background: #1f5c5c; }
+
+    .am-compatible { padding: 0 40px 32px; border-top: 1px solid #f0f0f0; padding-top: 28px; }
+    .am-compatible-heading { font-size: 13px; color: #8a9696; text-align: center; margin-bottom: 20px; }
+
+    .am-product {
+      display: flex; gap: 20px; align-items: center;
+      border: 1px solid #ededed; border-radius: 16px;
+      padding: 20px; margin-bottom: 12px; background: #fafafa;
+    }
+    .am-product-img {
+      width: 120px; height: 120px; flex-shrink: 0;
+      background: #fff; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid #f0f0f0;
+    }
+    .am-product-img img { width: 90px; height: 90px; object-fit: contain; }
+    .am-product-body { flex: 1; min-width: 0; }
+    .am-product-name { font-size: 17px; font-weight: 600; color: #121621; letter-spacing: -0.02em; margin-bottom: 4px; }
+    .am-product-desc { font-size: 13px; color: #6b7676; line-height: 1.6; margin-bottom: 12px; }
+    .am-product-price { font-size: 15px; font-weight: 600; color: #121621; margin-bottom: 14px; }
+    .am-product-actions { display: flex; gap: 8px; }
+    .am-btn-add {
+      height: 36px; padding: 0 16px; background: #277777; color: #fff;
+      border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
+      cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap;
+    }
+    .am-btn-add:hover { background: #1f5c5c; }
+    .am-btn-info {
+      height: 36px; padding: 0 16px;
+      border: 1.5px solid #d4d8d8; border-radius: 8px;
+      font-size: 13px; font-weight: 500; color: #525d5d;
+      text-decoration: none; display: inline-flex; align-items: center;
+      transition: border-color 0.15s, color 0.15s; white-space: nowrap; background: transparent;
+    }
+    .am-btn-info:hover { border-color: #277777; color: #277777; }
+
+    .am-checkout-footer {
+      padding: 20px 40px 32px; border-top: 1px solid #f0f0f0; text-align: center;
+    }
+    .am-checkout-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      height: 48px; padding: 0 32px; background: #277777; color: #fff;
+      border: none; border-radius: 10px; font-size: 15px; font-weight: 500;
+      cursor: pointer; font-family: inherit; transition: background 0.15s; text-decoration: none;
+    }
+    .am-checkout-btn:hover { background: #1f5c5c; }
+    .am-skip {
+      display: block; margin-top: 12px; font-size: 13px; color: #8a9696;
+      cursor: pointer; background: none; border: none; font-family: inherit;
+      transition: color 0.15s;
+    }
+    .am-skip:hover { color: #525d5d; }
+  `;
+  document.head.appendChild(s);
+}
+
 function showAddedModal(productId) {
   const product = PRODUCT_DATA[productId];
   if (!product) return;
 
-  // Inject styles once
-  if (!document.getElementById('added-modal-styles')) {
-    const s = document.createElement('style');
-    s.id = 'added-modal-styles';
-    s.textContent = `
-      #added-modal-overlay {
-        position: fixed; inset: 0; z-index: 99999;
-        background: rgba(18,22,33,0.45);
-        display: flex; align-items: center; justify-content: center;
-        padding: 24px;
-        opacity: 0; transition: opacity 0.25s ease;
-      }
-      #added-modal-overlay.visible { opacity: 1; }
+  _injectModalStyles();
 
-      #added-modal {
-        background: #fff; border-radius: 20px;
-        width: 100%; max-width: 600px; max-height: 88vh;
-        overflow-y: auto; position: relative;
-        box-shadow: 0 24px 80px rgba(18,22,33,0.18);
-        transform: translateY(16px) scale(0.98);
-        transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
-        font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
-      }
-      #added-modal-overlay.visible #added-modal {
-        transform: translateY(0) scale(1);
-      }
-      #added-modal::-webkit-scrollbar { width: 4px; }
-      #added-modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
-
-      .am-close {
-        position: absolute; top: 16px; right: 16px;
-        width: 32px; height: 32px; border-radius: 50%;
-        background: #f5f7f7; border: none; cursor: pointer;
-        display: flex; align-items: center; justify-content: center;
-        color: #6b7676; transition: background 0.15s, color 0.15s;
-      }
-      .am-close:hover { background: #e6ebeb; color: #121621; }
-
-      .am-top {
-        padding: 40px 40px 28px; text-align: center;
-        border-bottom: 1px solid #f0f0f0;
-      }
-      .am-check {
-        width: 48px; height: 48px; background: #e8f4f4; border-radius: 50%;
-        display: flex; align-items: center; justify-content: center; margin: 0 auto 16px;
-      }
-      .am-heading {
-        font-size: 22px; font-weight: 600; color: #121621;
-        letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 16px;
-      }
-      .am-view-cart {
-        display: inline-flex; align-items: center; height: 40px; padding: 0 20px;
-        border: 1.5px solid #277777; border-radius: 8px;
-        font-size: 13px; font-weight: 500; color: #277777;
-        text-decoration: none; transition: background 0.15s;
-      }
-      .am-view-cart:hover { background: #f0f7f7; }
-
-      .am-compatible { padding: 24px 40px 32px; }
-      .am-compatible-heading {
-        font-size: 13px; color: #8a9696; text-align: center; margin-bottom: 20px;
-      }
-
-      .am-product {
-        display: flex; gap: 20px; align-items: center;
-        border: 1px solid #ededed; border-radius: 16px;
-        padding: 20px; margin-bottom: 12px;
-        background: #fafafa;
-      }
-      .am-product-img {
-        width: 120px; height: 120px; flex-shrink: 0;
-        background: #fff; border-radius: 12px;
-        display: flex; align-items: center; justify-content: center;
-        border: 1px solid #f0f0f0;
-      }
-      .am-product-img img { width: 90px; height: 90px; object-fit: contain; }
-      .am-product-body { flex: 1; min-width: 0; }
-      .am-product-name { font-size: 17px; font-weight: 600; color: #121621; letter-spacing: -0.02em; margin-bottom: 4px; }
-      .am-product-desc { font-size: 13px; color: #6b7676; line-height: 1.6; margin-bottom: 12px; }
-      .am-product-price { font-size: 15px; font-weight: 600; color: #121621; margin-bottom: 14px; }
-      .am-product-actions { display: flex; gap: 8px; }
-      .am-btn-add {
-        height: 36px; padding: 0 16px; background: #277777; color: #fff;
-        border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
-        cursor: pointer; font-family: inherit; transition: background 0.15s; white-space: nowrap;
-      }
-      .am-btn-add:hover { background: #1f5c5c; }
-      .am-btn-info {
-        height: 36px; padding: 0 16px;
-        border: 1.5px solid #d4d8d8; border-radius: 8px;
-        font-size: 13px; font-weight: 500; color: #525d5d;
-        text-decoration: none; display: inline-flex; align-items: center;
-        transition: border-color 0.15s, color 0.15s; white-space: nowrap;
-        background: transparent;
-      }
-      .am-btn-info:hover { border-color: #277777; color: #277777; }
-    `;
-    document.head.appendChild(s);
-  }
-
-  // Remove any existing modal
   const existing = document.getElementById('added-modal-overlay');
   if (existing) existing.remove();
-
-  const compatIds = (COMPATIBLE[productId] || []).slice(0, 2);
-  const compatHtml = compatIds.map(id => {
-    const p = PRODUCT_DATA[id];
-    if (!p) return '';
-    const img = PRODUCT_RENDERS[id] || 'img-terminal.png';
-    const desc = PRODUCT_DESCRIPTIONS[id] || '';
-    const addAction = p.price !== null
-      ? `<button class="am-btn-add" onclick="addToCart('${id}'); hideAddedModal();">Add to basket</button>`
-      : `<a href="buy.html?id=${id}" class="am-btn-add" style="text-decoration:none;display:inline-flex;align-items:center;" onclick="hideAddedModal();">Get a quote</a>`;
-    return `
-      <div class="am-product">
-        <div class="am-product-img"><img src="${img}" alt="${p.name}" /></div>
-        <div class="am-product-body">
-          <div class="am-product-name">${p.name}</div>
-          <div class="am-product-desc">${desc}</div>
-          <div class="am-product-price">${p.priceLabel}</div>
-          <div class="am-product-actions">
-            ${addAction}
-            <a href="product.html?id=${id}" class="am-btn-info" onclick="hideAddedModal();">More info</a>
-          </div>
-        </div>
-      </div>
-    `;
-  }).join('');
 
   const overlay = document.createElement('div');
   overlay.id = 'added-modal-overlay';
@@ -262,21 +255,97 @@ function showAddedModal(productId) {
         <div class="am-check">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#277777" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
         </div>
-        <h2 class="am-heading">The item was added to<br>your cart.</h2>
-        <a href="basket.html" class="am-view-cart" onclick="hideAddedModal();">View your cart</a>
+        <h2 class="am-heading">${product.name} added to your basket</h2>
+        <p class="am-sub">Ready to complete your order?</p>
+        <div class="am-actions">
+          <a href="basket.html" class="am-view-cart" onclick="hideAddedModal();">View basket</a>
+          <button class="am-continue" onclick="hideAddedModal();">Continue shopping</button>
+        </div>
       </div>
-      ${compatHtml ? `
-      <div class="am-compatible">
-        <p class="am-compatible-heading">These products go well with ${product.name}</p>
-        ${compatHtml}
-      </div>` : ''}
     </div>
   `;
 
   overlay.addEventListener('click', e => { if (e.target === overlay) hideAddedModal(); });
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
+}
 
+function showCheckoutRecommendations(onCheckout) {
+  _injectModalStyles();
+
+  const existing = document.getElementById('added-modal-overlay');
+  if (existing) existing.remove();
+
+  // Pick compatible products based on first terminal in cart
+  const cart = getCart();
+  const firstTerminal = cart.find(i => !i.addonId);
+  const refId = firstTerminal ? firstTerminal.id : null;
+  const cartIds = new Set(cart.map(i => i.id));
+  const compatIds = (refId ? (COMPATIBLE[refId] || []) : Object.values(COMPATIBLE)[0] || [])
+    .filter(id => !cartIds.has(id))
+    .slice(0, 2);
+
+  const compatHtml = compatIds.map(id => {
+    const p = PRODUCT_DATA[id];
+    if (!p) return '';
+    const img  = PRODUCT_RENDERS[id] || 'assets/Terminal renders/1.png';
+    const desc = PRODUCT_DESCRIPTIONS[id] || '';
+    const addAction = p.price !== null
+      ? `<button class="am-btn-add" onclick="addToCart('${id}');">Add to basket</button>`
+      : `<a href="buy.html?id=${id}" class="am-btn-add" style="text-decoration:none;display:inline-flex;align-items:center;">Get a quote</a>`;
+    return `
+      <div class="am-product">
+        <div class="am-product-img"><img src="${img}" alt="${p.name}" /></div>
+        <div class="am-product-body">
+          <div class="am-product-name">${p.name}</div>
+          <div class="am-product-desc">${desc}</div>
+          <div class="am-product-price">${p.priceLabel}</div>
+          <div class="am-product-actions">
+            ${addAction}
+            <a href="product.html?id=${id}" class="am-btn-info">More info</a>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+
+  const overlay = document.createElement('div');
+  overlay.id = 'added-modal-overlay';
+  overlay.innerHTML = `
+    <div id="added-modal">
+      <button class="am-close" onclick="hideAddedModal()" aria-label="Close">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+      ${compatHtml ? `
+      <div class="am-top" style="padding-bottom:28px;border-bottom:1px solid #f0f0f0;">
+        <h2 class="am-heading" style="margin-bottom:6px;">Before you check out</h2>
+        <p class="am-sub" style="margin-bottom:0;">Customers who bought this also added these to their order.</p>
+      </div>
+      <div class="am-compatible">
+        ${compatHtml}
+      </div>
+      <div class="am-checkout-footer">
+        <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+          Proceed to secure checkout
+        </button>
+        <button class="am-skip" onclick="hideAddedModal(); (${onCheckout.toString()})();">Skip and continue</button>
+      </div>` : `
+      <div class="am-top">
+        <h2 class="am-heading">You're all set!</h2>
+        <p class="am-sub">Ready to complete your order.</p>
+        <div class="am-actions">
+          <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
+            Proceed to secure checkout
+          </button>
+        </div>
+      </div>`}
+    </div>
+  `;
+
+  overlay.addEventListener('click', e => { if (e.target === overlay) hideAddedModal(); });
+  document.body.appendChild(overlay);
+  document.body.style.overflow = 'hidden';
   requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add('visible')));
 }
 
