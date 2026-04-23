@@ -23,7 +23,7 @@ const PRODUCT_DATA = {
     price: 238,
     priceLabel: '€238',
     category: 'Portable Terminal',
-    image: 'assets/placeholder-terminal.svg',
+    image: 'assets/Terminal renders/axium ex4000/Axium EX4000 1.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi', Printer: 'Included' }
   },
   'saturn-1000f2': {
@@ -76,7 +76,7 @@ const PRODUCT_DESCRIPTIONS = {
 const PRODUCT_RENDERS = {
   'tap-on-mobile': 'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
   'link-2500':     'assets/Terminal renders/Link/link_2.png',
-  'ex4000':        'assets/placeholder-terminal.svg',
+  'ex4000':        'assets/Terminal renders/axium ex4000/Axium EX4000 1.png',
   'saturn-1000f2': 'assets/Terminal renders/Saturn/1.png',
   'newland-s30':   'assets/placeholder-terminal.svg',
   'pay-by-link':   'assets/placeholder-terminal.svg',
