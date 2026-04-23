@@ -7,7 +7,7 @@ const PRODUCT_DATA = {
     price: 0,
     priceLabel: '€0',
     category: 'Mobile Terminal',
-    image: 'Tap on mobile.png',
+    image: 'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
     specs: { Connectivity: 'Uses phone WiFi/4G', Printer: 'Not included' }
   },
   'link-2500': {
@@ -15,7 +15,7 @@ const PRODUCT_DATA = {
     price: 79,
     priceLabel: '€79',
     category: 'Mobile Terminal',
-    image: 'img-link-2500.png',
+    image: 'assets/Terminal renders/Link/link_2.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Printer: 'Included' }
   },
   'ex4000': {
@@ -23,7 +23,7 @@ const PRODUCT_DATA = {
     price: 238,
     priceLabel: '€238',
     category: 'Portable Terminal',
-    image: 'img-terminal.png',
+    image: 'assets/placeholder-terminal.svg',
     specs: { Connectivity: '4G/LTE, Wi-Fi', Printer: 'Included' }
   },
   'saturn-1000f2': {
@@ -31,7 +31,7 @@ const PRODUCT_DATA = {
     price: 499,
     priceLabel: '€499',
     category: 'Countertop Terminal',
-    image: 'img-saturn-1000f2.png',
+    image: 'assets/Terminal renders/Saturn/1.png',
     specs: { Connectivity: 'Ethernet + WiFi + USB', Printer: 'Included' }
   },
   'newland-s30': {
@@ -39,7 +39,7 @@ const PRODUCT_DATA = {
     price: 449,
     priceLabel: '€449',
     category: 'Mobile Terminal',
-    image: 'img-terminal.png',
+    image: 'assets/placeholder-terminal.svg',
     specs: { Connectivity: '5G/4G/3G/2G, Wi-Fi, Bluetooth', Printer: 'Included' }
   },
   'pay-by-link': {
@@ -47,7 +47,7 @@ const PRODUCT_DATA = {
     price: 0,
     priceLabel: 'From €0',
     category: 'Digital',
-    image: 'img-terminal.png',
+    image: 'assets/placeholder-terminal.svg',
     specs: { Connectivity: 'Online', Printer: 'Not required' }
   }
 };
@@ -74,12 +74,12 @@ const PRODUCT_DESCRIPTIONS = {
 };
 
 const PRODUCT_RENDERS = {
-  'tap-on-mobile': 'assets/Terminal renders/1.png',
-  'link-2500':     'assets/Terminal renders/2.png',
-  'ex4000':        'assets/Terminal renders/3.png',
-  'saturn-1000f2': 'assets/Terminal renders/4.png',
-  'newland-s30':   'assets/Terminal renders/1.png',
-  'pay-by-link':   'assets/Terminal renders/2.png',
+  'tap-on-mobile': 'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
+  'link-2500':     'assets/Terminal renders/Link/link_2.png',
+  'ex4000':        'assets/placeholder-terminal.svg',
+  'saturn-1000f2': 'assets/Terminal renders/Saturn/1.png',
+  'newland-s30':   'assets/placeholder-terminal.svg',
+  'pay-by-link':   'assets/placeholder-terminal.svg',
 };
 
 const LINK2500_ACCESSORIES = [
@@ -292,6 +292,118 @@ function renderSaturnAccessoriesSection(cart) {
       + btnHtml
       + '</div></div>';
   }).join('');
+}
+
+// Renders the accessories upsell section on the buy.html page
+function renderBuyPageAccessories(productId) {
+  var wrapper = document.getElementById('buy-accessories-wrapper');
+  if (!wrapper) return;
+
+  var accessories = null;
+  var terminalName = '';
+  var terminalPriceNum = 0;
+  var terminalPriceLabel = '';
+
+  if (productId === 'link-2500') {
+    accessories = LINK2500_ACCESSORIES;
+    terminalName = 'Link/2500';
+    terminalPriceNum = 79;
+    terminalPriceLabel = '€79';
+  } else if (productId === 'saturn-1000f2') {
+    accessories = SATURN1000F2_ACCESSORIES;
+    terminalName = 'Saturn 1000F2';
+    terminalPriceNum = 499;
+    terminalPriceLabel = '€499';
+  }
+
+  if (!accessories || accessories.length === 0) return;
+
+  wrapper.classList.remove('hidden');
+
+  var titleEl = document.getElementById('buy-accessories-title');
+  if (titleEl) titleEl.textContent = 'Compatible accessories for ' + terminalName;
+
+  var selectedIds = {};
+
+  function formatPriceNum(num) {
+    if (num === 0) return 'Free';
+    var str = num.toFixed(2);
+    return '\u20ac' + (str.slice(-3) === '.00' ? str.slice(0, -3) : str);
+  }
+
+  function updateSubtotal() {
+    var linesEl = document.getElementById('buy-subtotal-lines');
+    var totalEl = document.getElementById('buy-subtotal-total');
+    if (!linesEl || !totalEl) return;
+    var total = terminalPriceNum;
+    var html = '<div class="flex items-start justify-between gap-2 pb-2.5">'
+      + '<span class="text-[13px] text-[#525d5d]">' + terminalName + '</span>'
+      + '<span class="text-[13px] font-medium text-[#121621] flex-shrink-0">' + terminalPriceLabel + '</span>'
+      + '</div>';
+    for (var k in selectedIds) {
+      var a = selectedIds[k];
+      total += a.price;
+      html += '<div class="flex items-start justify-between gap-2 pb-2.5">'
+        + '<span class="text-[13px] text-[#525d5d] leading-snug">' + a.name + '</span>'
+        + '<span class="text-[13px] font-medium text-[#121621] flex-shrink-0">' + a.priceLabel + '</span>'
+        + '</div>';
+    }
+    linesEl.innerHTML = html;
+    totalEl.textContent = formatPriceNum(total);
+  }
+
+  var listEl = document.getElementById('buy-accessories-list');
+  if (!listEl) return;
+
+  listEl.innerHTML = '';
+
+  accessories.forEach(function(acc) {
+    var row = document.createElement('div');
+    row.id = 'buy-acc-row-' + acc.id;
+    row.className = 'flex items-center gap-5 bg-white border border-[#ededed] rounded-[14px] p-4 hover:border-[#c8d0d0] transition-all';
+    var imgSrc = acc.image || 'assets/placeholder-terminal.svg';
+    row.innerHTML = '<div class="w-[76px] h-[76px] bg-[#f5f7f7] rounded-[10px] flex items-center justify-center flex-shrink-0 overflow-hidden">'
+      + '<img src="' + imgSrc + '" alt="' + acc.name + '" class="w-[60px] h-[60px] object-contain" />'
+      + '</div>'
+      + '<div class="flex-1 min-w-0">'
+      + '<p class="text-[14px] font-semibold text-[#121621] mb-0.5">' + acc.name + '</p>'
+      + '<p class="text-[11px] text-[#aab4b4] font-medium mb-1.5">' + acc.art + '</p>'
+      + '<p class="text-[13px] text-[#6b7676] leading-snug">' + acc.desc + '</p>'
+      + '</div>'
+      + '<div class="flex flex-col items-end gap-2.5 flex-shrink-0 pl-2">'
+      + '<span class="text-[16px] font-semibold text-[#121621]">' + acc.priceLabel + '</span>'
+      + '<button class="buy-acc-add-btn h-9 px-5 rounded-[8px] bg-[#277777] text-white text-[13px] font-medium hover:bg-[#1f5c5c] transition-colors whitespace-nowrap" data-acc-id="' + acc.id + '">Add</button>'
+      + '</div>';
+    listEl.appendChild(row);
+  });
+
+  listEl.querySelectorAll('.buy-acc-add-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var accId = btn.getAttribute('data-acc-id');
+      var acc = null;
+      for (var i = 0; i < accessories.length; i++) {
+        if (accessories[i].id === accId) { acc = accessories[i]; break; }
+      }
+      if (!acc || selectedIds[accId]) return;
+      selectedIds[accId] = acc;
+      addAddonToCart(acc.id, acc.name, acc.price, acc.priceLabel, acc.image);
+      btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:inline;vertical-align:middle;margin-right:4px;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Added';
+      btn.className = 'buy-acc-add-btn h-9 px-5 rounded-[8px] bg-[#eef7f5] text-[#277777] text-[13px] font-medium border border-[#277777] whitespace-nowrap';
+      btn.style.pointerEvents = 'none';
+      var rowEl = document.getElementById('buy-acc-row-' + accId);
+      if (rowEl) rowEl.className = 'flex items-center gap-5 bg-[#f7fcfb] border border-[#b8ddd7] rounded-[14px] p-4 transition-all';
+      updateSubtotal();
+    });
+  });
+
+  var contBtn = document.getElementById('buy-acc-continue-btn');
+  if (contBtn) {
+    contBtn.addEventListener('click', function() {
+      window.location.href = 'basket.html';
+    });
+  }
+
+  updateSubtotal();
 }
 
 function getCart() {
@@ -552,7 +664,7 @@ function showCheckoutRecommendations(onCheckout) {
     sectionHtml = compatIds.map(id => {
       const p = PRODUCT_DATA[id];
       if (!p) return '';
-      const img  = PRODUCT_RENDERS[id] || 'assets/Terminal renders/1.png';
+      const img  = PRODUCT_RENDERS[id] || 'assets/placeholder-terminal.svg';
       const desc = PRODUCT_DESCRIPTIONS[id] || '';
       const addAction = p.price !== null
         ? `<button class="am-btn-add" onclick="addToCart('${id}');">Add to basket</button>`
@@ -1046,6 +1158,12 @@ function renderCartBadge() {
 
 document.addEventListener('DOMContentLoaded', () => {
   renderCartBadge();
+
+  // Auto-init buy page accessories
+  if (document.getElementById('buy-accessories-wrapper')) {
+    var _buyParams = new URLSearchParams(window.location.search);
+    renderBuyPageAccessories(_buyParams.get('id'));
+  }
 
   // Open drawer on cart icon click
   const cartIcon = document.querySelector('[aria-label="Shopping cart"]');

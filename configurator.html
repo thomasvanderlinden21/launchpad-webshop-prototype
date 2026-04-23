@@ -532,7 +532,7 @@
               <span class="bg-[#277777] text-white text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide shadow-sm">Best match</span>
             </div>
             <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
-              <img id="rec-best-img" src="assets/Terminal renders/1.png" alt="" class="h-[180px] w-auto object-contain" />
+              <img id="rec-best-img" src="assets/placeholder-terminal.svg" alt="" class="h-[180px] w-auto object-contain" />
             </div>
             <div class="p-8 flex flex-col flex-1">
               <p id="rec-best-category" class="text-xs font-medium text-[#6b7676] mb-2"></p>
@@ -555,7 +555,7 @@
               <span class="bg-[#f5f7f7] text-[#121621] text-xs font-semibold px-4 py-1.5 rounded-full tracking-wide border border-[#e6ebeb]">Best alternative</span>
             </div>
             <div class="bg-[#f5f7f7] rounded-t-[10px] h-[220px] flex items-center justify-center">
-              <img id="rec-alt-img" src="assets/Terminal renders/2.png" alt="" class="h-[180px] w-auto object-contain" />
+              <img id="rec-alt-img" src="assets/placeholder-terminal.svg" alt="" class="h-[180px] w-auto object-contain" />
             </div>
             <div class="p-8 flex flex-col flex-1">
               <p id="rec-alt-category" class="text-xs font-medium text-[#6b7676] mb-2"></p>
@@ -583,7 +583,7 @@
         <div class="grid grid-cols-4 gap-5 mb-12">
           <a href="product.html?id=tap-on-mobile" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <img src="assets/Terminal renders/1.png" alt="Tap on Mobile" class="h-[80px] w-auto object-contain" />
+              <img src="assets/Terminal renders/Tap on mobile/Tap on mobile.png" alt="Tap on Mobile" class="h-[80px] w-auto object-contain" />
             </div>
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Mobile Terminal</p>
@@ -593,7 +593,7 @@
           </a>
           <a href="product.html?id=link-2500" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <img src="assets/Terminal renders/2.png" alt="Link/2500" class="h-[80px] w-auto object-contain" />
+              <img src="assets/Terminal renders/Link/link_2.png" alt="Link/2500" class="h-[80px] w-auto object-contain" />
             </div>
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Mobile Terminal</p>
@@ -603,7 +603,7 @@
           </a>
           <a href="product.html?id=ex4000" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <img src="assets/Terminal renders/3.png" alt="EX4000" class="h-[80px] w-auto object-contain" />
+              <img src="assets/placeholder-terminal.svg" alt="EX4000" class="h-[80px] w-auto object-contain" />
             </div>
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Portable Terminal</p>
@@ -613,7 +613,7 @@
           </a>
           <a href="product.html?id=saturn-1000f2" class="bg-white/[0.04] border border-white/[0.08] rounded-[12px] p-5 flex flex-col gap-4 hover:bg-white/[0.08] transition-colors group">
             <div class="h-[100px] bg-white/[0.04] rounded-[8px] flex items-center justify-center">
-              <img src="assets/Terminal renders/4.png" alt="Saturn 1000F2" class="h-[80px] w-auto object-contain" />
+              <img src="assets/Terminal renders/Saturn/1.png" alt="Saturn 1000F2" class="h-[80px] w-auto object-contain" />
             </div>
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Countertop Terminal</p>
@@ -644,10 +644,10 @@
   <script>
     // ── Product renders ──────────────────────────────────────────────────────────
     const PRODUCT_IMAGES = {
-      'tap-on-mobile':  'Tap on mobile.png',
-      'link-2500':      'assets/Terminal renders/2.png',
-      'ex4000':         'assets/Terminal renders/3.png',
-      'saturn-1000f2':  'assets/Terminal renders/4.png',
+      'tap-on-mobile':  'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
+      'link-2500':      'assets/Terminal renders/Link/link_2.png',
+      'ex4000':         'assets/placeholder-terminal.svg',
+      'saturn-1000f2':  'assets/Terminal renders/Saturn/1.png',
     };
 
     // ── Product data ─────────────────────────────────────────────────────────────
@@ -809,41 +809,118 @@
       updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
     });
 
+    // ── Cost model (based on real pricing data) ──────────────────────────────────
+    //
+    // Tap on Mobile:  1.68% on all txn, no hardware, no monthly fee
+    // Link/2500:      €149 hw / 24mo + €0.13/txn (domestic flat) + €60/yr compliance
+    // EX4000:         €199 hw / 24mo + €0.13/txn (domestic flat) + €60/yr compliance
+    // Saturn 1000F2:  €499 hw / 24mo + €96.60 SIM / 24mo + avg €24/mo service pkg
+    //                 + €5/mo compliance + 70% debit @€0.115/txn + 30% credit @1.10%
+    //
+    function estimateMonthlyCost(id, txn, spend) {
+      if (id === 'tap-on-mobile') {
+        // 1.68% on every transaction value
+        return txn * spend * 0.0168;
+      }
+      if (id === 'link-2500') {
+        // Fixed: hw amortised + compliance / Variable: flat €0.13 per txn
+        return (149 / 24) + (60 / 12) + txn * 0.13;
+      }
+      if (id === 'ex4000') {
+        // Same structure as Link but slightly higher hw cost
+        return (199 / 24) + (60 / 12) + txn * 0.13;
+      }
+      if (id === 'saturn-1000f2') {
+        // Fixed: hw + SIM + service package (avg yr1 free, yr2 €48 → €24/mo avg) + compliance
+        const fixed = (499 / 24) + (96.60 / 24) + 24 + 5;
+        // Variable: 70% debit at €0.115/txn, 30% credit at 1.10% of spend
+        const variable = 0.7 * txn * 0.115 + 0.3 * txn * spend * 0.011;
+        return fixed + variable;
+      }
+      return Infinity;
+    }
+
     // ── Recommendation scoring ───────────────────────────────────────────────────
     function getRecommendation(answers) {
-      const scores = { 'tap-on-mobile': 0, 'link-2500': 0, 'ex4000': 0, 'saturn-1000f2': 0 };
+      const { transactions: txn, avgSpend: spend, needsPrinter, businessTypes, paymentMethods } = answers;
+      const IDS = ['tap-on-mobile', 'link-2500', 'ex4000', 'saturn-1000f2'];
 
-      const hasPhysical = answers.businessTypes.includes('physical');
-      const hasPopup    = answers.businessTypes.includes('popup');
-      const hasOnlineBiz = answers.businessTypes.includes('online');
-      if (hasPhysical)  { scores['saturn-1000f2'] += 2; scores['ex4000'] += 2; scores['link-2500'] += 1; }
-      if (hasPopup)     { scores['link-2500'] += 2; scores['ex4000'] += 2; scores['tap-on-mobile'] += 1; }
-      if (hasOnlineBiz) { scores['tap-on-mobile'] += 2; scores['link-2500'] += 1; }
+      // Step 1 — cost-based score. Lower monthly cost → higher score (0–10 scale).
+      const costs = {};
+      IDS.forEach(id => { costs[id] = estimateMonthlyCost(id, txn, spend); });
+      const maxCost = Math.max(...Object.values(costs));
+      const minCost = Math.min(...Object.values(costs));
+      const range   = maxCost - minCost || 1;
+      const scores  = {};
+      IDS.forEach(id => { scores[id] = ((maxCost - costs[id]) / range) * 10; });
 
-      const hasTerminal = answers.paymentMethods.includes('terminal');
-      const hasLink     = answers.paymentMethods.includes('pay-by-link');
-      const hasOnline   = answers.paymentMethods.includes('online');
-      if (hasTerminal) { scores['link-2500'] += 2; scores['ex4000'] += 2; scores['saturn-1000f2'] += 2; }
-      if (hasLink)     { scores['tap-on-mobile'] += 3; scores['link-2500'] += 1; }
-      if (hasOnline)   { scores['ex4000'] += 2; scores['saturn-1000f2'] += 2; }
-      if (!hasTerminal && !hasOnline) { scores['tap-on-mobile'] += 3; }
+      // Step 2 — qualitative adjustments
+      const isPhysical    = businessTypes.includes('physical');
+      const isPopup       = businessTypes.includes('popup');
+      const isOnline      = businessTypes.includes('online');
+      const wantsTerminal = paymentMethods.includes('terminal');
 
-      const txn = answers.transactions;
-      if (txn < 1000)        { scores['tap-on-mobile'] += 3; scores['link-2500'] += 2; }
-      else if (txn < 5000)   { scores['link-2500'] += 3; scores['ex4000'] += 2; }
-      else if (txn < 12000)  { scores['ex4000'] += 3; scores['saturn-1000f2'] += 2; }
-      else                   { scores['saturn-1000f2'] += 4; scores['ex4000'] += 2; }
-
-      const spend = answers.avgSpend;
-      if (spend < 50)        { scores['tap-on-mobile'] += 1; }
-      else if (spend < 150)  { scores['link-2500'] += 2; }
-      else                   { scores['ex4000'] += 1; scores['saturn-1000f2'] += 2; }
-
-      if (answers.needsPrinter) {
-        scores['tap-on-mobile'] -= 10;
-        scores['link-2500'] += 2; scores['ex4000'] += 2; scores['saturn-1000f2'] += 2;
+      // Printer requirement — Tap and Link have no built-in printer
+      if (needsPrinter) {
+        scores['tap-on-mobile'] -= 20; // hard disqualifier
+        scores['link-2500']     -= 8;  // no printer
+        scores['ex4000']        += 2;  // built-in printer
+        scores['saturn-1000f2'] += 2;  // built-in high-speed printer
       } else {
+        scores['tap-on-mobile'] += 1;
+        scores['link-2500']     += 1;
+      }
+
+      // Mobility signals
+      if (isPopup && !isPhysical) {
+        // On the go → portable wins, countertop loses
+        scores['link-2500']     += 4;
+        scores['tap-on-mobile'] += 3;
+        scores['ex4000']        += 2;
+        scores['saturn-1000f2'] -= 4;
+      }
+      if (isPhysical && !isPopup) {
+        // Fixed counter → Saturn excels (always-on, fast printer, low debit fees)
+        scores['saturn-1000f2'] += 3;
+        scores['ex4000']        += 1;
+        scores['tap-on-mobile'] -= 1;
+      }
+      if (isPhysical && isPopup) {
+        // Both → mid-range portables fit best
+        scores['link-2500'] += 2;
+        scores['ex4000']    += 2;
+      }
+
+      // Payment channel preference
+      if (!wantsTerminal) {
+        scores['link-2500']     -= 6;
+        scores['ex4000']        -= 6;
+        scores['saturn-1000f2'] -= 8;
+        scores['tap-on-mobile'] += 4;
+      }
+
+      // Volume adjustments
+      if (txn < 300) {
+        // Very low volume → hardware investment hard to justify
         scores['tap-on-mobile'] += 2;
+        scores['saturn-1000f2'] -= 2;
+      }
+      if (txn >= 3000 && txn < 10000) {
+        scores['ex4000']    += 1;
+        scores['link-2500'] += 1;
+      }
+      if (txn >= 10000) {
+        // Saturn's flat debit fee (€0.115/txn) beats 1.68% or €0.13 at scale
+        scores['saturn-1000f2'] += 3;
+        scores['ex4000']        += 1;
+        scores['tap-on-mobile'] -= 4; // 1.68% becomes very expensive
+      }
+
+      // High avg spend — percentage fee (TOM 1.68%) gets costly vs flat fee
+      if (spend >= 100) {
+        scores['tap-on-mobile'] -= 2;
+        scores['link-2500']     += 1;
+        scores['ex4000']        += 1;
       }
 
       return Object.entries(scores).sort((a, b) => b[1] - a[1]).map(e => e[0]);
@@ -893,12 +970,12 @@
       `).join('');
     }
 
-    function renderCard(prefix, productId, product, isBest, answers) {
+    function renderCard(prefix, productId, product, isBest, answers, altId) {
       document.getElementById(`${prefix}-category`).textContent = product.category;
       document.getElementById(`${prefix}-name`).textContent     = product.name;
       document.getElementById(`${prefix}-price`).textContent    = product.price;
       document.getElementById(`${prefix}-detail`).href          = `product.html?id=${productId}`;
-      document.getElementById(`${prefix}-img`).src              = PRODUCT_IMAGES[productId] || 'assets/Terminal renders/1.png';
+      document.getElementById(`${prefix}-img`).src              = PRODUCT_IMAGES[productId] || 'assets/placeholder-terminal.svg';
       renderBullets(`${prefix}-bullets`, product.bullets);
 
       const addBtn = document.getElementById(`${prefix}-add`);
@@ -909,12 +986,23 @@
       if (isBest) {
         const savingsEl = document.getElementById('rec-best-savings');
         const savingsText = document.getElementById('rec-best-savings-text');
-        if (product.price === '€0') {
+        const txn = answers.transactions;
+        const spend = answers.avgSpend;
+        const bestCost = estimateMonthlyCost(productId, txn, spend);
+        const altCost = altId ? estimateMonthlyCost(altId, txn, spend) : Infinity;
+        const saving = altCost - bestCost;
+        if (bestCost === Infinity) {
           savingsEl.classList.add('hidden');
         } else {
-          const num = parseInt(product.price.replace('€', ''));
-          const monthly = Math.ceil(num / 12);
-          savingsText.innerHTML = `<strong>One-time payment</strong> &mdash; equivalent to ~€${monthly}/month over 12 months. No subscription.`;
+          savingsEl.classList.remove('hidden');
+          const bestStr = `~€${Math.round(bestCost).toLocaleString('nl-NL')}/month`;
+          const altStr  = `~€${Math.round(altCost).toLocaleString('nl-NL')}/month`;
+          const saveStr = `€${Math.round(saving).toLocaleString('nl-NL')}/month`;
+          if (saving > 5 && altId) {
+            savingsText.innerHTML = `<strong>${bestStr} at your volume</strong> &mdash; ${saveStr} cheaper than ${PRODUCTS[altId].name} (${altStr}).`;
+          } else {
+            savingsText.innerHTML = `<strong>${bestStr} estimated at your volume</strong> based on your transaction profile.`;
+          }
         }
       }
     }
@@ -929,7 +1017,7 @@
       document.getElementById('rec-summary-text').textContent = buildSummaryText(answers);
 
       // Render cards
-      renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers);
+      renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers, altId);
       renderCard('rec-alt',  altId,  PRODUCTS[altId],  false, answers);
 
       const resultEl = document.getElementById('result-section');

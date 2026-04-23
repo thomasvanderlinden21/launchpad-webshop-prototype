@@ -170,7 +170,7 @@
         <!-- Image -->
         <div class="w-[480px] flex-shrink-0">
           <div id="feature-a-img-wrap" class="bg-white rounded-[24px] h-[440px] flex items-center justify-center p-12 shadow-[0_2px_24px_rgba(0,0,0,0.05)] overflow-hidden">
-            <img id="feature-a-img" src="assets/Terminal renders/2.png" alt="" class="h-[320px] w-auto object-contain" />
+            <img id="feature-a-img" src="assets/placeholder-terminal.svg" alt="" class="h-[320px] w-auto object-contain" />
           </div>
         </div>
         <!-- Text -->
@@ -198,7 +198,7 @@
         <!-- Image -->
         <div class="w-[480px] flex-shrink-0">
           <div id="feature-b-img-wrap" class="bg-[#f7f9f9] rounded-[24px] h-[440px] flex items-center justify-center p-12 border border-[#ebebeb] overflow-hidden">
-            <img id="feature-b-img" src="assets/Terminal renders/3.png" alt="" class="h-[320px] w-auto object-contain" />
+            <img id="feature-b-img" src="assets/placeholder-terminal.svg" alt="" class="h-[320px] w-auto object-contain" />
           </div>
         </div>
       </div>
@@ -272,7 +272,7 @@
         name: 'Tap on Mobile',
         eyebrow: 'Tap on Mobile',
         tagline: 'Your phone is your payment terminal',
-        image: 'Tap on mobile.png',
+        image: 'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
         price: '€0',
         priceDisplay: '€0',
         heroDescription: 'No hardware. No setup. Accept contactless payments on any Android 12+ phone instantly — with zero upfront cost.',
@@ -298,7 +298,7 @@
             body: 'PCI-certified, end-to-end encryption, and built-in PIN support for larger amounts.',
           },
         ],
-        imageB: 'assets/tap-on-mobile-hero.png',
+        imageB: 'assets/Terminal renders/Tap on mobile/tap-on-mobile-hero.png',
         featureA: {
           eyebrow: 'Simplicity',
           title: 'Accept payments without a terminal',
@@ -335,7 +335,9 @@
         name: 'Link/2500',
         eyebrow: 'Link/2500',
         tagline: 'Lightweight payments, anywhere you go',
-        image: 'assets/Terminal renders/2.png',
+        image: 'assets/Terminal renders/Link/link_2.png',
+        renderA: 'assets/Terminal renders/Link/Link_1.png',
+        imageB2: 'assets/Terminal renders/Link/Link_3.png',
         price: '€79',
         priceDisplay: '€79',
         heroDescription: 'The compact go-anywhere terminal. Pocket-sized, always connected, and built for merchants on the move.',
@@ -393,7 +395,7 @@
         name: 'EX4000',
         eyebrow: 'EX4000',
         tagline: 'Power and portability in one',
-        image: 'assets/Terminal renders/3.png',
+        image: 'assets/placeholder-terminal.svg',
         price: '€238',
         priceDisplay: '€238',
         heroDescription: 'A 5.5" HD touchscreen, 12-hour battery, and built-in printer — all in a sleek mobile form factor built for high-volume use.',
@@ -449,7 +451,8 @@
         name: 'Saturn 1000F2',
         eyebrow: 'Saturn 1000F2',
         tagline: 'Built for the busiest counters',
-        image: 'assets/Terminal renders/4.png',
+        image: 'assets/Terminal renders/Saturn/1.png',
+        imageB2: 'assets/Terminal renders/Saturn/2.png',
         price: '€499',
         priceDisplay: '€499',
         heroDescription: 'High-performance countertop terminal. Plug-in powered, always on, and ready for non-stop retail environments.',
@@ -506,7 +509,7 @@
         name: 'Newland S30',
         eyebrow: 'Newland S30',
         tagline: '5G speed meets modern commerce',
-        image: 'assets/Terminal renders/2.png',
+        image: 'assets/placeholder-terminal.svg',
         price: '€449',
         priceDisplay: '€449',
         heroDescription: 'Future-proof mobile payments. Android 13, 5G connectivity, and a premium touchscreen in one powerful device.',
@@ -561,7 +564,7 @@
         name: 'Pay by Link',
         eyebrow: 'Pay by Link',
         tagline: 'Get paid without the hardware',
-        image: 'assets/Terminal renders/1.png',
+        image: 'assets/placeholder-terminal.svg',
         price: 'From €0',
         priceDisplay: 'From €0',
         heroDescription: 'Send a payment link by email or SMS. Your customer clicks, pays, and you are done — no terminal, no app, no friction.',
@@ -661,26 +664,33 @@
       `).join('');
 
       // Feature section A
-      if (p.imageA) {
-        const imgEl = document.getElementById('feature-a-img');
+      {
+        const imgEl  = document.getElementById('feature-a-img');
         const wrapEl = document.getElementById('feature-a-img-wrap');
-        imgEl.src = p.imageA;
-        imgEl.className = 'w-full h-full object-cover';
-        wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center');
+        if (p.imageA) {
+          imgEl.src = p.imageA;
+          imgEl.className = 'w-full h-full object-cover';
+          wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center');
+        } else {
+          imgEl.src = p.renderA || p.image;
+        }
       }
       document.getElementById('feature-a-eyebrow').textContent = p.featureA.eyebrow;
       document.getElementById('feature-a-title').textContent = p.featureA.title;
       document.getElementById('feature-a-body').textContent = p.featureA.body;
       renderBullets('feature-a-bullets', p.featureA.bullets);
 
-
       // Feature section B
-      if (p.imageB) {
-        const imgEl = document.getElementById('feature-b-img');
+      {
+        const imgEl  = document.getElementById('feature-b-img');
         const wrapEl = document.getElementById('feature-b-img-wrap');
-        imgEl.src = p.imageB;
-        imgEl.className = 'w-full h-full object-cover';
-        wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center', 'border');
+        if (p.imageB) {
+          imgEl.src = p.imageB;
+          imgEl.className = 'w-full h-full object-cover';
+          wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center', 'border');
+        } else {
+          imgEl.src = p.imageB2 || p.image;
+        }
       }
       document.getElementById('feature-b-eyebrow').textContent = p.featureB.eyebrow;
       document.getElementById('feature-b-title').textContent = p.featureB.title;
@@ -709,12 +719,12 @@
 
       // Related products
       const RELATED_IMAGES = {
-        'tap-on-mobile':  'Tap on mobile.png',
-        'link-2500':      'assets/Terminal renders/2.png',
-        'ex4000':         'assets/Terminal renders/3.png',
-        'saturn-1000f2':  'assets/Terminal renders/4.png',
-        'newland-s30':    'assets/Terminal renders/2.png',
-        'pay-by-link':    'assets/Terminal renders/1.png',
+        'tap-on-mobile':  'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
+        'link-2500':      'assets/Terminal renders/Link/link_2.png',
+        'ex4000':         'assets/placeholder-terminal.svg',
+        'saturn-1000f2':  'assets/Terminal renders/Saturn/1.png',
+        'newland-s30':    'assets/placeholder-terminal.svg',
+        'pay-by-link':    'assets/placeholder-terminal.svg',
       };
       const others = Object.keys(PRODUCTS).filter(k => k !== id);
       document.getElementById('related-products').innerHTML = others.map(k => `

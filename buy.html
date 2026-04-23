@@ -153,6 +153,15 @@
     </div>
   </section>
 
+  <!-- Compatible accessories section (shown only for Link/2500 and Saturn 1000F2) -->
+  <section id="buy-accessories-wrapper" class="hidden border-t border-black/[0.06]">
+    <div class="max-w-[1440px] mx-auto px-24 py-16">
+      <h2 id="buy-accessories-title" class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em] mb-1"></h2>
+      <p class="text-[14px] text-[#8a9696] mb-8">Designed to work seamlessly with your terminal.</p>
+      <div id="buy-accessories-list" class="flex flex-col gap-3"></div>
+    </div>
+  </section>
+
   <!-- Payment methods section -->
   <section class="border-t border-black/[0.06] bg-[#f7f9f9]">
     <div class="max-w-[1440px] mx-auto px-24 py-14">
@@ -161,13 +170,6 @@
     </div>
   </section>
 
-  <!-- Related products -->
-  <section class="border-t border-black/[0.06] py-16">
-    <div class="max-w-[1440px] mx-auto px-24">
-      <h2 class="text-[26px] font-semibold text-[#121621] tracking-[-0.02em] mb-10">Related Products</h2>
-      <div class="flex gap-5" id="related-products"></div>
-    </div>
-  </section>
 
   <!-- Footer -->
   <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12">
@@ -186,7 +188,7 @@
     const PRODUCTS = {
       'tap-on-mobile': {
         name: 'Tap on Mobile',
-        images: ['Tap on mobile.png'],
+        images: ['assets/Terminal renders/Tap on mobile/Tap on mobile.png'],
         price: '€0',
         priceDisplay: '€0',
         priceNote: 'No monthly or activation fees. From €0.13 per debit transaction.',
@@ -219,7 +221,7 @@
       },
       'link-2500': {
         name: 'Link/2500',
-        images: ['assets/Terminal renders/2.png'],
+        images: ['assets/Terminal renders/Link/Link_1.png', 'assets/Terminal renders/Link/link_2.png', 'assets/Terminal renders/Link/Link_3.png'],
         price: '€79',
         priceDisplay: '€79',
         priceNote: '+ EUR 0.038 per transaction',
@@ -241,7 +243,7 @@
       },
       'ex4000': {
         name: 'EX4000',
-        images: ['assets/Terminal renders/3.png'],
+        images: ['assets/placeholder-terminal.svg'],
         price: '€238',
         priceDisplay: '€238',
         priceNote: 'One-time payment. No subscriptions.',
@@ -261,7 +263,7 @@
       },
       'saturn-1000f2': {
         name: 'Saturn 1000F2',
-        images: ['assets/Terminal renders/4.png'],
+        images: ['assets/Terminal renders/Saturn/1.png', 'assets/Terminal renders/Saturn/2.png', 'assets/Terminal renders/Saturn/3.png', 'assets/Terminal renders/Saturn/4.png'],
         price: 499,
         priceDisplay: '€499',
         priceNote: 'Tailored pricing for your business.',
@@ -282,7 +284,7 @@
       },
       'newland-s30': {
         name: 'Newland S30',
-        images: ['assets/Terminal renders/2.png'],
+        images: ['assets/placeholder-terminal.svg'],
         price: '€449',
         priceDisplay: '€449',
         priceNote: 'One-time payment. No subscriptions.',
@@ -301,7 +303,7 @@
       },
       'pay-by-link': {
         name: 'Pay by Link',
-        images: ['assets/Terminal renders/1.png'],
+        images: ['assets/placeholder-terminal.svg'],
         price: 'From €0',
         priceDisplay: 'From €0',
         priceNote: 'Transaction fees apply.',
@@ -335,7 +337,7 @@
       document.getElementById('hero-description').textContent = p.heroDescription;
 
       // Build carousel from product images
-      const imgs = p.images || ['assets/Terminal renders/1.png'];
+      const imgs = p.images || ['assets/placeholder-terminal.svg'];
       document.getElementById('carousel-track').innerHTML = imgs.map(src => `
         <div class="min-w-full h-full flex items-center justify-center p-10">
           <img src="${src}" alt="${p.name}" class="h-[380px] w-auto object-contain product-image" />
@@ -405,24 +407,6 @@
         </div>
       `).join('');
 
-      // Related products
-      const PRODUCT_IMAGES = {
-        'tap-on-mobile':  'Tap on mobile.png',
-        'link-2500':      'assets/Terminal renders/2.png',
-        'ex4000':         'assets/Terminal renders/3.png',
-        'saturn-1000f2':  'assets/Terminal renders/4.png',
-        'newland-s30':    'assets/Terminal renders/2.png',
-        'pay-by-link':    'assets/Terminal renders/1.png',
-      };
-      const others = Object.keys(PRODUCTS).filter(k => k !== id);
-      document.getElementById('related-products').innerHTML = others.map(k => `
-        <a href="buy.html?id=${k}" class="flex flex-col gap-3 w-[172px] group">
-          <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[18px] h-[180px] flex items-center justify-center p-3 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-shadow">
-            <img src="${PRODUCT_IMAGES[k]}" alt="${PRODUCTS[k].name}" class="h-[140px] w-auto object-contain" />
-          </div>
-          <p class="text-[13px] text-[#525d5d] text-center font-medium">${PRODUCTS[k].name}</p>
-        </a>
-      `).join('');
     }
 
     // Carousel state — must be declared before render() runs
