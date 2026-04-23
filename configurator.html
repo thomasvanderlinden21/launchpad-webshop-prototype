@@ -618,7 +618,7 @@
             <div>
               <p class="text-[10px] font-medium text-[#6b7676] mb-1">Countertop Terminal</p>
               <p class="text-base font-semibold text-white mb-1">Saturn 1000F2</p>
-              <p class="text-sm text-[rgba(255,255,255,0.45)]">Contact sales</p>
+              <p class="text-sm text-[rgba(255,255,255,0.45)]">€499</p>
             </div>
           </a>
         </div>
@@ -676,7 +676,7 @@
       'saturn-1000f2': {
         name: 'Saturn 1000F2',
         category: 'Countertop Terminal',
-        price: 'Contact sales',
+        price: '€499',
         description: 'High-performance countertop terminal built for busy retail environments. Plug-in powered, fast, and always ready.',
         bullets: ['High-speed transaction processing', 'Large 7" colour display', 'Ethernet + Wi-Fi + optional 4G', 'Built-in high-speed printer'],
       }
@@ -902,18 +902,14 @@
       renderBullets(`${prefix}-bullets`, product.bullets);
 
       const addBtn = document.getElementById(`${prefix}-add`);
-      if (product.price === 'Contact sales') {
-        addBtn.textContent = 'Contact sales';
-      } else {
-        addBtn.textContent = `Add to basket`;
-        addBtn.onclick = () => addToCart(productId);
-      }
+      addBtn.textContent = `Add to basket`;
+      addBtn.onclick = () => addToCart(productId);
 
       // Savings box (best match only)
       if (isBest) {
         const savingsEl = document.getElementById('rec-best-savings');
         const savingsText = document.getElementById('rec-best-savings-text');
-        if (product.price === 'Contact sales' || product.price === '€0') {
+        if (product.price === '€0') {
           savingsEl.classList.add('hidden');
         } else {
           const num = parseInt(product.price.replace('€', ''));

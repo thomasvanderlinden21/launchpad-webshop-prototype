@@ -104,6 +104,30 @@
           </div>
         </div>
 
+        <!-- Link/2500 Accessories (shown when link-2500 is in cart) -->
+        <div id="link-accessories-section" class="hidden">
+          <div class="mb-6">
+            <div class="flex items-center gap-3 mb-1">
+              <h2 class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em]">Link/2500 Accessories</h2>
+              <span class="bg-[#277777]/10 text-[#277777] text-[12px] font-semibold px-3 py-1 rounded-full">For your terminal</span>
+            </div>
+            <p class="text-sm text-[#6b7676]">Designed specifically for the Link/2500 — protection, charging, and more.</p>
+          </div>
+          <div id="link-accessories-grid" class="grid grid-cols-3 gap-4 mb-8"></div>
+        </div>
+
+        <!-- Saturn 1000F2 Accessories (shown when saturn-1000f2 is in cart) -->
+        <div id="saturn-accessories-section" class="hidden">
+          <div class="mb-6">
+            <div class="flex items-center gap-3 mb-1">
+              <h2 class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em]">Saturn 1000F2 Accessories</h2>
+              <span class="bg-[#277777]/10 text-[#277777] text-[12px] font-semibold px-3 py-1 rounded-full">For your terminal</span>
+            </div>
+            <p class="text-sm text-[#6b7676]">Designed specifically for the Saturn 1000F2 — charging, paper rolls, and more.</p>
+          </div>
+          <div id="saturn-accessories-grid" class="grid grid-cols-3 gap-4 mb-8"></div>
+        </div>
+
         <!-- Complete your setup -->
         <div id="addons-section">
           <div class="mb-6">
@@ -392,6 +416,8 @@
       }
 
       updateSummary(cart);
+      renderLinkAccessoriesSection(cart);
+      renderSaturnAccessoriesSection(cart);
     }
 
     function updateSummary(cart) {

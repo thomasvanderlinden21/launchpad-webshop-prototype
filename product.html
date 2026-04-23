@@ -169,7 +169,7 @@
       <div class="flex items-center gap-20 reveal">
         <!-- Image -->
         <div class="w-[480px] flex-shrink-0">
-          <div class="bg-white rounded-[24px] h-[440px] flex items-center justify-center p-12 shadow-[0_2px_24px_rgba(0,0,0,0.05)]">
+          <div id="feature-a-img-wrap" class="bg-white rounded-[24px] h-[440px] flex items-center justify-center p-12 shadow-[0_2px_24px_rgba(0,0,0,0.05)] overflow-hidden">
             <img id="feature-a-img" src="assets/Terminal renders/2.png" alt="" class="h-[320px] w-auto object-contain" />
           </div>
         </div>
@@ -197,7 +197,7 @@
         </div>
         <!-- Image -->
         <div class="w-[480px] flex-shrink-0">
-          <div class="bg-[#f7f9f9] rounded-[24px] h-[440px] flex items-center justify-center p-12 border border-[#ebebeb]">
+          <div id="feature-b-img-wrap" class="bg-[#f7f9f9] rounded-[24px] h-[440px] flex items-center justify-center p-12 border border-[#ebebeb] overflow-hidden">
             <img id="feature-b-img" src="assets/Terminal renders/3.png" alt="" class="h-[320px] w-auto object-contain" />
           </div>
         </div>
@@ -298,6 +298,7 @@
             body: 'PCI-certified, end-to-end encryption, and built-in PIN support for larger amounts.',
           },
         ],
+        imageB: 'assets/tap-on-mobile-hero.png',
         featureA: {
           eyebrow: 'Simplicity',
           title: 'Accept payments without a terminal',
@@ -449,8 +450,8 @@
         eyebrow: 'Saturn 1000F2',
         tagline: 'Built for the busiest counters',
         image: 'assets/Terminal renders/4.png',
-        price: 'Contact sales',
-        priceDisplay: 'Contact sales',
+        price: '€499',
+        priceDisplay: '€499',
         heroDescription: 'High-performance countertop terminal. Plug-in powered, always on, and ready for non-stop retail environments.',
         highlights: [
           {
@@ -487,7 +488,7 @@
           bullets: ['7" colour customer display', 'Built-in high-speed thermal printer', 'Contactless, chip & PIN, magstripe'],
         },
         ctaHeadline: 'Enterprise-grade payments for retail',
-        ctaSub: 'Tailored pricing to fit your business.',
+        ctaSub: 'One-time purchase. No subscriptions.',
         payMethods: ['Contactless', 'Chip & PIN', 'Magnetic stripe', 'Apple Pay', 'Google Pay'],
         specs: [
           ['Connectivity', 'Ethernet, Wi-Fi, optional 4G'],
@@ -498,7 +499,7 @@
           ['Dimensions', '280 x 100 x 60 mm'],
           ['Weight', '680g'],
           ['Security', 'PCI PTS 6.x certified'],
-          ['Pricing', 'Contact sales team'],
+          ['Price', '€499 excl. VAT'],
         ]
       },
       'newland-s30': {
@@ -660,6 +661,13 @@
       `).join('');
 
       // Feature section A
+      if (p.imageA) {
+        const imgEl = document.getElementById('feature-a-img');
+        const wrapEl = document.getElementById('feature-a-img-wrap');
+        imgEl.src = p.imageA;
+        imgEl.className = 'w-full h-full object-cover';
+        wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center');
+      }
       document.getElementById('feature-a-eyebrow').textContent = p.featureA.eyebrow;
       document.getElementById('feature-a-title').textContent = p.featureA.title;
       document.getElementById('feature-a-body').textContent = p.featureA.body;
@@ -667,6 +675,13 @@
 
 
       // Feature section B
+      if (p.imageB) {
+        const imgEl = document.getElementById('feature-b-img');
+        const wrapEl = document.getElementById('feature-b-img-wrap');
+        imgEl.src = p.imageB;
+        imgEl.className = 'w-full h-full object-cover';
+        wrapEl.classList.remove('p-12', 'flex', 'items-center', 'justify-center', 'border');
+      }
       document.getElementById('feature-b-eyebrow').textContent = p.featureB.eyebrow;
       document.getElementById('feature-b-title').textContent = p.featureB.title;
       document.getElementById('feature-b-body').textContent = p.featureB.body;

@@ -262,8 +262,8 @@
       'saturn-1000f2': {
         name: 'Saturn 1000F2',
         images: ['assets/Terminal renders/4.png'],
-        price: 'Contact sales',
-        priceDisplay: 'Contact sales',
+        price: 499,
+        priceDisplay: '€499',
         priceNote: 'Tailored pricing for your business.',
         heroDescription: 'The Saturn 1000F2 is a high-performance countertop terminal built for busy retail environments. Plug-in powered and always on, it delivers fast, reliable payment processing for high-volume merchants.',
         payMethods: ['Contactless', 'Chip & PIN', 'Magnetic stripe', 'Apple Pay', 'Google Pay'],
@@ -277,7 +277,7 @@
           ['Dimensions', '280 x 100 x 60 mm'],
           ['Weight', '680g'],
           ['Security', 'PCI PTS 6.x certified'],
-          ['Pricing', 'Contact sales team'],
+          ['Price', '€499 excl. VAT'],
         ]
       },
       'newland-s30': {
@@ -388,18 +388,14 @@
 
       // Hero add button
       const addBtn = document.getElementById('hero-add-btn');
-      addBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : `Add to basket — ${p.price}`;
-      if (p.price !== 'Contact sales') {
-        addBtn.onclick = () => addToCart(id);
-      }
+      addBtn.textContent = `Add to basket — ${p.priceDisplay}`;
+      addBtn.onclick = () => addToCart(id);
 
       // Sticky bar
       document.getElementById('sticky-name').textContent = p.name;
       const stickyBtn = document.getElementById('sticky-add-btn');
-      stickyBtn.textContent = p.price === 'Contact sales' ? 'Contact sales' : 'Add to basket';
-      if (p.price !== 'Contact sales') {
-        stickyBtn.onclick = () => addToCart(id);
-      }
+      stickyBtn.textContent = 'Add to basket';
+      stickyBtn.onclick = () => addToCart(id);
 
       // Specs table
       document.getElementById('panel-specs').innerHTML = p.specs.map(row => `

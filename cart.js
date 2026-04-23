@@ -28,8 +28,8 @@ const PRODUCT_DATA = {
   },
   'saturn-1000f2': {
     name: 'Saturn 1000F2',
-    price: null,
-    priceLabel: 'Contact sales',
+    price: 499,
+    priceLabel: '€499',
     category: 'Countertop Terminal',
     image: 'img-saturn-1000f2.png',
     specs: { Connectivity: 'Ethernet + WiFi + USB', Printer: 'Included' }
@@ -82,6 +82,218 @@ const PRODUCT_RENDERS = {
   'pay-by-link':   'assets/Terminal renders/2.png',
 };
 
+const LINK2500_ACCESSORIES = [
+  {
+    id: 'link-protective-cover',
+    name: 'Protective Cover',
+    art: 'Art. 23406',
+    price: 19.95,
+    priceLabel: '€19.95',
+    image: "assets/Link recommendations /Link_2500 Protective Cover - Art 23406 - €19,95 excl.VAT 1.png",
+    desc: 'Slim-fit cover designed for the Link/2500. Protects against everyday drops and scratches.',
+  },
+  {
+    id: 'link-cover-lanyard',
+    name: 'Protective Cover + Lanyard',
+    art: 'Art. 23407',
+    price: 24.95,
+    priceLabel: '€24.95',
+    image: "assets/Link recommendations /Link_2500 Protective cover including lanyard - Art 23407 €24,95 excl.VAT 1.png",
+    desc: 'All-day protection with a lanyard so your terminal is always within reach.',
+  },
+  {
+    id: 'link-desktop-stand',
+    name: 'Desktop Stand + Cover',
+    art: 'Art. 23408',
+    price: 59.95,
+    priceLabel: '€59.95',
+    image: "assets/Link recommendations /Link_2500 Desktop stand including protective coevr - Art 23408 - €59,95 excl VAT 1.png",
+    desc: 'Transform your mobile terminal into a countertop setup. Includes protective cover.',
+  },
+  {
+    id: 'link-multi-charger',
+    name: 'Multi-Charger (3 terminals)',
+    art: 'Art. 23072',
+    price: 159.95,
+    priceLabel: '€159.95',
+    image: "assets/Link recommendations /Link_2500 Multi-Charger for 3 Terminals - Art 23072 - €159,95 excl.VAT 1.png",
+    desc: 'Charge up to 3 Link/2500 terminals simultaneously. Perfect for multi-terminal setups.',
+  },
+  {
+    id: 'link-usb-cable',
+    name: 'USB Cable (USB-A to USB-C 1.5m)',
+    art: 'Art. 23400',
+    price: 5.95,
+    priceLabel: '€5.95',
+    image: "assets/Link recommendations /Link_2500 USB Cable (USB-A to USB-C) 1.5m - Art 23400 - €5,95 excl VAT 1.png",
+    desc: '1.5m USB-A to USB-C cable for reliable daily charging.',
+  },
+  {
+    id: 'link-power-supply',
+    name: 'Power Supply (5V-1A USB-A)',
+    art: 'Art. 23402',
+    price: 7.95,
+    priceLabel: '€7.95',
+    image: "assets/Link recommendations /Link_2500 Multi-Charger for 3 Terminals - Art 23402 - €7,95 excl VAT  1.png",
+    desc: '5V 1A USB-A power supply for charging your Link/2500 terminal.',
+  },
+  {
+    id: 'link-battery',
+    name: 'Battery (1200mAh)',
+    art: 'Art. 23401',
+    price: 27.95,
+    priceLabel: '€27.95',
+    image: null,
+    desc: 'Genuine 1200mAh replacement battery. Always have a spare ready for busy days.',
+  },
+  {
+    id: 'link-payment-stickers',
+    name: 'Payment Stickers',
+    art: 'Art. N/A',
+    price: 0,
+    priceLabel: 'Free',
+    image: null,
+    desc: 'Contactless and card payment acceptance stickers for your counter or window.',
+  },
+];
+
+const SATURN1000F2_ACCESSORIES = [
+  {
+    id: 'saturn-paper-rolls',
+    name: 'Paper Rolls (Pack of 20)',
+    art: 'Art. 20511',
+    price: 28.90,
+    priceLabel: '€28.90',
+    image: "assets/Saturn recommendations/Paper rolls for Saturn 1000F2 Portable — Art. 20511 — Pack of 20 paper rolls — €28.90 excl. VAT 1.png",
+    desc: 'Pack of 20 paper rolls for the Saturn 1000F2. Keep your receipt printing uninterrupted.',
+  },
+  {
+    id: 'saturn-battery',
+    name: 'Spare Battery',
+    art: 'Art. 22605',
+    price: 54.95,
+    priceLabel: '€54.95',
+    image: "assets/Saturn recommendations/Battery for Saturn 1000F2 Portable Saturn spare battery Art. 22605 54.95 EUR excluding VAT 1.png",
+    desc: 'Genuine Saturn 1000F2 spare battery. Always have a backup ready for busy shifts.',
+  },
+  {
+    id: 'saturn-power-adapter',
+    name: 'Power Adapter',
+    art: 'Art. 22610',
+    price: 12.95,
+    priceLabel: '€12.95',
+    image: "assets/Saturn recommendations/Power adapter for Saturn 1000F2 Portable charger for Saturn Art. 22610 12.95 EUR excluding VAT 1.png",
+    desc: 'Compact power adapter for direct charging of your Saturn 1000F2.',
+  },
+  {
+    id: 'saturn-charging-station',
+    name: 'Charging Station',
+    art: 'Art. 22601',
+    price: 39.95,
+    priceLabel: '€39.95',
+    image: "assets/Saturn recommendations/Charging station for Saturn 1000F2 Portable Saturn charging station Art. 22601 39.95 EUR excluding VAT 1.png",
+    desc: 'Desktop charging station. Keeps your Saturn 1000F2 ready and prominently positioned at your counter.',
+  },
+  {
+    id: 'saturn-power-adapter-dock',
+    name: 'Power Adapter (Dock)',
+    art: 'Art. 22606',
+    price: 34.95,
+    priceLabel: '€34.95',
+    image: "assets/Saturn recommendations/Power adapter for Saturn 1000F2 Portable charging station Saturn charging station Art. 22606 34.95 EUR excluding VAT 1.png",
+    desc: 'Power adapter for the Saturn 1000F2 charging station dock.',
+  },
+  {
+    id: 'saturn-eu-power-cable',
+    name: 'EU Power Cable',
+    art: 'Art. 22603',
+    price: 9.95,
+    priceLabel: '€9.95',
+    image: "assets/Saturn recommendations/EU power cable for Saturn 1000F2 Portable charging station Saturn charging station Art. 22603 9.95 EUR excluding VAT 1.png",
+    desc: 'EU-standard power cable for the Saturn 1000F2 charging station.',
+  },
+];
+
+// Renders the Link/2500 accessories section on the basket page
+function renderLinkAccessoriesSection(cart) {
+  const linkSection = document.getElementById('link-accessories-section');
+  if (!linkSection) return;
+
+  const hasLink2500 = cart.some(i => i.id === 'link-2500' && !i.addonId);
+  linkSection.classList.toggle('hidden', !hasLink2500);
+  if (!hasLink2500) return;
+
+  const cartAddonIds = new Set(cart.filter(i => i.addonId).map(i => i.addonId));
+  const linkGrid = document.getElementById('link-accessories-grid');
+  if (!linkGrid) return;
+
+  linkGrid.innerHTML = LINK2500_ACCESSORIES.map(a => {
+    const inCart = cartAddonIds.has(a.id);
+    const imgHtml = a.image
+      ? `<img src="${a.image}" alt="${a.name}" class="w-full h-full object-contain p-2" />`
+      : `<div class="w-full h-full flex items-center justify-center"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="#c8d0d0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg></div>`;
+    const safeId    = a.id;
+    const safeName  = a.name.replace(/'/g, "\\'");
+    const safeImg   = a.image ? a.image.replace(/'/g, "\\'") : '';
+    const imgArg    = a.image ? `'${safeImg}'` : 'null';
+    const btnHtml = inCart
+      ? `<span class="text-[13px] font-medium text-[#277777] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Added</span>`
+      : `<button onclick="addAddonToCart('${safeId}','${safeName}',${a.price},'${a.priceLabel}',${imgArg}); if(window.renderBasket) renderBasket();" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>`;
+    return `
+      <div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3${inCart ? ' opacity-60' : ''}">
+        <div class="w-full h-[120px] bg-[#f5f7f7] rounded-[12px] overflow-hidden">${imgHtml}</div>
+        <div class="flex-1">
+          <p class="text-base font-medium text-[#121621]">${a.name}</p>
+          <p class="text-[11px] text-[#8a9696] mt-0.5 mb-1">${a.art}</p>
+          <p class="text-sm text-[#6b7676]">${a.desc}</p>
+        </div>
+        <div class="flex items-center justify-between mt-auto pt-2">
+          <span class="text-base font-semibold text-[#121621]">${a.priceLabel}</span>
+          ${btnHtml}
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// Renders the Saturn 1000F2 accessories section on the basket page
+function renderSaturnAccessoriesSection(cart) {
+  const saturnSection = document.getElementById('saturn-accessories-section');
+  if (!saturnSection) return;
+
+  const hasSaturn = cart.some(i => i.id === 'saturn-1000f2' && !i.addonId);
+  saturnSection.classList.toggle('hidden', !hasSaturn);
+  if (!hasSaturn) return;
+
+  const cartAddonIds = new Set(cart.filter(i => i.addonId).map(i => i.addonId));
+  const saturnGrid = document.getElementById('saturn-accessories-grid');
+  if (!saturnGrid) return;
+
+  saturnGrid.innerHTML = SATURN1000F2_ACCESSORIES.map(function(a) {
+    const inCart = cartAddonIds.has(a.id);
+    const imgHtml = a.image
+      ? '<img src="' + a.image + '" alt="' + a.name + '" class="w-full h-full object-contain p-2" />'
+      : '<div class="w-full h-full flex items-center justify-center"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="#c8d0d0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg></div>';
+    const safeId    = a.id;
+    const safeName  = a.name.replace(/'/g, "\\'");
+    const safeImg   = a.image ? a.image.replace(/'/g, "\\'") : '';
+    const imgArg    = a.image ? ("'" + safeImg + "'") : 'null';
+    const btnHtml = inCart
+      ? '<span class="text-[13px] font-medium text-[#277777] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Added</span>'
+      : '<button onclick="addAddonToCart(\'' + safeId + '\',\'' + safeName + '\',' + a.price + ',\'' + a.priceLabel + '\',' + imgArg + '); if(window.renderBasket) renderBasket();" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>';
+    return '<div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3' + (inCart ? ' opacity-60' : '') + '">'
+      + '<div class="w-full h-[120px] bg-[#f5f7f7] rounded-[12px] overflow-hidden">' + imgHtml + '</div>'
+      + '<div class="flex-1">'
+      + '<p class="text-base font-medium text-[#121621]">' + a.name + '</p>'
+      + '<p class="text-[11px] text-[#8a9696] mt-0.5 mb-1">' + a.art + '</p>'
+      + '<p class="text-sm text-[#6b7676]">' + a.desc + '</p>'
+      + '</div>'
+      + '<div class="flex items-center justify-between mt-auto pt-2">'
+      + '<span class="text-base font-semibold text-[#121621]">' + a.priceLabel + '</span>'
+      + btnHtml
+      + '</div></div>';
+  }).join('');
+}
+
 function getCart() {
   try { return JSON.parse(localStorage.getItem(CART_KEY)) || []; } catch { return []; }
 }
@@ -107,11 +319,11 @@ function addToCart(productId) {
   showAddedModal(productId);
 }
 
-function addAddonToCart(addonId, name, price, priceLabel) {
+function addAddonToCart(addonId, name, price, priceLabel, image) {
   const cart = getCart();
   const existing = cart.find(i => i.addonId === addonId);
   if (existing) { existing.qty += 1; } else {
-    cart.push({ id: addonId, addonId, name, price, priceLabel, image: 'img-terminal.png', category: 'Add-on', specs: {}, qty: 1 });
+    cart.push({ id: addonId, addonId, name, price, priceLabel, image: image || 'img-terminal.png', category: 'Add-on', specs: {}, qty: 1 });
   }
   saveCart(cart);
   animateCartIcon();
@@ -277,37 +489,95 @@ function showCheckoutRecommendations(onCheckout) {
   const existing = document.getElementById('added-modal-overlay');
   if (existing) existing.remove();
 
-  // Pick compatible products based on first terminal in cart
   const cart = getCart();
-  const firstTerminal = cart.find(i => !i.addonId);
-  const refId = firstTerminal ? firstTerminal.id : null;
-  const cartIds = new Set(cart.map(i => i.id));
-  const compatIds = (refId ? (COMPATIBLE[refId] || []) : Object.values(COMPATIBLE)[0] || [])
-    .filter(id => !cartIds.has(id))
-    .slice(0, 2);
+  const cartAddonIds = new Set(cart.filter(i => i.addonId).map(i => i.addonId));
+  const hasLink2500  = cart.some(i => i.id === 'link-2500'     && !i.addonId);
+  const hasSaturn    = cart.some(i => i.id === 'saturn-1000f2' && !i.addonId);
 
-  const compatHtml = compatIds.map(id => {
-    const p = PRODUCT_DATA[id];
-    if (!p) return '';
-    const img  = PRODUCT_RENDERS[id] || 'assets/Terminal renders/1.png';
-    const desc = PRODUCT_DESCRIPTIONS[id] || '';
-    const addAction = p.price !== null
-      ? `<button class="am-btn-add" onclick="addToCart('${id}');">Add to basket</button>`
-      : `<a href="buy.html?id=${id}" class="am-btn-add" style="text-decoration:none;display:inline-flex;align-items:center;">Get a quote</a>`;
-    return `
-      <div class="am-product">
-        <div class="am-product-img"><img src="${img}" alt="${p.name}" /></div>
-        <div class="am-product-body">
-          <div class="am-product-name">${p.name}</div>
-          <div class="am-product-desc">${desc}</div>
-          <div class="am-product-price">${p.priceLabel}</div>
-          <div class="am-product-actions">
-            ${addAction}
-            <a href="product.html?id=${id}" class="am-btn-info">More info</a>
+  let sectionHtml = '';
+
+  if (hasLink2500) {
+    // Show Link/2500 accessories not already in cart (top 3)
+    const toShow = LINK2500_ACCESSORIES.filter(a => !cartAddonIds.has(a.id)).slice(0, 3);
+    if (toShow.length) {
+      sectionHtml = toShow.map(function(a) {
+        const imgHtml = a.image
+          ? '<img src="' + a.image + '" alt="' + a.name + '" style="width:90px;height:90px;object-fit:contain;" />'
+          : '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8d0d0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg>';
+        const safeId   = a.id;
+        const safeName = a.name.replace(/'/g, "\\'");
+        const imgArg   = a.image ? ("'" + a.image.replace(/'/g, "\\'") + "'") : 'null';
+        return '<div class="am-product">'
+          + '<div class="am-product-img">' + imgHtml + '</div>'
+          + '<div class="am-product-body">'
+          + '<div class="am-product-name">' + a.name + '</div>'
+          + '<div class="am-product-desc" style="color:#8a9696;font-size:12px;margin-bottom:4px;">' + a.art + '</div>'
+          + '<div class="am-product-desc">' + a.desc + '</div>'
+          + '<div class="am-product-price">' + a.priceLabel + '</div>'
+          + '<div class="am-product-actions">'
+          + '<button class="am-btn-add" onclick="addAddonToCart(\'' + safeId + '\',\'' + safeName + '\',' + a.price + ',\'' + a.priceLabel + '\',' + imgArg + ');">Add to basket</button>'
+          + '</div></div></div>';
+      }).join('');
+    }
+  } else if (hasSaturn) {
+    const toShow = SATURN1000F2_ACCESSORIES.filter(function(a) { return !cartAddonIds.has(a.id); }).slice(0, 3);
+    if (toShow.length) {
+      sectionHtml = toShow.map(function(a) {
+        const imgHtml = a.image
+          ? '<img src="' + a.image + '" alt="' + a.name + '" style="width:90px;height:90px;object-fit:contain;" />'
+          : '<svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#c8d0d0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg>';
+        const safeId   = a.id;
+        const safeName = a.name.replace(/'/g, "\\'");
+        const imgArg   = a.image ? ("'" + a.image.replace(/'/g, "\\'") + "'") : 'null';
+        return '<div class="am-product">'
+          + '<div class="am-product-img">' + imgHtml + '</div>'
+          + '<div class="am-product-body">'
+          + '<div class="am-product-name">' + a.name + '</div>'
+          + '<div class="am-product-desc" style="color:#8a9696;font-size:12px;margin-bottom:4px;">' + a.art + '</div>'
+          + '<div class="am-product-desc">' + a.desc + '</div>'
+          + '<div class="am-product-price">' + a.priceLabel + '</div>'
+          + '<div class="am-product-actions">'
+          + '<button class="am-btn-add" onclick="addAddonToCart(\'' + safeId + '\',\'' + safeName + '\',' + a.price + ',\'' + a.priceLabel + '\',' + imgArg + ');">Add to basket</button>'
+          + '</div></div></div>';
+      }).join('');
+    }
+  } else {
+    // Show compatible terminal products
+    const firstTerminal = cart.find(i => !i.addonId);
+    const refId = firstTerminal ? firstTerminal.id : null;
+    const cartIds = new Set(cart.map(i => i.id));
+    const compatIds = (refId ? (COMPATIBLE[refId] || []) : [])
+      .filter(id => !cartIds.has(id))
+      .slice(0, 2);
+    sectionHtml = compatIds.map(id => {
+      const p = PRODUCT_DATA[id];
+      if (!p) return '';
+      const img  = PRODUCT_RENDERS[id] || 'assets/Terminal renders/1.png';
+      const desc = PRODUCT_DESCRIPTIONS[id] || '';
+      const addAction = p.price !== null
+        ? `<button class="am-btn-add" onclick="addToCart('${id}');">Add to basket</button>`
+        : `<a href="buy.html?id=${id}" class="am-btn-add" style="text-decoration:none;display:inline-flex;align-items:center;">Get a quote</a>`;
+      return `
+        <div class="am-product">
+          <div class="am-product-img"><img src="${img}" alt="${p.name}" /></div>
+          <div class="am-product-body">
+            <div class="am-product-name">${p.name}</div>
+            <div class="am-product-desc">${desc}</div>
+            <div class="am-product-price">${p.priceLabel}</div>
+            <div class="am-product-actions">
+              ${addAction}
+              <a href="product.html?id=${id}" class="am-btn-info">More info</a>
+            </div>
           </div>
-        </div>
-      </div>`;
-  }).join('');
+        </div>`;
+    }).join('');
+  }
+
+  const subHeading = hasLink2500
+    ? 'Complete your Link/2500 setup with the right accessories.'
+    : hasSaturn
+    ? 'Complete your Saturn 1000F2 setup with the right accessories.'
+    : 'Customers who bought this also added these to their order.';
 
   const overlay = document.createElement('div');
   overlay.id = 'added-modal-overlay';
@@ -316,13 +586,13 @@ function showCheckoutRecommendations(onCheckout) {
       <button class="am-close" onclick="hideAddedModal()" aria-label="Close">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
-      ${compatHtml ? `
+      ${sectionHtml ? `
       <div class="am-top" style="padding-bottom:28px;border-bottom:1px solid #f0f0f0;">
         <h2 class="am-heading" style="margin-bottom:6px;">Before you check out</h2>
-        <p class="am-sub" style="margin-bottom:0;">Customers who bought this also added these to their order.</p>
+        <p class="am-sub" style="margin-bottom:0;">${subHeading}</p>
       </div>
       <div class="am-compatible">
-        ${compatHtml}
+        ${sectionHtml}
       </div>
       <div class="am-checkout-footer">
         <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
