@@ -84,25 +84,7 @@
           <a href="index.html" class="text-[#277777] underline text-base">Browse terminals</a>
         </div>
 
-        <!-- AI upsell card -->
-        <div id="upsell-card" class="bg-[#f7f9f9] border border-black/[0.06] rounded-[16px] p-6 hidden">
-          <div class="flex gap-5 items-start">
-            <div class="w-14 h-14 rounded-full bg-[#6b7676] flex items-center justify-center flex-shrink-0">
-              <svg class="w-7 h-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 3l14 9-14 9V3z"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6M12 9v6"/></svg>
-            </div>
-            <div class="flex-1">
-              <div class="flex items-center gap-2 mb-1.5">
-                <p class="text-[18px] font-medium text-[#121621]">Optimize your counter setup</p>
-                <span class="bg-[#6b7676] text-white text-xs font-medium px-2 py-0.5 rounded-full">AI</span>
-              </div>
-              <p class="text-sm text-[#6b7676] mb-4">Complete your countertop solution with a premium docking stand and receipt printer for a professional checkout experience.</p>
-              <div class="flex gap-3 flex-wrap">
-                <button onclick="addAddonToCart('docking-stand','Premium Docking Stand',49,'€49')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add Premium Docking Stand</button>
-                <button onclick="addAddonToCart('receipt-printer','Thermal Receipt Printer',149,'€149')" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add Thermal Receipt Printer</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <div id="upsell-card" class="hidden"></div>
 
         <!-- Link/2500 Accessories (shown when link-2500 is in cart) -->
         <div id="link-accessories-section" class="hidden">

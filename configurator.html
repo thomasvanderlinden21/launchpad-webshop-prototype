@@ -990,19 +990,12 @@
         const spend = answers.avgSpend;
         const bestCost = estimateMonthlyCost(productId, txn, spend);
         const altCost = altId ? estimateMonthlyCost(altId, txn, spend) : Infinity;
-        const saving = altCost - bestCost;
-        if (bestCost === Infinity) {
-          savingsEl.classList.add('hidden');
-        } else {
+        const saving = Math.round(altCost - bestCost);
+        if (saving > 0) {
           savingsEl.classList.remove('hidden');
-          const bestStr = `~€${Math.round(bestCost).toLocaleString('nl-NL')}/month`;
-          const altStr  = `~€${Math.round(altCost).toLocaleString('nl-NL')}/month`;
-          const saveStr = `€${Math.round(saving).toLocaleString('nl-NL')}/month`;
-          if (saving > 5 && altId) {
-            savingsText.innerHTML = `<strong>${bestStr} at your volume</strong> &mdash; ${saveStr} cheaper than ${PRODUCTS[altId].name} (${altStr}).`;
-          } else {
-            savingsText.innerHTML = `<strong>${bestStr} estimated at your volume</strong> based on your transaction profile.`;
-          }
+          savingsText.innerHTML = `<strong>€${saving.toLocaleString('nl-NL')} cheaper to run per month</strong> than ${PRODUCTS[altId].name}.`;
+        } else {
+          savingsEl.classList.add('hidden');
         }
       }
     }
