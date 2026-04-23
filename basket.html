@@ -128,12 +128,7 @@
           <div id="saturn-accessories-grid" class="grid grid-cols-3 gap-4 mb-8"></div>
         </div>
 
-        <!-- Complete your setup -->
-        <div id="addons-section">
-          <div class="mb-6">
-            <h2 class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em] mb-1">Complete your payment setup</h2>
-            <p class="text-sm text-[#6b7676]">Add hardware and services to enhance your terminal</p>
-          </div>
+        <div id="addons-section" class="hidden">
 
           <!-- Hardware -->
           <h3 class="text-[13px] font-semibold text-[#277777] mb-4">Hardware add-ons</h3>
@@ -356,16 +351,16 @@
           `<p class="text-sm text-[#121621] whitespace-nowrap"><span class="font-medium">${k}:</span> <span class="text-[#6b7676]">${v}</span></p>`
         ).join('');
         const productUrl = !item.addonId ? `product.html?id=${item.id}` : null;
-        const imgSrc     = item.image || 'img-terminal.png';
+        const imgSrc     = (typeof PRODUCT_RENDERS !== 'undefined' && PRODUCT_RENDERS[item.id]) || item.image || 'assets/placeholder-terminal.svg';
         el.innerHTML = `
           <div class="flex gap-6 items-start">
             <!-- Image -->
             ${productUrl
               ? `<a href="${productUrl}" class="w-32 h-32 bg-[#f5f7f7] rounded-[12px] flex items-center justify-center flex-shrink-0 overflow-hidden hover:opacity-80 transition-opacity">
-                   <img src="${imgSrc}" alt="${item.name}" class="h-[100px] w-auto object-contain" onerror="this.src='img-terminal.png'" />
+                   <img src="${imgSrc}" alt="${item.name}" class="h-[100px] w-auto object-contain" onerror="this.src='assets/placeholder-terminal.svg'" />
                  </a>`
               : `<div class="w-32 h-32 bg-[#f5f7f7] rounded-[12px] flex items-center justify-center flex-shrink-0 overflow-hidden">
-                   <img src="${imgSrc}" alt="${item.name}" class="h-[100px] w-auto object-contain" onerror="this.src='img-terminal.png'" />
+                   <img src="${imgSrc}" alt="${item.name}" class="h-[100px] w-auto object-contain" onerror="this.src='assets/placeholder-terminal.svg'" />
                  </div>`}
             <!-- Details -->
             <div class="flex-1 min-w-0">
