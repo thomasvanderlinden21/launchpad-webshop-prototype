@@ -773,19 +773,56 @@
         txnDefault = 800;   spendDefault = 75;
       }
 
-      // Volume modifiers — scale up or down based on size signals
+      // ── Multipliers: size + location ─────────────────────────────────────────────
+      let txnMult = 1.0, spendMult = 1.0;
+
+      // Size signals
+      if (/\b(small|tiny|startup|just started|solo|one.person|one man)\b/.test(text)) {
+        txnMult *= 0.4;
+      } else if (/\b(busy|large|high volume|chain|multiple locations|franchise)\b/.test(text)) {
+        txnMult *= 2.5;
+      }
+
+      // Named cities — premium / high-footfall cities raise both volume and spend
+      if (/\blondon\b/.test(text))                              { txnMult *= 1.8; spendMult *= 1.25; }
+      else if (/\bparis\b/.test(text))                          { txnMult *= 1.7; spendMult *= 1.2;  }
+      else if (/\b(zurich|zürich|geneva|genève)\b/.test(text))  { txnMult *= 1.5; spendMult *= 1.3;  }
+      else if (/\b(new york|nyc|manhattan)\b/.test(text))       { txnMult *= 1.8; spendMult *= 1.3;  }
+      else if (/\bdubai\b/.test(text))                          { txnMult *= 1.6; spendMult *= 1.4;  }
+      else if (/\b(amsterdam)\b/.test(text))                    { txnMult *= 1.5; spendMult *= 1.1;  }
+      else if (/\b(berlin|munich|münchen|hamburg|frankfurt)\b/.test(text)) { txnMult *= 1.4; spendMult *= 1.1; }
+      else if (/\b(barcelona|madrid)\b/.test(text))             { txnMult *= 1.4; spendMult *= 1.1;  }
+      else if (/\b(brussels|bruxelles|antwerp|antwerpen|ghent|gent)\b/.test(text)) { txnMult *= 1.3; spendMult *= 1.05; }
+      else if (/\b(rome|roma|milan|milano)\b/.test(text))       { txnMult *= 1.4; spendMult *= 1.1;  }
+      else if (/\b(rotterdam|the hague|den haag|utrecht|eindhoven)\b/.test(text)) { txnMult *= 1.2; }
+      else if (/\b(birmingham|manchester|glasgow|edinburgh|leeds|liverpool)\b/.test(text)) { txnMult *= 1.3; spendMult *= 1.05; }
+
+      // Generic location descriptors — use Math.max/min so they don't override named-city boosts
+      if (/city cent(er|re)|high street|main street|downtown|heart of the city|heart of/.test(text)) {
+        txnMult = Math.max(txnMult, 1.5);
+      }
+      if (/\b(airport|train station|central station)\b/.test(text)) {
+        txnMult = Math.max(txnMult, 2.2); spendMult = Math.max(spendMult, 1.15);
+      }
+      if (/shopping (mall|center|centre|arcade)/.test(text)) {
+        txnMult = Math.max(txnMult, 1.7);
+      }
+      if (/\b(suburb|suburban|residential area|residential street)\b/.test(text)) {
+        txnMult = Math.min(txnMult, 0.75);
+      }
+      if (/\b(small town|village|rural|countryside|outskirts)\b/.test(text)) {
+        txnMult = Math.min(txnMult, 0.5);
+      }
+
+      // Apply multipliers and update sliders
       if (txnDefault) {
-        if (/small|tiny|startup|just started|new|solo|one.person|one man/.test(text)) {
-          txnDefault = Math.round(txnDefault * 0.4);
-          spendDefault = spendDefault; // spend stays the same
-        } else if (/busy|large|high volume|chain|multiple|franchise/.test(text)) {
-          txnDefault = Math.round(txnDefault * 2.5);
-        }
-        document.getElementById('txn-slider').value = sliderFromTxn(txnDefault);
+        const adjusted = Math.round(txnDefault * txnMult);
+        document.getElementById('txn-slider').value = sliderFromTxn(adjusted);
         updateSlider('txn-slider', 'txn-tooltip', 'txn-label', formatTxn);
       }
       if (spendDefault) {
-        document.getElementById('spend-slider').value = Math.max(5, Math.min(500, spendDefault));
+        const adjusted = Math.max(5, Math.min(500, Math.round(spendDefault * spendMult)));
+        document.getElementById('spend-slider').value = adjusted;
         updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
       }
 
