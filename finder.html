@@ -364,12 +364,12 @@
           <span>20,000+</span>
         </div>
         <div class="relative mb-10 mt-6">
-          <input type="range" id="txn-slider" min="50" max="20000" step="50" value="5000" oninput="updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn)" />
-          <div id="txn-tooltip" class="slider-bubble" style="left: 24.9%;">5,000</div>
+          <input type="range" id="txn-slider" min="0" max="100" step="1" value="50" oninput="updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn)" />
+          <div id="txn-tooltip" class="slider-bubble" style="left: 50%;">1,000</div>
         </div>
         <div class="flex items-baseline gap-3">
-          <p id="txn-label" class="text-sm text-[#6b7676]">~5,000 transactions / month</p>
-          <p id="txn-day-label" class="text-sm text-[#aab5b5]">~167 / day</p>
+          <p id="txn-label" class="text-sm text-[#6b7676]">~1,000 transactions / month</p>
+          <p id="txn-day-label" class="text-sm text-[#aab5b5]">~33 / day</p>
         </div>
       </div>
     </div>
@@ -718,12 +718,18 @@
       return n >= 500 ? '€500+' : `€${n}`;
     }
 
+    const TXN_MIN = 50, TXN_MAX = 20000;
+    function txnFromSlider(pos) {
+      return Math.round(TXN_MIN * Math.pow(TXN_MAX / TXN_MIN, pos / 100));
+    }
+
     function updateSlider(sliderId, tooltipId, labelId, fmt) {
       const slider  = document.getElementById(sliderId);
       const tooltip = document.getElementById(tooltipId);
       const label   = document.getElementById(labelId);
       const pct = (slider.value - slider.min) / (slider.max - slider.min);
-      const val = parseInt(slider.value);
+      const rawVal = parseInt(slider.value);
+      const val = sliderId === 'txn-slider' ? txnFromSlider(rawVal) : rawVal;
       // Update track fill
       slider.style.background = `linear-gradient(to right, #277777 0%, #277777 ${pct * 100}%, #e6ebeb ${pct * 100}%, #e6ebeb 100%)`;
       // Position tooltip
@@ -875,7 +881,7 @@
       const answers = {
         businessTypes: [selections.businessType],
         paymentMethods: [selections.paymentMethod],
-        transactions:  parseInt(document.getElementById('txn-slider').value),
+        transactions:  txnFromSlider(parseInt(document.getElementById('txn-slider').value)),
         avgSpend:      parseInt(document.getElementById('spend-slider').value),
         needsPrinter:  selections.receipts === 'yes',
       };
@@ -966,7 +972,7 @@
         document.querySelector('[data-payment="terminal"]').click();
         document.querySelector('[data-payment="pay-by-link"]').click();
         document.querySelector('[data-group="receipts"][data-value="yes"]').click();
-        document.getElementById('txn-slider').value = 12000;
+        document.getElementById('txn-slider').value = 92; // ~12,000 txn on log scale
         document.getElementById('spend-slider').value = 22;
         updateSlider('txn-slider','txn-tooltip','txn-label',formatTxn);
         updateSlider('spend-slider','spend-tooltip','spend-label',formatSpend);
