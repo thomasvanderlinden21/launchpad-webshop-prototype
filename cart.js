@@ -1,11 +1,13 @@
 // ── Shared cart module ─────────────────────────────────────────────────────
 const CART_KEY = 'ws_cart';
 
+function fmt(n) { return '€' + Number(n).toFixed(2); }
+
 const PRODUCT_DATA = {
   'tap-on-mobile': {
     name: 'Tap on Mobile',
     price: 0,
-    priceLabel: '€0',
+    priceLabel: '€0.00',
     category: 'Mobile Terminal',
     image: 'assets/Terminal renders/Tap on mobile/Tap on mobile.png',
     specs: { Compatibility: 'Android 12+', Connectivity: 'Device WiFi / 4G', 'Card reader': 'NFC contactless', Printer: 'Not included', 'Monthly fee': 'None' }
@@ -13,7 +15,7 @@ const PRODUCT_DATA = {
   'link-2500': {
     name: 'Link/2500',
     price: 79,
-    priceLabel: '€79',
+    priceLabel: '€79.00',
     category: 'Mobile Terminal',
     image: 'assets/Terminal renders/Link/link_2.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Battery: '8 hours', Printer: 'Not included', Screen: '2.4"', Weight: '165g', OS: 'Android 10' }
@@ -21,7 +23,7 @@ const PRODUCT_DATA = {
   'ex4000': {
     name: 'EX4000',
     price: 238,
-    priceLabel: '€238',
+    priceLabel: '€238.00',
     category: 'Portable Terminal',
     image: 'assets/Terminal renders/axium ex4000/Axium EX4000 1.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Battery: 'Up to 12 hours', Printer: 'Built-in thermal', Screen: '5.5" HD touchscreen', Weight: '420g' }
@@ -29,7 +31,7 @@ const PRODUCT_DATA = {
   'saturn-1000f2': {
     name: 'Saturn 1000F2',
     price: 499,
-    priceLabel: '€499',
+    priceLabel: '€499.00',
     category: 'Countertop Terminal',
     image: 'assets/Terminal renders/Saturn/1.png',
     specs: { Connectivity: 'Ethernet, Wi-Fi, optional 4G', Power: 'Mains powered', Printer: 'Built-in high-speed thermal', Screen: '7" colour display', Security: 'PCI PTS 6.x' }
@@ -37,7 +39,7 @@ const PRODUCT_DATA = {
   'newland-s30': {
     name: 'Newland S30',
     price: 449,
-    priceLabel: '€449',
+    priceLabel: '€449.00',
     category: 'Mobile Terminal',
     image: 'assets/placeholder-terminal.svg',
     specs: { Connectivity: '5G/4G/3G/2G, Wi-Fi, Bluetooth', OS: 'Android 13', Printer: 'Built-in thermal', Security: 'PCI PTS certified' }
@@ -45,7 +47,7 @@ const PRODUCT_DATA = {
   'pay-by-link': {
     name: 'Pay by Link',
     price: 0,
-    priceLabel: 'From €0',
+    priceLabel: 'From €0.00',
     category: 'Digital',
     image: 'assets/placeholder-terminal.svg',
     specs: { Hardware: 'None required', Delivery: 'Email or SMS', Setup: 'Instant', Security: 'PCI DSS compliant' }
@@ -1026,16 +1028,6 @@ function showMiniCart() {
           Go to basket
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <div class="mc-trust">
-          <div class="mc-trust-item">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
-            Secure payment
-          </div>
-          <div class="mc-trust-item">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/></svg>
-            Next-day delivery
-          </div>
-        </div>
       </div>
     `;
     document.body.appendChild(popup);
@@ -1079,7 +1071,7 @@ function renderMiniCartContents() {
 
   document.getElementById('mini-cart-items').innerHTML = cart.map(item => {
     const lineTotal = item.price != null ? item.price * item.qty : null;
-    const priceStr  = lineTotal != null ? `€${lineTotal}` : item.priceLabel;
+    const priceStr  = lineTotal != null ? fmt(lineTotal) : item.priceLabel;
     const img       = item.image || 'img-terminal.png';
     const productUrl = `product.html?id=${item.id}`;
     const firstSpec  = Object.entries(item.specs || {})[0];
@@ -1120,10 +1112,10 @@ function renderMiniCartContents() {
   const total    = subtotal + vat + shipping;
 
   document.getElementById('mini-cart-totals').innerHTML = `
-    <div class="mc-pricing-row"><span>Subtotal</span><span>€${subtotal}</span></div>
-    <div class="mc-pricing-row"><span>VAT (20%)</span><span>€${vat}</span></div>
-    <div class="mc-pricing-row"><span>Shipping</span><span>€${shipping}</span></div>
-    <div class="mc-pricing-total"><span>Total</span><span>€${total}</span></div>
+    <div class="mc-pricing-row"><span>Subtotal</span><span>${fmt(subtotal)}</span></div>
+    <div class="mc-pricing-row"><span>VAT (20%)</span><span>${fmt(vat)}</span></div>
+    <div class="mc-pricing-row"><span>Shipping</span><span>${fmt(shipping)}</span></div>
+    <div class="mc-pricing-total"><span>Total</span><span>${fmt(total)}</span></div>
   `;
 }
 
