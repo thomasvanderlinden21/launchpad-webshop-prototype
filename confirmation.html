@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order confirmed – Webshop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="tokens.css" />
+  <script>
+  (function (m, a, z, e) {
+    var s, t, u, v;
+    try {
+      t = m.sessionStorage.getItem('maze-us');
+    } catch (err) {}
+    if (!t) {
+      t = new Date().getTime();
+      try {
+        m.sessionStorage.setItem('maze-us', t);
+      } catch (err) {}
+    }
+    u = document.currentScript || (function () {
+      var w = document.getElementsByTagName('script');
+      return w[w.length - 1];
+    })();
+    v = u && u.nonce;
+    s = a.createElement('script');
+    s.src = z + '?apiKey=' + e;
+    s.async = true;
+    if (v) s.setAttribute('nonce', v);
+    a.getElementsByTagName('head')[0].appendChild(s);
+    m.mazeUniversalSnippetApiKey = e;
+  })(window, document, 'https://snippet.maze.co/maze-universal-loader.js', '9228364a-fc17-41e8-a324-bd75dfce2eae');
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    @keyframes scaleIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+    .check-anim { animation: scaleIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both; }
+  </style>
+</head>
+<body class="bg-[#f5f7f7] text-[#121621] min-h-screen flex flex-col">
+
+  <!-- Nav -->
+  <header class="bg-white border-b border-black/[0.06] h-[72px] flex items-center px-24">
+    <a href="home.html" aria-label="Worldline" class="flex-shrink-0">
+      <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
+    </a>
+    <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-2 text-sm text-[#6b7676]">
+      <span class="text-[#277777] font-medium">Basket</span>
+      <svg class="w-4 h-4 text-[#c8d0d0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-[#277777] font-medium">Checkout</span>
+      <svg class="w-4 h-4 text-[#c8d0d0]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-[#121621] font-semibold">Confirmation</span>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 flex items-center justify-center py-20 px-8">
+    <div class="max-w-[520px] w-full text-center">
+
+      <!-- Check icon -->
+      <div class="check-anim w-20 h-20 rounded-full bg-[#277777] flex items-center justify-center mx-auto mb-8 shadow-[0_8px_32px_rgba(39,119,119,0.25)]">
+        <svg class="w-10 h-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+        </svg>
+      </div>
+
+      <h1 class="text-[36px] font-semibold text-[#121621] tracking-[-0.02em] leading-tight mb-3">Order confirmed!</h1>
+      <p class="text-base text-[#6b7676] leading-7 mb-2">Thank you for your order. You'll receive a confirmation email shortly with your order details and delivery information.</p>
+      <p class="text-[13px] text-[#9aa5a5] mb-10">Estimated delivery: <strong class="text-[#121621]">2–4 business days</strong></p>
+
+      <!-- Order reference -->
+      <div class="bg-white border border-[#e6ebeb] rounded-[12px] px-6 py-4 mb-10 inline-block">
+        <p class="text-[12px] text-[#9aa5a5] mb-1">Order reference</p>
+        <p class="text-[17px] font-semibold text-[#121621] tracking-wide">#WL-2026-08241</p>
+      </div>
+
+      <!-- Next steps -->
+      <div class="flex flex-col gap-3 text-left mb-10">
+        <div class="flex items-start gap-4 bg-white border border-[#e6ebeb] rounded-[12px] px-5 py-4">
+          <div class="w-8 h-8 rounded-full bg-[#e8f4f4] flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          </div>
+          <div>
+            <p class="text-[14px] font-semibold text-[#121621]">Confirmation email sent</p>
+            <p class="text-[13px] text-[#6b7676] mt-0.5">Check your inbox for your order summary and receipt.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-white border border-[#e6ebeb] rounded-[12px] px-5 py-4">
+          <div class="w-8 h-8 rounded-full bg-[#e8f4f4] flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"/></svg>
+          </div>
+          <div>
+            <p class="text-[14px] font-semibold text-[#121621]">Your terminal is being prepared</p>
+            <p class="text-[13px] text-[#6b7676] mt-0.5">We'll notify you with a tracking link once it ships.</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4 bg-white border border-[#e6ebeb] rounded-[12px] px-5 py-4">
+          <div class="w-8 h-8 rounded-full bg-[#e8f4f4] flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+          </div>
+          <div>
+            <p class="text-[14px] font-semibold text-[#121621]">24/7 support available</p>
+            <p class="text-[13px] text-[#6b7676] mt-0.5">Need help with setup or have a question? We're here.</p>
+          </div>
+        </div>
+      </div>
+
+      <a href="index.html" class="inline-flex items-center gap-2 h-11 px-7 rounded-[10px] bg-[#277777] text-white font-semibold text-[14px] hover:bg-[#1f5c5c] transition-colors">
+        Back to store
+      </a>
+
+    </div>
+  </main>
+
+</body>
+</html>

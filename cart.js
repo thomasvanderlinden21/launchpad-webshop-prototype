@@ -428,7 +428,7 @@ function addAddonToCart(addonId, name, price, priceLabel, image) {
   const cart = getCart();
   const existing = cart.find(i => i.addonId === addonId);
   if (existing) { existing.qty += 1; } else {
-    cart.push({ id: addonId, addonId, name, price, priceLabel, image: image || 'img-terminal.png', category: 'Add-on', specs: {}, qty: 1 });
+    cart.push({ id: addonId, addonId, name, price, priceLabel, image: image || 'assets/placeholder-terminal.svg', category: 'Add-on', specs: {}, qty: 1 });
   }
   saveCart(cart);
   animateCartIcon();
