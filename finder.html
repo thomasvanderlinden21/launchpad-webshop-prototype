@@ -564,6 +564,75 @@
 
   </div>
 
+  <!-- E-commerce result (shown instead of terminal recs for online businesses) -->
+  <div id="ecommerce-result" style="display:none">
+
+    <div class="bg-[#F5F8F7]">
+      <div class="max-w-[1100px] mx-auto px-16 py-20 flex flex-col items-center text-center">
+
+        <!-- Badge -->
+        <span class="text-[12px] font-semibold text-[#6b5b9e] bg-[#ede8f5] px-4 py-1.5 rounded-full mb-8 tracking-wide">E-commerce</span>
+
+        <!-- Heading -->
+        <h2 class="text-[44px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-5 max-w-[620px]">We've got your online business covered</h2>
+
+        <!-- Body -->
+        <p class="text-base text-[#6b7676] leading-7 mb-10 max-w-[520px]">Worldline biedt complete e-commerce betaaloplossingen — van hosted checkout tot volledige API-integraties. Gebouwd om te converteren en klaar om mee te schalen.</p>
+
+        <!-- Feature chips -->
+        <div class="flex flex-wrap items-center justify-center gap-3 mb-12">
+          <span class="flex items-center gap-2 text-[13px] font-medium text-[#525d5d] bg-white border border-[#e6ebeb] rounded-full px-4 py-2 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Hosted checkout
+          </span>
+          <span class="flex items-center gap-2 text-[13px] font-medium text-[#525d5d] bg-white border border-[#e6ebeb] rounded-full px-4 py-2 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Payment gateway API
+          </span>
+          <span class="flex items-center gap-2 text-[13px] font-medium text-[#525d5d] bg-white border border-[#e6ebeb] rounded-full px-4 py-2 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Recurring &amp; subscriptions
+          </span>
+          <span class="flex items-center gap-2 text-[13px] font-medium text-[#525d5d] bg-white border border-[#e6ebeb] rounded-full px-4 py-2 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            50+ betaalmethoden
+          </span>
+          <span class="flex items-center gap-2 text-[13px] font-medium text-[#525d5d] bg-white border border-[#e6ebeb] rounded-full px-4 py-2 shadow-sm">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            iDEAL, Klarna, Apple Pay &amp; meer
+          </span>
+        </div>
+
+        <!-- CTAs -->
+        <div class="flex items-center gap-4">
+          <a href="#" class="inline-flex items-center h-12 px-8 rounded-[10px] bg-[#277777] text-white font-semibold text-[15px] hover:bg-[#1f5c5c] transition-colors">
+            Sign up &amp; explore
+          </a>
+          <a href="#" class="inline-flex items-center gap-2 h-12 px-6 rounded-[10px] border border-[#d4d8d8] text-[#525d5d] font-medium text-[15px] hover:border-[#277777] hover:text-[#277777] transition-colors">
+            Learn more
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Dark bottom strip -->
+    <section class="bg-[#1b1c1e] py-16">
+      <div class="max-w-[1100px] mx-auto px-16 flex items-center justify-between gap-12">
+        <div>
+          <p class="text-[13px] font-semibold text-[#277777] mb-2">Ook fysiek aanwezig?</p>
+          <h3 class="text-[20px] font-medium text-white leading-tight mb-2">Combineert u online met een fysieke locatie?</h3>
+          <p class="text-sm text-[rgba(255,255,255,0.5)] max-w-[420px] leading-6">Dan kunt u beide werelden combineren. Bekijk onze betaalterminals voor in de winkel.</p>
+        </div>
+        <a href="index.html" class="flex-shrink-0 inline-flex items-center h-12 px-7 rounded-[8px] bg-white text-[#121621] font-medium text-[15px] hover:bg-gray-100 transition-colors shadow-[inset_0px_-2px_0px_0px_rgba(0,0,0,0.10)] whitespace-nowrap">
+          Bekijk terminals
+        </a>
+      </div>
+    </section>
+
+  </div>
+
   <!-- Footer -->
   <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12">
     <div class="max-w-[1440px] mx-auto px-24 flex items-center justify-between">
@@ -947,6 +1016,20 @@
 
     function showResult(ranked, answers) {
       lastAnswers = answers;
+      const resultEl = document.getElementById('result-section');
+      const ecomEl   = document.getElementById('ecommerce-result');
+
+      // Online-only business → show e-commerce page, no terminal recs
+      if (answers.businessTypes.includes('online') && !answers.businessTypes.includes('physical') && !answers.businessTypes.includes('popup')) {
+        ecomEl.style.display = 'block';
+        resultEl.classList.remove('visible');
+        setTimeout(() => ecomEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+        return;
+      }
+
+      // All other cases → hide ecom, show terminal recommendations
+      ecomEl.style.display = 'none';
+
       const [bestId, altId] = ranked;
 
       // AI summary bar
@@ -956,7 +1039,6 @@
       renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers, altId);
       renderCard('rec-alt',  altId,  PRODUCTS[altId],  false, answers);
 
-      const resultEl = document.getElementById('result-section');
       resultEl.classList.add('visible');
       setTimeout(() => resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     }
