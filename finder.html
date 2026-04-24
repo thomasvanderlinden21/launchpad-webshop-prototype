@@ -731,6 +731,64 @@
         if (card) selectOption(card);
       }
 
+      // ── Slider defaults based on industry ───────────────────────────────────────
+      // [transactions/month, avg spend €]
+      let txnDefault = null, spendDefault = null;
+
+      if (/coffee|café|cafe|barista|espresso|latte|cappuccino/.test(text)) {
+        txnDefault = 3000;  spendDefault = 8;
+      } else if (/bakery|bakker|bread|pastry|patisserie/.test(text)) {
+        txnDefault = 2000;  spendDefault = 12;
+      } else if (/fast food|takeaway|takeout|snackbar|burger|kebab|pizza/.test(text)) {
+        txnDefault = 3500;  spendDefault = 14;
+      } else if (/restaurant|bistro|brasserie|eatery|diner|dining/.test(text)) {
+        txnDefault = 2000;  spendDefault = 45;
+      } else if (/bar|pub|tavern|brewery|club/.test(text)) {
+        txnDefault = 2500;  spendDefault = 18;
+      } else if (/grocery|supermarket|hypermarket/.test(text)) {
+        txnDefault = 6000;  spendDefault = 38;
+      } else if (/convenience|corner store|kiosk|newsagent/.test(text)) {
+        txnDefault = 4000;  spendDefault = 22;
+      } else if (/pharmacy|chemist|drugstore|apotheek/.test(text)) {
+        txnDefault = 900;   spendDefault = 28;
+      } else if (/salon|barber|barbershop|beauty|spa|nail|hair/.test(text)) {
+        txnDefault = 350;   spendDefault = 55;
+      } else if (/gym|fitness|sport|yoga|pilates/.test(text)) {
+        txnDefault = 600;   spendDefault = 65;
+      } else if (/fashion|clothing|apparel|clothes|garment/.test(text)) {
+        txnDefault = 450;   spendDefault = 85;
+      } else if (/jewel|jewelry|jewellery|watch/.test(text)) {
+        txnDefault = 150;   spendDefault = 320;
+      } else if (/luxury|premium|high.end/.test(text)) {
+        txnDefault = 200;   spendDefault = 250;
+      } else if (/electronics|tech|gadget|computer|phone/.test(text)) {
+        txnDefault = 300;   spendDefault = 180;
+      } else if (/hotel|accommodation|bnb|bed and breakfast/.test(text)) {
+        txnDefault = 500;   spendDefault = 130;
+      } else if (/market|stall|festival|fair|craft/.test(text)) {
+        txnDefault = 400;   spendDefault = 32;
+      } else if (/florist|flower|gift|gift shop/.test(text)) {
+        txnDefault = 300;   spendDefault = 42;
+      } else if (/online|ecommerce|e-commerce|webshop|web shop/.test(text)) {
+        txnDefault = 800;   spendDefault = 75;
+      }
+
+      // Volume modifiers — scale up or down based on size signals
+      if (txnDefault) {
+        if (/small|tiny|startup|just started|new|solo|one.person|one man/.test(text)) {
+          txnDefault = Math.round(txnDefault * 0.4);
+          spendDefault = spendDefault; // spend stays the same
+        } else if (/busy|large|high volume|chain|multiple|franchise/.test(text)) {
+          txnDefault = Math.round(txnDefault * 2.5);
+        }
+        document.getElementById('txn-slider').value = sliderFromTxn(txnDefault);
+        updateSlider('txn-slider', 'txn-tooltip', 'txn-label', formatTxn);
+      }
+      if (spendDefault) {
+        document.getElementById('spend-slider').value = Math.max(5, Math.min(500, spendDefault));
+        updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
+      }
+
       // Scroll to first unanswered question
       const firstUnanswered = document.querySelector('.option-card:not(.selected)');
       if (firstUnanswered) {
@@ -796,6 +854,10 @@
     const TXN_MIN = 50, TXN_MAX = 20000;
     function txnFromSlider(pos) {
       return Math.round(TXN_MIN * Math.pow(TXN_MAX / TXN_MIN, pos / 100));
+    }
+    function sliderFromTxn(txn) {
+      const clamped = Math.max(TXN_MIN, Math.min(TXN_MAX, txn));
+      return Math.round(Math.log(clamped / TXN_MIN) / Math.log(TXN_MAX / TXN_MIN) * 100);
     }
 
     function updateSlider(sliderId, tooltipId, labelId, fmt) {
