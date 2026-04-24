@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="tokens.css" />
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
-  <script src="cart.js" defer></script>
   <style>
     body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
 
@@ -77,12 +76,12 @@
   </div>
 
   <!-- Hero section -->
-  <section class="max-w-[1440px] mx-auto px-24 py-20">
-    <div class="flex gap-20 items-start">
+  <section class="max-w-[1440px] mx-auto px-24 py-14">
+    <div class="flex gap-16 items-start">
 
-      <!-- Product image carousel -->
-      <div class="w-[500px] flex-shrink-0 fade-up">
-        <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[24px] h-[500px] overflow-hidden relative" id="carousel-track-wrap">
+      <!-- Product image carousel — sticky while reading right column -->
+      <div class="w-[460px] flex-shrink-0 fade-up sticky top-[128px]">
+        <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[24px] h-[460px] overflow-hidden relative" id="carousel-track-wrap">
           <div id="carousel-track" class="flex h-full" style="transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);"></div>
           <button onclick="carouselMove(-1)" aria-label="Previous" id="carousel-prev" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow flex items-center justify-center text-[#525d5d] hover:text-[#121621] hover:bg-white transition-colors">
             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
@@ -95,81 +94,82 @@
       </div>
 
       <!-- Content -->
-      <div class="flex-1 flex flex-col gap-5 pt-4 fade-up-1">
-        <p class="text-[13px] font-semibold text-[#277777] tracking-wide uppercase">Worldline</p>
-        <h1 id="hero-title" class="text-[40px] font-semibold text-[#121621] leading-tight tracking-[-0.03em]"></h1>
-        <div class="h-px bg-black/[0.06]"></div>
-        <p id="hero-description" class="text-[16px] text-[#6b7676] leading-[1.7]"></p>
+      <div class="flex-1 flex flex-col gap-5 fade-up-1">
 
-        <!-- Price -->
-        <div class="flex items-baseline gap-2.5">
-          <span id="price-display" class="text-[36px] font-semibold text-[#121621] tracking-[-0.03em]"></span>
-          <span id="price-note-inline" class="text-[14px] text-[#8a9696]"></span>
+        <!-- Title + price -->
+        <div class="flex items-start justify-between gap-6">
+          <h1 id="hero-title" class="text-[36px] font-semibold text-[#121621] leading-[1.1] tracking-[-0.03em]"></h1>
+          <div class="flex-shrink-0 text-right pt-1">
+            <div id="price-display" class="text-[26px] font-semibold text-[#121621] tracking-[-0.02em]"></div>
+            <div id="price-note-inline" class="text-[11px] text-[#8a9696] mt-0.5 leading-snug max-w-[140px] text-right"></div>
+          </div>
         </div>
 
-        <!-- Feature bullets -->
-        <ul id="feat-bullets-hero" class="flex flex-col gap-2.5"></ul>
+        <!-- Description -->
+        <p id="hero-description" class="text-[15px] text-[#6b7676] leading-[1.65]"></p>
 
-        <!-- Payment methods -->
-        <div>
-          <p class="text-[13px] text-[#8a9696] mb-2.5">Payment methods accepted</p>
-          <div id="pay-methods-hero" class="flex flex-wrap gap-2"></div>
+        <!-- USPs -->
+        <ul id="feat-bullets-hero" class="grid grid-cols-2 gap-x-6 gap-y-1.5"></ul>
+
+        <!-- Expansion panels -->
+        <div class="flex flex-col gap-2">
+          <div class="border border-[#e6ebeb] rounded-[10px] overflow-hidden">
+            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3.5 text-left bg-[#fafafa] hover:bg-[#f3f5f5] transition-colors">
+              <span class="text-[13px] font-semibold text-[#121621]">Specifications</span>
+              <svg class="w-4 h-4 text-[#8a9696] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="hero-specs-body" class="hidden border-t border-[#f0f2f2] px-4 pb-2 pt-1"></div>
+          </div>
+          <div id="hero-acc-wrap" class="hidden border border-[#e6ebeb] rounded-[10px] overflow-hidden">
+            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3.5 text-left bg-[#fafafa] hover:bg-[#f3f5f5] transition-colors">
+              <span class="text-[13px] font-semibold text-[#121621]">Accessories</span>
+              <svg class="w-4 h-4 text-[#8a9696] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div id="hero-acc-body" class="hidden border-t border-[#f0f2f2] px-4 pb-2 pt-1"></div>
+          </div>
         </div>
 
-        <!-- Buttons -->
-        <div class="flex items-center gap-3 pt-2">
-          <button id="hero-add-btn" class="h-12 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors whitespace-nowrap"></button>
-          <a id="hero-learn-link" href="#" class="inline-flex items-center gap-2 h-12 px-6 rounded-[8px] border border-[#d4d8d8] text-[#525d5d] font-medium text-[15px] hover:border-[#277777] hover:text-[#277777] transition-colors whitespace-nowrap">
+        <!-- CTA -->
+        <div class="flex items-center gap-3">
+          <button id="hero-add-btn" class="h-12 px-7 rounded-[10px] bg-[#277777] text-white font-semibold text-[15px] hover:bg-[#1f5c5c] transition-colors whitespace-nowrap"></button>
+          <a id="hero-learn-link" href="#" class="inline-flex items-center gap-2 h-12 px-6 rounded-[10px] border border-[#d4d8d8] text-[#525d5d] font-medium text-[15px] hover:border-[#277777] hover:text-[#277777] transition-colors whitespace-nowrap">
             Learn more
             <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
           </a>
         </div>
 
-        <!-- Trust badges -->
-        <div class="flex items-center gap-6 pt-4 border-t border-black/[0.06]">
-          <div class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-            <span class="text-[13px] text-[#525d5d]">PCI-certified security</span>
+        <!-- Trust signals -->
+        <div class="flex items-center justify-center gap-4 pt-3 border-t border-[#f0f2f2]">
+          <div class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            <span class="text-[12px] text-[#525d5d]">PCI-certified</span>
           </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-            <span class="text-[13px] text-[#525d5d]">Next-day payouts</span>
+          <div class="w-px h-3 bg-[#dde2e2]"></div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span class="text-[12px] text-[#525d5d]">Next-day payouts</span>
           </div>
-          <div class="flex items-center gap-2">
-            <svg class="w-4 h-4 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
-            <span class="text-[13px] text-[#525d5d]">Dedicated support</span>
+          <div class="w-px h-3 bg-[#dde2e2]"></div>
+          <div class="flex items-center gap-1.5">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+            <span class="text-[12px] text-[#525d5d]">Dedicated support</span>
           </div>
         </div>
+
       </div>
-
     </div>
   </section>
 
-  <!-- Specs section -->
+  <!-- FAQ section -->
   <section class="border-t border-black/[0.06]">
-    <div class="max-w-[1440px] mx-auto px-24 py-14">
-      <h2 class="text-[22px] font-semibold text-[#121621] tracking-[-0.015em] mb-10">Specifications</h2>
-      <div id="panel-specs" class="grid grid-cols-2 gap-x-24"></div>
-    </div>
-  </section>
-
-  <!-- Compatible accessories section (shown only for Link/2500 and Saturn 1000F2) -->
-  <section id="buy-accessories-wrapper" class="hidden border-t border-black/[0.06]">
     <div class="max-w-[1440px] mx-auto px-24 py-16">
-      <h2 id="buy-accessories-title" class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em] mb-1"></h2>
-      <p class="text-[14px] text-[#8a9696] mb-8">Designed to work seamlessly with your terminal.</p>
-      <div id="buy-accessories-list" class="flex flex-col gap-3"></div>
+      <div class="max-w-[720px] mx-auto">
+        <h2 class="text-[28px] font-semibold text-[#121621] tracking-[-0.02em] mb-2">Frequently asked questions</h2>
+        <p class="text-[15px] text-[#6b7676] mb-10">Everything you need to know before you order.</p>
+        <div id="faq-list" class="flex flex-col"></div>
+      </div>
     </div>
   </section>
-
-  <!-- Payment methods section -->
-  <section class="border-t border-black/[0.06] bg-[#f7f9f9]">
-    <div class="max-w-[1440px] mx-auto px-24 py-14">
-      <h2 class="text-[22px] font-semibold text-[#121621] tracking-[-0.015em] mb-8">Accepted payment methods</h2>
-      <div id="pay-methods-panel" class="flex flex-wrap gap-2"></div>
-    </div>
-  </section>
-
 
   <!-- Footer -->
   <footer class="bg-[#0d1117] border-t border-white/[0.06] py-12">
@@ -194,13 +194,13 @@
         priceNote: 'No monthly or activation fees. From €0.13 per debit transaction.',
         heroDescription: 'Accept cashless payments without a dedicated payment terminal. The Worldline Tap on Mobile app turns any Android 12+ device into a contactless payment terminal — no hardware investment, no monthly fees, and ready to go in minutes.',
         payMethods: ['Visa', 'Mastercard', 'Maestro', 'V Pay', 'Google Pay', 'Apple Pay'],
-        featBullets: [
-          'No upfront hardware cost — zero monthly or activation fees',
-          'NFC contactless payments with PIN support for amounts over €50',
-          'Digital receipts via email or QR code',
-          'Up to 5 devices per account',
-          'Next-business-day payouts',
-          'Built-in tip function',
+        featBullets: ['No hardware cost', 'No monthly fees', 'NFC + PIN support', 'Digital receipts', 'Up to 5 devices', 'Next-day payouts'],
+        faqs: [
+          { q: 'Which Android devices are supported?', a: 'Any Android 12 or higher device with NFC support. Most modern smartphones qualify — check our compatibility list in the app before downloading.' },
+          { q: 'Is there a transaction limit without a PIN?', a: 'Contactless payments up to €50 can be completed without a PIN. Above €50, the customer will be prompted to enter their PIN on your device\'s screen.' },
+          { q: 'How quickly do payouts land in my account?', a: 'Funds are settled the next business day directly to your registered bank account. No delays, no holds on standard transactions.' },
+          { q: 'Is there a monthly fee or contract?', a: 'No monthly fee, no contract, and no activation fee. You only pay per transaction — from €0.13 for domestic debit cards.' },
+          { q: 'What happens if my phone loses internet mid-transaction?', a: 'Transactions require an active internet connection. If the connection drops, the payment will not be processed and the customer can try again once connectivity is restored.' },
         ],
         specs: [
           ['Compatibility', 'Android 12+'],
@@ -228,6 +228,14 @@
         heroDescription: 'Lightweight, compact, mobile terminal ideal for retailers, caterers, service providers and businesses that accept payments on the go.',
         payMethods: ['Samsung Pay', 'Contactless', 'MasterCard', 'Visa', 'V-Pay', 'AMEX', 'Maestro', 'Diners Club'],
         featBullets: ['Compact & lightweight at 165 g', 'Touchscreen + physical keyboard', 'WiFi & 4G connectivity', 'Dynamic Currency Conversion'],
+        faqs: [
+          { q: 'Does the Link/2500 work without a WiFi connection?', a: 'Yes. The Link/2500 supports 4G/LTE so you can accept payments anywhere with mobile coverage — no WiFi required. It also connects to WiFi when available for faster processing.' },
+          { q: 'How long does the battery last on a single charge?', a: 'Up to 8 hours of active use on a full charge. For high-volume days we recommend adding a spare battery or charging cradle from our accessories range.' },
+          { q: 'Is a receipt printer included?', a: 'No, the Link/2500 does not have a built-in printer. Digital receipts can be sent via email or QR code. A compatible Bluetooth printer is available as an accessory.' },
+          { q: 'What are the transaction fees?', a: 'The terminal costs €79 as a one-time purchase, plus €0.038 per transaction. There are no monthly fees or minimum volume requirements.' },
+          { q: 'How long does delivery take?', a: 'Orders are typically dispatched within 1 business day and delivered within 2–3 business days across Europe.' },
+          { q: 'Can I use one account across multiple terminals?', a: 'Yes. You can manage multiple Link/2500 devices under a single Worldline business account, with unified reporting across all devices.' },
+        ],
         specs: [
           ['Price', 'EUR 79'],
           ['Cost per Transaction', 'EUR 0.038 per transaction'],
@@ -254,6 +262,13 @@
         heroDescription: 'The EX4000 combines a slim, lightweight form factor with a large 5.5" touchscreen and a 12-hour battery. Ideal for merchants who need a compact, full-featured terminal for high-volume mobile use.',
         payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
         featBullets: ['4G + WiFi dual connectivity', '12-hour battery life', 'Built-in receipt printer', '5.5" HD touchscreen display'],
+        faqs: [
+          { q: 'Does the EX4000 have a built-in receipt printer?', a: 'Yes, the EX4000 features a built-in high-speed thermal printer so you can hand customers a printed receipt immediately after every transaction.' },
+          { q: 'How long does the battery last?', a: 'Up to 12 hours on a full charge, making it suitable for full-day trading without needing a top-up. Charging is via USB-C.' },
+          { q: 'Does it work on 4G and WiFi?', a: 'Yes, it supports both 4G/LTE and WiFi simultaneously and automatically switches between them for the most reliable connection.' },
+          { q: 'What is included in the box?', a: 'The EX4000 comes with the terminal, a USB-C charging cable, a power adapter, and a quick-start guide. Paper rolls for the printer are sold separately.' },
+          { q: 'Is there a subscription or monthly fee?', a: 'No. The EX4000 is a one-time purchase at €238. Transaction fees apply per payment processed — contact us for your personalised rate.' },
+        ],
         specs: [
           ['Connectivity', '4G/LTE, Wi-Fi, Bluetooth'],
           ['Battery Life', 'Up to 12 hours'],
@@ -274,6 +289,14 @@
         heroDescription: 'The Saturn 1000F2 is a high-performance countertop terminal built for busy retail environments. Plug-in powered and always on, it delivers fast, reliable payment processing for high-volume merchants.',
         payMethods: ['Contactless', 'Chip & PIN', 'Magnetic stripe', 'Apple Pay', 'Google Pay'],
         featBullets: ['High-speed transaction processing', 'Built-in thermal printer', 'Large colour customer display', 'Plug-in powered — always on'],
+        faqs: [
+          { q: 'Does the Saturn 1000F2 need a dedicated internet line?', a: 'It connects via Ethernet (recommended for reliability) or WiFi. An optional 4G module is available if a fixed line isn\'t practical for your location.' },
+          { q: 'Can it print receipts?', a: 'Yes, the Saturn 1000F2 has a built-in high-speed thermal printer. It uses standard 57mm paper rolls, available from us or any office supply store.' },
+          { q: 'How difficult is the setup?', a: 'Setup typically takes under 30 minutes. Our team will preconfigure the terminal before it ships, and a step-by-step guide is included. Phone support is available if you need help.' },
+          { q: 'Is the 7" screen for the customer or the merchant?', a: 'The Saturn 1000F2 features a large colour display that faces the customer, showing the payment amount and prompting for PIN entry — reducing friction at checkout.' },
+          { q: 'What security certification does it hold?', a: 'The Saturn 1000F2 is PCI PTS 6.x certified, the highest current standard for payment terminal security.' },
+          { q: 'Is there a minimum contract period?', a: 'Pricing and contract terms are tailored to your business volume. Contact our sales team for a personalised quote with no obligation.' },
+        ],
         specs: [
           ['Connectivity', 'Ethernet, Wi-Fi, optional 4G'],
           ['Power', 'Plug-in (mains powered)'],
@@ -295,6 +318,12 @@
         heroDescription: 'The Newland S30 is a powerful Android 13 mobile terminal with 5G connectivity and a responsive touchscreen interface. Built for businesses that need speed, flexibility and the latest mobile network support.',
         payMethods: ['Contactless', 'Chip & PIN', 'Apple Pay', 'Google Pay', 'Samsung Pay'],
         featBullets: ['Android 13 operating system', '5G / 4G / 3G / 2G connectivity', 'Touchscreen interface', 'Built-in receipt printer'],
+        faqs: [
+          { q: 'What makes the Newland S30 different from other mobile terminals?', a: 'The S30 runs Android 13 and supports 5G, making it one of the fastest and most future-proof mobile terminals available. It\'s built for high-demand environments where speed and connectivity matter.' },
+          { q: 'Does it have a built-in printer?', a: 'Yes, the Newland S30 includes a built-in thermal receipt printer for instant printed receipts after every transaction.' },
+          { q: 'Is 5G required, or does it also work on 4G networks?', a: 'The S30 supports 5G, 4G, 3G, and 2G, so it works on any mobile network. 5G is used automatically when available for the fastest possible response times.' },
+          { q: 'Is there a monthly fee?', a: 'No — the Newland S30 is a one-time purchase at €449. Transaction fees apply per payment processed.' },
+        ],
         specs: [
           ['Operating System', 'Android 13'],
           ['Connectivity', '5G, 4G, 3G, 2G, Wi-Fi, Bluetooth'],
@@ -314,6 +343,13 @@
         heroDescription: 'Accept payments remotely without any hardware. Send a payment link via email or SMS and let your customers pay instantly from any device — supporting Apple Pay, Google Pay, and all major cards.',
         payMethods: ['Apple Pay', 'Google Pay', 'Visa', 'Mastercard', 'AMEX', 'Contactless'],
         featBullets: ['No hardware required', 'Send links via email or SMS', 'Apple Pay & Google Pay support', 'Works on any device'],
+        faqs: [
+          { q: 'How does Pay by Link work?', a: 'You generate a unique payment link from your Worldline dashboard and send it to your customer via email, SMS, or messaging app. The customer clicks the link, enters their payment details, and the payment is confirmed in seconds.' },
+          { q: 'Does the customer need to create an account to pay?', a: 'No. Customers pay as guests — no account or app download required. They simply click the link and pay with any supported card or digital wallet.' },
+          { q: 'How long is a payment link valid?', a: 'By default, links expire after 7 days. You can customise the expiry period in your dashboard, from a few hours to 30 days.' },
+          { q: 'Is there a limit on the payment amount?', a: 'Standard limits apply based on your account tier. Most businesses can process up to €10,000 per transaction. Higher limits are available on request.' },
+          { q: 'What happens if the customer doesn\'t pay?', a: 'You\'ll receive a notification when the link is viewed and when payment is completed or abandoned. Unpaid links simply expire — there are no charges for uncompleted payments.' },
+        ],
         specs: [
           ['Hardware', 'None required'],
           ['Delivery', 'Email or SMS'],
@@ -372,25 +408,7 @@
       document.getElementById('sticky-learn-link').href = learnUrl;
       document.getElementById('sticky-back-btn').href = learnUrl;
 
-      // Feature bullets
-      document.getElementById('feat-bullets-hero').innerHTML = p.featBullets.map(b => `
-        <li class="flex items-center gap-2">
-          <svg class="w-4 h-4 text-[#00b4aa] flex-shrink-0" viewBox="0 0 16 16" fill="none">
-            <path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="text-[14px] text-[#403e3c]">${b}</span>
-        </li>
-      `).join('');
 
-      // Payment methods (hero)
-      document.getElementById('pay-methods-hero').innerHTML = p.payMethods.map(m =>
-        `<span class="bg-white border border-[#e8e8e8] text-[#525d5d] text-[13px] px-3.5 py-1.5 rounded-full">${m}</span>`
-      ).join('');
-
-      // Payment methods (panel)
-      document.getElementById('pay-methods-panel').innerHTML = p.payMethods.map(m =>
-        `<span class="bg-white border border-[#e8e8e8] text-[#525d5d] text-[13px] px-3.5 py-1.5 rounded-full">${m}</span>`
-      ).join('');
 
       // Hero add button
       const addBtn = document.getElementById('hero-add-btn');
@@ -403,21 +421,75 @@
       stickyBtn.textContent = 'Add to basket';
       stickyBtn.onclick = () => addToCart(id);
 
-      // Specs table
-      document.getElementById('panel-specs').innerHTML = p.specs.map(row => `
-        <div class="flex items-center justify-between py-4 border-b border-black/[0.05]">
-          <span class="text-[14px] text-[#8a9696]">${row[0]}</span>
-          <span class="text-[14px] font-medium text-[#121621] text-right">${row[1]}</span>
-        </div>
-      `).join('');
+      // USPs
+      document.getElementById('feat-bullets-hero').innerHTML = p.featBullets.map(b =>
+        `<li class="flex items-center gap-2">
+           <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0" viewBox="0 0 16 16" fill="none"><path d="M3 8l3.5 3.5L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+           <span class="text-[13px] text-[#525d5d]">${b}</span>
+         </li>`
+      ).join('');
 
+      // FAQ section
+      const faqList = document.getElementById('faq-list');
+      if (p.faqs && p.faqs.length) {
+        faqList.innerHTML = p.faqs.map((item, i) => `
+          <div class="border-b border-black/[0.06] ${i === 0 ? 'border-t' : ''}">
+            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between py-5 text-left gap-6">
+              <span class="text-[15px] font-medium text-[#121621]">${item.q}</span>
+              <svg class="w-5 h-5 text-[#6b7676] flex-shrink-0 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+            </button>
+            <div class="hidden pb-5">
+              <p class="text-[15px] text-[#6b7676] leading-[1.7]">${item.a}</p>
+            </div>
+          </div>`).join('');
+      }
+
+      // Specifications panel
+      document.getElementById('hero-specs-body').innerHTML = p.specs.map(([k, v]) =>
+        `<div class="flex items-center justify-between py-2 border-b border-[#f0f2f2] last:border-0">
+           <span class="text-[13px] text-[#6b7676]">${k}</span>
+           <span class="text-[13px] font-medium text-[#121621] text-right">${v}</span>
+         </div>`
+      ).join('');
+
+      // Accessories panel
+      let accList = [];
+      if (id === 'link-2500' && typeof LINK2500_ACCESSORIES !== 'undefined') accList = LINK2500_ACCESSORIES;
+      else if (id === 'saturn-1000f2' && typeof SATURN1000F2_ACCESSORIES !== 'undefined') accList = SATURN1000F2_ACCESSORIES;
+      const accWrap = document.getElementById('hero-acc-wrap');
+      if (accList.length) {
+        accWrap.classList.remove('hidden');
+        document.getElementById('hero-acc-body').innerHTML = accList.map(a => {
+          const accImg = a.image
+            ? `<img src="${a.image}" alt="${a.name}" class="w-full h-full object-contain p-1" />`
+            : `<div class="w-5 h-5 bg-[#e0e6e6] rounded"></div>`;
+          return `
+            <div class="flex items-center gap-3 py-2 border-b border-[#f0f2f2] last:border-0">
+              <div class="w-10 h-10 bg-[#f5f7f7] rounded-[8px] flex items-center justify-center flex-shrink-0 overflow-hidden">${accImg}</div>
+              <div class="flex-1 min-w-0">
+                <p class="text-[13px] font-medium text-[#121621] truncate">${a.name}</p>
+                <p class="text-[12px] text-[#6b7676]">${a.priceLabel}</p>
+              </div>
+              <button onclick="addAddonToCart('${a.id}','${a.name.replace(/'/g,"\\'")}',${a.price},'${a.priceLabel}','${(a.image||'').replace(/'/g,"\\'")}')" class="text-[12px] font-medium text-[#277777] border border-[#277777] rounded-[6px] px-3 py-1.5 hover:bg-[#f0f7f7] transition-colors flex-shrink-0">Add</button>
+            </div>`;
+        }).join('');
+      }
+
+    }
+
+    function toggleAccordion(btn) {
+      const body = btn.nextElementSibling;
+      const chevron = btn.querySelector('svg');
+      const isOpen = !body.classList.contains('hidden');
+      body.classList.toggle('hidden', isOpen);
+      chevron.style.transform = isOpen ? '' : 'rotate(180deg)';
     }
 
     // Carousel state — must be declared before render() runs
     let carouselIndex = 0;
     let CAROUSEL_TOTAL = 1;
 
-    render();
+
 
     function carouselUpdate() {
       document.getElementById('carousel-track').style.transform = `translateX(-${carouselIndex * 100}%)`;
@@ -469,5 +541,7 @@
       }, { passive: true });
     })();
   </script>
+  <script src="cart.js"></script>
+  <script>render();</script>
 </body>
 </html>

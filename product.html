@@ -139,7 +139,7 @@
           Buy now
           <svg class="w-3 h-3 ml-1.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <a href="configurator.html" class="inline-flex items-center h-11 px-6 border border-[#c8d0d0] bg-white/60 backdrop-blur-sm text-[#525d5d] font-medium text-[14px] rounded-[8px] hover:border-[#277777] hover:text-[#277777] transition-colors">
+        <a href="finder.html" class="inline-flex items-center h-11 px-6 border border-[#c8d0d0] bg-white/60 backdrop-blur-sm text-[#525d5d] font-medium text-[14px] rounded-[8px] hover:border-[#277777] hover:text-[#277777] transition-colors">
           Find your perfect solution
         </a>
       </div>
@@ -238,7 +238,7 @@
           Buy now
           <svg class="w-3.5 h-3.5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <a href="configurator.html" class="inline-flex items-center h-12 px-6 border border-white/20 text-white/70 font-medium text-[15px] rounded-[8px] hover:border-white/40 hover:text-white transition-colors">
+        <a href="finder.html" class="inline-flex items-center h-12 px-6 border border-white/20 text-white/70 font-medium text-[15px] rounded-[8px] hover:border-white/40 hover:text-white transition-colors">
           Find my terminal
         </a>
       </div>
@@ -248,7 +248,7 @@
   <!-- ═══════════════════ RELATED PRODUCTS ═══════════════════ -->
   <section class="py-20">
     <div class="max-w-[1440px] mx-auto px-24 reveal">
-      <h2 class="text-[26px] font-semibold text-[#121621] tracking-[-0.02em] mb-10">Related Products</h2>
+      <h2 class="text-[26px] font-semibold text-[#121621] tracking-[-0.02em] mb-10">Other terminals</h2>
       <div class="flex gap-5" id="related-products"></div>
     </div>
   </section>
@@ -728,7 +728,8 @@
         'newland-s30':    'assets/placeholder-terminal.svg',
         'pay-by-link':    'assets/placeholder-terminal.svg',
       };
-      const others = Object.keys(PRODUCTS).filter(k => k !== id);
+      const MAIN_TERMINALS = ['tap-on-mobile', 'link-2500', 'ex4000', 'saturn-1000f2'];
+      const others = MAIN_TERMINALS.filter(k => k !== id);
       document.getElementById('related-products').innerHTML = others.map(k => `
         <a href="product.html?id=${k}" class="flex flex-col gap-3 w-[172px] group">
           <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[18px] h-[180px] flex items-center justify-center p-3 group-hover:shadow-[0_4px_16px_rgba(0,0,0,0.08)] transition-shadow">
