@@ -24,7 +24,23 @@
   })(window, document, 'https://snippet.maze.co/maze-universal-loader.js', '9228364a-fc17-41e8-a324-bd75dfce2eae');
   </script>
   <style>
-    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up   { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) both; }
+    .fade-up-1 { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.07s both; }
+    .fade-up-2 { animation: fadeUp 0.5s cubic-bezier(0.16,1,0.3,1) 0.14s both; }
+
+    header { transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
+
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1), transform 0.55s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
   </style>
 </head>
 <body class="bg-[#f5f7f7] text-[#121621] min-h-screen flex flex-col">
@@ -53,15 +69,15 @@
   <!-- Hero -->
   <section class="bg-white border-b border-black/[0.05]">
     <div class="max-w-[1100px] mx-auto px-16 py-20">
-      <p class="text-[13px] font-semibold text-[#277777] uppercase tracking-widest mb-4">Contact</p>
-      <h1 class="text-[44px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-5 max-w-[520px]">Get in touch with us</h1>
-      <p class="text-[16px] text-[#6b7676] leading-[1.7] max-w-[480px]">Have a question about our products, pricing, or your account? We're here to help. Reach out and our team will get back to you shortly.</p>
+      <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-4 fade-up">Contact</p>
+      <h1 class="text-[44px] font-semibold text-[#121621] leading-[1.08] tracking-[-0.03em] mb-5 max-w-[520px] fade-up-1">Get in touch with us</h1>
+      <p class="text-[16px] text-[#6b7676] leading-[1.7] max-w-[480px] fade-up-2">Have a question about our products, pricing, or your account? We're here to help. Reach out and our team will get back to you shortly.</p>
     </div>
   </section>
 
   <!-- Empty state -->
   <main class="flex-1 max-w-[1100px] mx-auto px-16 py-20 w-full">
-    <div class="grid grid-cols-[1fr_360px] gap-12 items-start">
+    <div class="grid grid-cols-[1fr_360px] gap-12 items-start reveal">
 
       <!-- Contact form placeholder -->
       <div class="bg-white rounded-[16px] border border-[#e6ebeb] p-10 flex flex-col items-center text-center">
@@ -148,5 +164,27 @@
     </div>
   </footer>
 
+  <script>
+    const revealEls = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    revealEls.forEach(el => observer.observe(el));
+
+    (function () {
+      const nav = document.querySelector('header');
+      const NAV_H = 72;
+      let lastY = window.scrollY;
+      let hidden = false;
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y > NAV_H) {
+          if (y > lastY && !hidden) { nav.style.transform = 'translateY(-100%)'; hidden = true; }
+          else if (y < lastY && hidden) { nav.style.transform = 'translateY(0)'; hidden = false; }
+        } else if (hidden) { nav.style.transform = 'translateY(0)'; hidden = false; }
+        lastY = y;
+      }, { passive: true });
+    })();
+  </script>
 </body>
 </html>
