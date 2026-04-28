@@ -521,6 +521,11 @@
             <span class="w-1.5 h-1.5 rounded-full bg-[#277777] opacity-60"></span>
           </span>
         </div>
+
+        <!-- Recommendation explanation -->
+        <div id="rec-explanation" class="hidden mt-5 p-5 rounded-[10px] border border-[rgba(39,119,119,0.18)]" style="background: linear-gradient(170deg, rgba(39,119,119,0.05) 0%, rgba(255,255,255,0.6) 100%);">
+          <ul id="rec-explanation-list" class="flex flex-col gap-2"></ul>
+        </div>
       </section>
 
       <!-- 2-column recommendation cards -->
@@ -1035,12 +1040,19 @@
         return;
       }
       errorEl.classList.add('hidden');
+      const descText = document.getElementById('business-desc').value;
+      const detectedBizType = detectBusinessType(descText);
+      const FOOD_BIZ_TYPES  = ['bar_lounge_nightlife','restaurant_full_service','fast_food_qsr','food_truck_popup_food','catering'];
+      const needsMealVouchers = FOOD_BIZ_TYPES.includes(detectedBizType) ||
+        /meal\s*(voucher|card|ticket)|maaltijd(cheque|bon)?/i.test(descText);
       const answers = {
-        businessTypes: [selections.businessType],
-        paymentMethods: [selections.paymentMethod],
-        transactions:  txnFromSlider(parseInt(document.getElementById('txn-slider').value)),
-        avgSpend:      parseInt(document.getElementById('spend-slider').value),
-        needsPrinter:  selections.receipts === 'yes',
+        businessTypes:       [selections.businessType],
+        paymentMethods:      [selections.paymentMethod],
+        transactions:        txnFromSlider(parseInt(document.getElementById('txn-slider').value)),
+        avgSpend:            parseInt(document.getElementById('spend-slider').value),
+        needsPrinter:        selections.receipts === 'yes',
+        detectedBusinessType: detectedBizType,
+        needsMealVouchers:   needsMealVouchers,
       };
       const ranked = getRecommendation(answers);
       showResult(ranked, answers);
@@ -1127,6 +1139,21 @@
 
       // AI summary bar
       document.getElementById('rec-summary-text').textContent = buildSummaryText(answers);
+
+      // Explanation
+      const explanationEl   = document.getElementById('rec-explanation');
+      const explanationList = document.getElementById('rec-explanation-list');
+      if (lastRecommendation && lastRecommendation.explanation && lastRecommendation.explanation.length) {
+        explanationEl.classList.remove('hidden');
+        explanationList.innerHTML = lastRecommendation.explanation.map(line => `
+          <li class="flex items-start gap-2.5 text-[13px] text-[#525d5d] leading-[1.5]">
+            <svg class="w-3.5 h-3.5 text-[#277777] flex-shrink-0 mt-[2px]" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>${line}</span>
+          </li>
+        `).join('');
+      } else {
+        explanationEl.classList.add('hidden');
+      }
 
       // Render cards
       renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers, altId);
