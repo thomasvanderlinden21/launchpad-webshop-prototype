@@ -1005,21 +1005,6 @@ function showMiniCart() {
       </div>
       <div class="mc-body">
         <div id="mini-cart-items"></div>
-        <div id="mc-ai-card" class="mc-ai-card" style="display:none;">
-          <div class="mc-ai-top">
-            <div class="mc-ai-icon">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1M4.22 4.22l.7.7m13.16 13.16.7.7M3 12h1m16 0h1M4.92 19.08l.7-.7M18.38 5.62l.7-.7M12 8a4 4 0 100 8 4 4 0 000-8z"/></svg>
-            </div>
-            <div class="mc-ai-text">
-              <div class="mc-ai-title-row">
-                <span class="mc-ai-title">Essential mobile protection</span>
-                <span class="mc-ai-badge">AI advice</span>
-              </div>
-              <p class="mc-ai-desc">Your portable terminal is exposed to drops and bumps. We strongly recommend adding a protective case and spare charger.</p>
-            </div>
-          </div>
-          <button class="mc-ai-cta" onclick="addAddonToCart('carry-case','Protective Carry Case',29,'€29'); renderMiniCartContents();">Add Protective Carry Case</button>
-        </div>
         <div class="mc-pricing" id="mini-cart-totals"></div>
       </div>
       <div class="mc-footer">
@@ -1064,10 +1049,6 @@ function renderMiniCartContents() {
     const total = cart.reduce((s, i) => s + i.qty, 0);
     countEl.textContent = `${total} item${total !== 1 ? 's' : ''}`;
   }
-
-  // Show AI card only when there are terminal items (not just add-ons)
-  const aiCard = document.getElementById('mc-ai-card');
-  if (aiCard) aiCard.style.display = cart.some(i => !i.addonId) ? 'block' : 'none';
 
   document.getElementById('mini-cart-items').innerHTML = cart.map(item => {
     const lineTotal = item.price != null ? item.price * item.qty : null;
