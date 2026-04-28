@@ -952,93 +952,15 @@
       updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
     });
 
-    // ── Cost model — delegates to pricing-engine.js ──────────────────────────────
-    function estimateMonthlyCost(id, txn, spend) {
-      return calculateTotalMonthlyCost(id, merchantInputsFromFinderAnswers(txn, spend));
-    }
+    // ── Recommendation engine — delegates to pricing-engine.js ───────────────────
+    // lastRecommendation holds the full result from the last getRecommendation call
+    // so renderCard can access cost breakdowns without re-running the engine.
+    let lastRecommendation = null;
 
-    // ── Recommendation scoring ───────────────────────────────────────────────────
     function getRecommendation(answers) {
-      const { transactions: txn, avgSpend: spend, needsPrinter, businessTypes, paymentMethods } = answers;
-      const IDS = ['tap-on-mobile', 'link-2500', 'ex4000', 'saturn-1000f2'];
-
-      // Step 1 — hardware cost score (0–10 scale).
-      // All products share the same per-transaction rates; the only cost difference
-      // is hardware amortisation. Tap €0, Link €3.29, EX4000 €9.92, Saturn €20.79 / month.
-      const HW = { 'tap-on-mobile': 0, 'link-2500': 3.29, 'ex4000': 9.92, 'saturn-1000f2': 20.79 };
-      const scores = {};
-      IDS.forEach(id => { scores[id] = ((20.79 - HW[id]) / 20.79) * 10; });
-
-      // Step 2 — qualitative adjustments
-      const isPhysical    = businessTypes.includes('physical');
-      const isPopup       = businessTypes.includes('popup');
-      const isOnline      = businessTypes.includes('online');
-      const wantsTerminal = paymentMethods.includes('terminal');
-
-      // Printer requirement — Tap and Link have no built-in printer
-      if (needsPrinter) {
-        scores['tap-on-mobile'] -= 20; // hard disqualifier
-        scores['link-2500']     -= 8;  // no printer
-        scores['ex4000']        += 2;  // built-in printer
-        scores['saturn-1000f2'] += 2;  // built-in high-speed printer
-      } else {
-        scores['tap-on-mobile'] += 1;
-        scores['link-2500']     += 1;
-      }
-
-      // Mobility signals
-      if (isPopup && !isPhysical) {
-        // On the go → portable wins, countertop loses
-        scores['link-2500']     += 4;
-        scores['tap-on-mobile'] += 3;
-        scores['ex4000']        += 2;
-        scores['saturn-1000f2'] -= 4;
-      }
-      if (isPhysical && !isPopup) {
-        // Fixed counter → Saturn excels (always-on, fast printer, low debit fees)
-        scores['saturn-1000f2'] += 3;
-        scores['ex4000']        += 1;
-        scores['tap-on-mobile'] -= 1;
-      }
-      if (isPhysical && isPopup) {
-        // Both → mid-range portables fit best
-        scores['link-2500'] += 2;
-        scores['ex4000']    += 2;
-      }
-
-      // Payment channel preference
-      if (!wantsTerminal) {
-        scores['link-2500']     -= 6;
-        scores['ex4000']        -= 6;
-        scores['saturn-1000f2'] -= 8;
-        scores['tap-on-mobile'] += 4;
-      }
-
-      // Volume adjustments
-      if (txn < 300) {
-        // Very low volume → hardware investment hard to justify
-        scores['tap-on-mobile'] += 2;
-        scores['saturn-1000f2'] -= 2;
-      }
-      if (txn >= 3000 && txn < 10000) {
-        scores['ex4000']    += 1;
-        scores['link-2500'] += 1;
-      }
-      if (txn >= 10000) {
-        // Very high volume — Saturn's reliability, fast printer, and always-on
-        // connectivity make the hardware cost worthwhile over EX4000
-        scores['saturn-1000f2'] += 5;
-        scores['tap-on-mobile'] -= 4;
-      }
-
-      // High avg spend — percentage fee (TOM 1.68%) gets costly vs flat fee
-      if (spend >= 100) {
-        scores['tap-on-mobile'] -= 2;
-        scores['link-2500']     += 1;
-        scores['ex4000']        += 1;
-      }
-
-      return Object.entries(scores).sort((a, b) => b[1] - a[1]).map(e => e[0]);
+      const inputs = merchantInputsFromFinderAnswers(answers.transactions, answers.avgSpend);
+      lastRecommendation = getTerminalRecommendation(answers, inputs);
+      return lastRecommendation.ranked;
     }
 
     // ── Submit ───────────────────────────────────────────────────────────────────
@@ -1098,19 +1020,24 @@
       addBtn.onclick = () => addToCart(productId);
 
       // Savings box (best match only)
-      if (isBest) {
-        const savingsEl = document.getElementById('rec-best-savings');
+      if (isBest && lastRecommendation && altId) {
+        const savingsEl   = document.getElementById('rec-best-savings');
         const savingsText = document.getElementById('rec-best-savings-text');
-        const txn = answers.transactions;
-        const spend = answers.avgSpend;
-        const bestCost = estimateMonthlyCost(productId, txn, spend);
-        const altCost = altId ? estimateMonthlyCost(altId, txn, spend) : Infinity;
-        const saving = Math.round(altCost - bestCost);
-        if (saving > 0) {
-          savingsEl.classList.remove('hidden');
-          savingsText.innerHTML = `<strong>€${saving.toLocaleString('nl-NL')} cheaper to run per month</strong> than ${PRODUCTS[altId].name}.`;
-        } else {
+        const recCost     = lastRecommendation.costs[productId];
+        const altCost     = lastRecommendation.costs[altId];
+        const diff        = Math.round(Math.abs(altCost - recCost));
+
+        if (diff === 0) {
           savingsEl.classList.add('hidden');
+        } else if (altCost > recCost) {
+          // Recommended is cheaper — standard savings message
+          savingsEl.classList.remove('hidden');
+          savingsText.innerHTML = `<strong>€${diff.toLocaleString('nl-NL')} cheaper to run per month</strong> than ${PRODUCTS[altId].name}.`;
+        } else {
+          // Alternative is cheaper — show it as a budget note
+          // (same transaction fees, only hardware differs)
+          savingsEl.classList.remove('hidden');
+          savingsText.innerHTML = `${PRODUCTS[altId].name} saves <strong>€${diff.toLocaleString('nl-NL')}/month</strong> on hardware — identical transaction fees, lower upfront cost.`;
         }
       }
     }
