@@ -44,7 +44,7 @@
   })(window, document, 'https://snippet.maze.co/maze-universal-loader.js', '9228364a-fc17-41e8-a324-bd75dfce2eae');
   </script>
 </head>
-<body class="bg-white text-[#121621]">
+<body class="bg-white text-[#121621] min-h-screen flex flex-col">
 
   <!-- Nav -->
   <header class="bg-white/85 backdrop-blur-xl border-b border-black/[0.06] h-[72px] flex items-center px-24 relative sticky top-0 z-[10000]">
@@ -87,7 +87,7 @@
   </div>
 
   <!-- Main content -->
-  <div class="max-w-[1440px] mx-auto px-24 pb-16">
+  <div class="flex-1 max-w-[1440px] mx-auto px-24 pb-16 w-full">
     <div class="flex gap-8 items-start">
 
       <!-- Left: cart items + add-ons -->
@@ -133,6 +133,18 @@
             <p class="text-sm text-[#6b7676]">Designed specifically for the Saturn 1000F2 — charging, paper rolls, and more.</p>
           </div>
           <div id="saturn-accessories-grid" class="grid grid-cols-3 gap-4 mb-8"></div>
+        </div>
+
+        <!-- EX4000 Accessories (shown when ex4000 is in cart) -->
+        <div id="ex4000-accessories-section" class="hidden">
+          <div class="mb-6">
+            <div class="flex items-center gap-3 mb-1">
+              <h2 class="text-[24px] font-semibold text-[#121621] tracking-[-0.02em]">EX4000 Accessories</h2>
+              <span class="bg-[#277777]/10 text-[#277777] text-[12px] font-semibold px-3 py-1 rounded-full">For your terminal</span>
+            </div>
+            <p class="text-sm text-[#6b7676]">Keep your EX4000 protected and running all day long.</p>
+          </div>
+          <div id="ex4000-accessories-grid" class="grid grid-cols-3 gap-4 mb-8"></div>
         </div>
 
         <div id="addons-section" class="hidden">
@@ -393,6 +405,7 @@
       updateSummary(cart);
       renderLinkAccessoriesSection(cart);
       renderSaturnAccessoriesSection(cart);
+      renderEx4000AccessoriesSection(cart);
     }
 
     function updateSummary(cart) {

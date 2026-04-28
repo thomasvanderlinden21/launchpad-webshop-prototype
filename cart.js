@@ -207,6 +207,27 @@ const SATURN1000F2_ACCESSORIES = [
   },
 ];
 
+const EX4000_ACCESSORIES = [
+  {
+    id: 'ex4000-protective-case',
+    name: 'Protective Case',
+    art: 'Art. EX4401',
+    price: 34.95,
+    priceLabel: '€34.95',
+    image: 'assets/EX4000 recommendations/EX4000 Protective Case - Art EX4401 - €34,95 excl.VAT 1.png',
+    desc: 'Slim-fit protective case designed for the EX4000. Protects against everyday drops and scratches.',
+  },
+  {
+    id: 'ex4000-spare-battery',
+    name: 'Spare Battery Pack (4400mAh)',
+    art: 'Art. EX4402',
+    price: 49.95,
+    priceLabel: '€49.95',
+    image: 'assets/EX4000 recommendations/EX4000 Spare Battery Pack - Art EX4402 - €49,95 excl.VAT 1.png',
+    desc: 'Genuine 4400mAh replacement battery for the EX4000. Swap in seconds and keep taking payments without interruption.',
+  },
+];
+
 // Renders the Link/2500 accessories section on the basket page
 function renderLinkAccessoriesSection(cart) {
   const linkSection = document.getElementById('link-accessories-section');
@@ -270,6 +291,44 @@ function renderSaturnAccessoriesSection(cart) {
     const safeName  = a.name.replace(/'/g, "\\'");
     const safeImg   = a.image ? a.image.replace(/'/g, "\\'") : '';
     const imgArg    = a.image ? ("'" + safeImg + "'") : 'null';
+    const btnHtml = inCart
+      ? '<span class="text-[13px] font-medium text-[#277777] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Added</span>'
+      : '<button onclick="addAddonToCart(\'' + safeId + '\',\'' + safeName + '\',' + a.price + ',\'' + a.priceLabel + '\',' + imgArg + '); if(window.renderBasket) renderBasket();" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>';
+    return '<div class="bg-white border border-[#ebebeb] rounded-[16px] p-5 flex flex-col gap-3' + (inCart ? ' opacity-60' : '') + '">'
+      + '<div class="w-full h-[120px] bg-[#f5f7f7] rounded-[12px] overflow-hidden">' + imgHtml + '</div>'
+      + '<div class="flex-1">'
+      + '<p class="text-base font-medium text-[#121621]">' + a.name + '</p>'
+      + '<p class="text-[11px] text-[#8a9696] mt-0.5 mb-1">' + a.art + '</p>'
+      + '<p class="text-sm text-[#6b7676]">' + a.desc + '</p>'
+      + '</div>'
+      + '<div class="flex items-center justify-between mt-auto pt-2">'
+      + '<span class="text-base font-semibold text-[#121621]">' + a.priceLabel + '</span>'
+      + btnHtml
+      + '</div></div>';
+  }).join('');
+}
+
+// Renders the EX4000 accessories section on the basket page
+function renderEx4000AccessoriesSection(cart) {
+  const ex4000Section = document.getElementById('ex4000-accessories-section');
+  if (!ex4000Section) return;
+
+  const hasEx4000 = cart.some(i => i.id === 'ex4000' && !i.addonId);
+  ex4000Section.classList.toggle('hidden', !hasEx4000);
+  if (!hasEx4000) return;
+
+  const cartAddonIds = new Set(cart.filter(i => i.addonId).map(i => i.addonId));
+  const ex4000Grid = document.getElementById('ex4000-accessories-grid');
+  if (!ex4000Grid) return;
+
+  ex4000Grid.innerHTML = EX4000_ACCESSORIES.map(function(a) {
+    const inCart = cartAddonIds.has(a.id);
+    const imgHtml = a.image
+      ? '<img src="' + a.image + '" alt="' + a.name + '" class="w-full h-full object-contain p-2" />'
+      : '<div class="w-full h-full flex items-center justify-center"><svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="#c8d0d0" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 12h6M12 9v6"/></svg></div>';
+    const safeId   = a.id;
+    const safeName = a.name.replace(/'/g, "\\'");
+    const imgArg   = a.image ? ("'" + a.image.replace(/'/g, "\\'") + "'") : 'null';
     const btnHtml = inCart
       ? '<span class="text-[13px] font-medium text-[#277777] flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Added</span>'
       : '<button onclick="addAddonToCart(\'' + safeId + '\',\'' + safeName + '\',' + a.price + ',\'' + a.priceLabel + '\',' + imgArg + '); if(window.renderBasket) renderBasket();" class="text-[13px] font-medium text-[#277777] border border-[#277777] rounded-[8px] px-4 py-2.5 hover:bg-[#f0f7f7] transition-colors">Add</button>';
@@ -452,15 +511,17 @@ function _injectModalStyles() {
     #added-modal {
       background: #fff; border-radius: 20px;
       width: 100%; max-width: 600px; max-height: 88vh;
-      overflow-y: auto; position: relative;
+      overflow: hidden; position: relative;
+      display: flex; flex-direction: column;
       box-shadow: 0 24px 80px rgba(18,22,33,0.18);
       transform: translateY(16px) scale(0.98);
       transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
       font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased;
     }
     #added-modal-overlay.visible #added-modal { transform: translateY(0) scale(1); }
-    #added-modal::-webkit-scrollbar { width: 4px; }
-    #added-modal::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
+    .am-scroll-body { flex: 1; overflow-y: auto; min-height: 0; }
+    .am-scroll-body::-webkit-scrollbar { width: 4px; }
+    .am-scroll-body::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 4px; }
 
     .am-close {
       position: absolute; top: 16px; right: 16px;
@@ -534,6 +595,7 @@ function _injectModalStyles() {
 
     .am-checkout-footer {
       padding: 20px 40px 32px; border-top: 1px solid #f0f0f0; text-align: center;
+      flex-shrink: 0; background: #fff;
     }
     .am-checkout-btn {
       display: inline-flex; align-items: center; gap: 8px;
@@ -542,12 +604,6 @@ function _injectModalStyles() {
       cursor: pointer; font-family: inherit; transition: background 0.15s; text-decoration: none;
     }
     .am-checkout-btn:hover { background: #1f5c5c; }
-    .am-skip {
-      display: block; margin-top: 12px; font-size: 13px; color: #8a9696;
-      cursor: pointer; background: none; border: none; font-family: inherit;
-      transition: color 0.15s;
-    }
-    .am-skip:hover { color: #525d5d; }
   `;
   document.head.appendChild(s);
 }
@@ -589,12 +645,16 @@ function showAddedModal(productId) {
 }
 
 function showCheckoutRecommendations(onCheckout) {
+  const cart = getCart();
+
+  // Skip modal if accessories are already in the basket
+  if (cart.some(i => i.addonId)) { onCheckout(); return; }
+
   _injectModalStyles();
 
   const existing = document.getElementById('added-modal-overlay');
   if (existing) existing.remove();
 
-  const cart = getCart();
   const cartAddonIds = new Set(cart.filter(i => i.addonId).map(i => i.addonId));
   const hasLink2500  = cart.some(i => i.id === 'link-2500'     && !i.addonId);
   const hasSaturn    = cart.some(i => i.id === 'saturn-1000f2' && !i.addonId);
@@ -692,27 +752,30 @@ function showCheckoutRecommendations(onCheckout) {
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
       ${sectionHtml ? `
-      <div class="am-top" style="padding-bottom:28px;border-bottom:1px solid #f0f0f0;">
-        <h2 class="am-heading" style="margin-bottom:6px;">Before you check out</h2>
-        <p class="am-sub" style="margin-bottom:0;">${subHeading}</p>
-      </div>
-      <div class="am-compatible">
-        ${sectionHtml}
+      <div class="am-scroll-body">
+        <div class="am-top" style="padding-bottom:28px;border-bottom:1px solid #f0f0f0;">
+          <h2 class="am-heading" style="margin-bottom:6px;">Before you check out</h2>
+          <p class="am-sub" style="margin-bottom:0;">${subHeading}</p>
+        </div>
+        <div class="am-compatible">
+          ${sectionHtml}
+        </div>
       </div>
       <div class="am-checkout-footer">
         <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
           Proceed to secure checkout
         </button>
-        <button class="am-skip" onclick="hideAddedModal(); (${onCheckout.toString()})();">Skip and continue</button>
       </div>` : `
-      <div class="am-top">
-        <h2 class="am-heading">You're all set!</h2>
-        <p class="am-sub">Ready to complete your order.</p>
-        <div class="am-actions">
-          <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
-            Proceed to secure checkout
-          </button>
+      <div class="am-scroll-body">
+        <div class="am-top">
+          <h2 class="am-heading">You're all set!</h2>
+          <p class="am-sub">Ready to complete your order.</p>
+          <div class="am-actions">
+            <button class="am-checkout-btn" onclick="hideAddedModal(); (${onCheckout.toString()})();">
+              Proceed to secure checkout
+            </button>
+          </div>
         </div>
       </div>`}
     </div>

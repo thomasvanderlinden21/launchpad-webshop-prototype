@@ -39,6 +39,10 @@
 
     .pm-row { transition: background 0.15s; }
     .pm-row:hover { background: #f7f9f9; }
+
+    /* Tab toggle */
+    .tab-btn { color: #6b7676; background: transparent; border: none; cursor: pointer; font-family: inherit; }
+    .tab-btn.active { background: white; color: #121621; box-shadow: 0 1px 6px rgba(0,0,0,0.08); font-weight: 600; }
   </style>
   <script>
   (function (m, a, z, e) {
@@ -96,20 +100,39 @@
   </header>
 
   <!-- ═══ HERO ═══ -->
-  <section class="text-center pt-20 pb-16 px-8">
+  <section class="text-center pt-20 pb-10 px-8">
     <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-4 fade-up">Transparent pricing</p>
     <h1 class="text-[52px] font-semibold text-[#121621] tracking-[-0.03em] leading-[1.08] mb-5 fade-up-1">Simple, honest rates</h1>
     <p class="text-[18px] text-[#6b7676] leading-[1.7] max-w-[520px] mx-auto fade-up-2">All fees straight from your contract. No setup costs, no monthly platform fees — you only pay when you take a payment.</p>
+
+    <!-- Tab toggle -->
+    <div class="flex justify-center mt-10 fade-up-2">
+      <div class="flex bg-[#f5f7f7] rounded-[12px] p-1 gap-1">
+        <button id="tab-instore" onclick="switchTab('instore')" class="tab-btn active px-7 py-2.5 rounded-[10px] text-[14px] transition-all">
+          In-store
+        </button>
+        <button id="tab-online" onclick="switchTab('online')" class="tab-btn px-7 py-2.5 rounded-[10px] text-[14px] transition-all">
+          Online
+        </button>
+      </div>
+    </div>
   </section>
 
-  <!-- ═══ TRANSACTION FEES ═══ -->
-  <section class="border-t border-black/[0.06]">
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- IN-STORE CONTENT                                           -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- ═══ IN-STORE TRANSACTION FEES ═══ -->
+  <section id="instore-tx" class="border-t border-black/[0.06]">
     <div class="max-w-[1100px] mx-auto px-16 py-20">
 
       <div class="reveal mb-12">
-        <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-3">Rate card</p>
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase">Rate card</p>
+          <span class="text-[11px] font-semibold text-[#525d5d] bg-[#f0f7f7] border border-[#c8e0e0] px-3 py-1 rounded-full tracking-wide">Card-present · In-store</span>
+        </div>
         <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Transaction fees per payment method</h2>
-        <p class="text-[15px] text-[#6b7676] max-w-[600px]">Rates shown are your contracted blended rates. A minimum of <strong class="text-[#121621] font-medium">€0.15 per transaction</strong> applies across all payment methods.</p>
+        <p class="text-[15px] text-[#6b7676] max-w-[600px]">Rates apply when a card is physically presented at your terminal. A minimum of <strong class="text-[#121621] font-medium">€0.15 per transaction</strong> applies across all payment methods.</p>
       </div>
 
       <!-- Table header -->
@@ -231,104 +254,15 @@
     </div>
   </section>
 
-  <!-- ═══ SURCHARGES ═══ -->
-  <section class="border-t border-black/[0.06] bg-[#f7f9f9]">
-    <div class="max-w-[1100px] mx-auto px-16 py-20">
-
-      <div class="reveal mb-12">
-        <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-3">Additional costs</p>
-        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Surcharges &amp; other fees</h2>
-        <p class="text-[15px] text-[#6b7676] max-w-[560px]">These charges are applied on top of the basic transaction rate where applicable.</p>
-      </div>
-
-      <div class="grid grid-cols-2 gap-6 reveal">
-
-        <!-- Surcharges -->
-        <div class="bg-white border border-[#ededed] rounded-[16px] overflow-hidden">
-          <div class="bg-[#f7f9f9] px-6 py-3.5 border-b border-[#ededed]">
-            <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Surcharges (applied on top of basic rate)</span>
-          </div>
-          <div class="divide-y divide-[#f3f4f6]">
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Minimum transaction cost</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">Applies to all payment methods</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€0.15 / txn</span>
-              </div>
-            </div>
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Commercial cards surcharge</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard, Bancontact</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#277777] flex-shrink-0">+1.20%</span>
-              </div>
-            </div>
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Non-EEA transactions surcharge</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#277777] flex-shrink-0">+1.20%</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Other fees -->
-        <div class="bg-white border border-[#ededed] rounded-[16px] overflow-hidden">
-          <div class="bg-[#f7f9f9] px-6 py-3.5 border-b border-[#ededed]">
-            <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Other fees</span>
-          </div>
-          <div class="divide-y divide-[#f3f4f6]">
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Chargeback fee</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">Per dispute filed by cardholder — all payment methods</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€30.00</span>
-              </div>
-            </div>
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Compliance guarantee</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">File management — per merchant, not per terminal</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€60.00 / yr</span>
-              </div>
-            </div>
-            <div class="pm-row px-6 py-4">
-              <div class="flex items-start justify-between gap-4">
-                <div>
-                  <p class="text-[14px] font-medium text-[#121621]">Environmental fee</p>
-                  <p class="text-[12px] text-[#8a9696] mt-0.5">Batteries &amp; recycling — one-time per device</p>
-                </div>
-                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€0.63</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- Refund note -->
-      <p class="text-[13px] text-[#8a9696] mt-6 reveal">Refunds are processed at the same rate as the original transaction.</p>
-
-    </div>
-  </section>
-
-  <!-- ═══ HARDWARE ═══ -->
-  <section class="border-t border-black/[0.06]">
+  <!-- ═══ IN-STORE HARDWARE ═══ -->
+  <section id="instore-hw" class="border-t border-black/[0.06]">
     <div class="max-w-[1100px] mx-auto px-16 py-20">
       <div class="reveal mb-12">
-        <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase mb-3">In-person payments</p>
-        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Hardware for every environment</h2>
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase">Hardware</p>
+          <span class="text-[11px] font-semibold text-[#525d5d] bg-[#f0f7f7] border border-[#c8e0e0] px-3 py-1 rounded-full tracking-wide">In-store only</span>
+        </div>
+        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Terminals for every environment</h2>
         <p class="text-[15px] text-[#6b7676]">One-time device purchase. Transaction fees above apply per payment.</p>
       </div>
 
@@ -402,14 +336,325 @@
     </div>
   </section>
 
-  <!-- ═══ FAQ ═══ -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- ONLINE CONTENT (hidden by default)                         -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <!-- ═══ ONLINE TRANSACTION FEES ═══ -->
+  <section id="online-tx" class="border-t border-black/[0.06] hidden">
+    <div class="max-w-[1100px] mx-auto px-16 py-20">
+
+      <div class="reveal mb-12">
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase">Rate card</p>
+          <span class="text-[11px] font-semibold text-[#525d5d] bg-[#f0f7f7] border border-[#c8e0e0] px-3 py-1 rounded-full tracking-wide">Card-not-present · Online</span>
+        </div>
+        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Transaction fees per payment method</h2>
+        <p class="text-[15px] text-[#6b7676] max-w-[620px]">Rates apply to online transactions where no physical card is presented. CNP rates are slightly higher to reflect the increased risk. A minimum of <strong class="text-[#121621] font-medium">€0.15 per transaction</strong> applies.</p>
+      </div>
+
+      <!-- Table header -->
+      <div class="grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 px-5 pb-3 reveal">
+        <span class="text-[11px] font-semibold text-[#8a9696] uppercase tracking-[0.07em]">Payment method</span>
+        <span class="text-[11px] font-semibold text-[#8a9696] uppercase tracking-[0.07em]">Details</span>
+        <span class="text-[11px] font-semibold text-[#8a9696] uppercase tracking-[0.07em] text-right">Domestic</span>
+        <span class="text-[11px] font-semibold text-[#8a9696] uppercase tracking-[0.07em] text-right">Cross-border</span>
+      </div>
+
+      <!-- Visa CNP -->
+      <div class="border border-[#ededed] rounded-[16px] overflow-hidden mb-3 reveal">
+        <div class="bg-[#f7f9f9] px-5 py-2.5 border-b border-[#ededed]">
+          <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Visa</span>
+        </div>
+        <div class="divide-y divide-[#f3f4f6]">
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Visa Credit</span>
+            <span class="text-[13px] text-[#6b7676]">Consumer credit cards — card not present</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.65%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.90%</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Visa Debit</span>
+            <span class="text-[13px] text-[#6b7676]">Consumer debit cards — card not present</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">0.50%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.65%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mastercard CNP -->
+      <div class="border border-[#ededed] rounded-[16px] overflow-hidden mb-3 reveal">
+        <div class="bg-[#f7f9f9] px-5 py-2.5 border-b border-[#ededed]">
+          <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Mastercard</span>
+        </div>
+        <div class="divide-y divide-[#f3f4f6]">
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Mastercard Credit</span>
+            <span class="text-[13px] text-[#6b7676]">Consumer credit cards — card not present</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.65%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.90%</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Debit Mastercard</span>
+            <span class="text-[13px] text-[#6b7676]">Consumer debit cards — card not present</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">0.50%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.65%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Local online methods -->
+      <div class="border border-[#ededed] rounded-[16px] overflow-hidden mb-3 reveal">
+        <div class="bg-[#f7f9f9] px-5 py-2.5 border-b border-[#ededed]">
+          <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Local online methods</span>
+        </div>
+        <div class="divide-y divide-[#f3f4f6]">
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">iDEAL</span>
+            <span class="text-[13px] text-[#6b7676]">Netherlands — instant bank transfer</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">€0.29</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Bancontact</span>
+            <span class="text-[13px] text-[#6b7676]">Belgium — online variant</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">€0.25</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Sofort / Klarna Pay Now</span>
+            <span class="text-[13px] text-[#6b7676]">Instant bank transfer — DE, AT, CH, NL, BE</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">€0.29</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">SEPA Direct Debit</span>
+            <span class="text-[13px] text-[#6b7676]">Recurring and one-off SEPA mandates</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">€0.35</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Giropay</span>
+            <span class="text-[13px] text-[#6b7676]">Germany — instant bank payment</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">€0.29</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Buy Now Pay Later -->
+      <div class="border border-[#ededed] rounded-[16px] overflow-hidden mb-3 reveal">
+        <div class="bg-[#f7f9f9] px-5 py-2.5 border-b border-[#ededed]">
+          <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Buy Now, Pay Later</span>
+        </div>
+        <div class="divide-y divide-[#f3f4f6]">
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Klarna Pay Later</span>
+            <span class="text-[13px] text-[#6b7676]">Invoice — 14 or 30 day payment terms</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">2.99% + €0.35</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Klarna Slice It</span>
+            <span class="text-[13px] text-[#6b7676]">Installments — 3, 6, or 12 months</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">3.49% + €0.35</span>
+            <span class="text-[13px] text-[#8a9696] text-right">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Digital wallets online -->
+      <div class="border border-[#ededed] rounded-[16px] overflow-hidden mb-8 reveal">
+        <div class="bg-[#f7f9f9] px-5 py-2.5 border-b border-[#ededed]">
+          <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Digital wallets &amp; international</span>
+        </div>
+        <div class="divide-y divide-[#f3f4f6]">
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Apple Pay</span>
+            <span class="text-[13px] text-[#6b7676]">Charged at the underlying card rate</span>
+            <span class="text-[13px] text-[#6b7676] text-right italic">Card rate</span>
+            <span class="text-[13px] text-[#6b7676] text-right italic">Card rate</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Google Pay</span>
+            <span class="text-[13px] text-[#6b7676]">Charged at the underlying card rate</span>
+            <span class="text-[13px] text-[#6b7676] text-right italic">Card rate</span>
+            <span class="text-[13px] text-[#6b7676] text-right italic">Card rate</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">Alipay+</span>
+            <span class="text-[13px] text-[#6b7676]">All regions</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">WeChat Pay</span>
+            <span class="text-[13px] text-[#6b7676]">All regions</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+          </div>
+          <div class="pm-row grid grid-cols-[2fr_3fr_1fr_1fr] gap-4 items-center px-5 py-3.5">
+            <span class="text-[14px] font-medium text-[#121621]">UnionPay</span>
+            <span class="text-[13px] text-[#6b7676]">All regions</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+            <span class="text-[13px] font-semibold text-[#121621] text-right">1.40%</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ ONLINE INTEGRATION ═══ -->
+  <section id="online-integration" class="border-t border-black/[0.06] hidden">
+    <div class="max-w-[1100px] mx-auto px-16 py-20">
+      <div class="reveal mb-10">
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase">Integration</p>
+          <span class="text-[11px] font-semibold text-[#525d5d] bg-[#f0f7f7] border border-[#c8e0e0] px-3 py-1 rounded-full tracking-wide">Online only · No hardware</span>
+        </div>
+        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">How to connect your store</h2>
+        <p class="text-[15px] text-[#6b7676] max-w-[600px]">No device purchase required. Choose the integration path that fits your tech setup — all included in your transaction pricing.</p>
+      </div>
+      <div class="grid grid-cols-3 gap-5 reveal">
+        <div class="bg-white border border-[#ededed] rounded-[20px] p-7">
+          <div class="w-10 h-10 rounded-[10px] bg-[#e8f4f4] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="3"/><path stroke-linecap="round" d="M9 9h6M9 12h4"/></svg>
+          </div>
+          <p class="text-[15px] font-semibold text-[#121621] mb-1.5">Hosted checkout</p>
+          <p class="text-[13px] text-[#6b7676] leading-[1.7]">Redirect customers to a Worldline-hosted payment page. PCI compliant out of the box — no certificate needed on your end.</p>
+        </div>
+        <div class="bg-white border border-[#ededed] rounded-[20px] p-7">
+          <div class="w-10 h-10 rounded-[10px] bg-[#e8f4f4] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+          </div>
+          <p class="text-[15px] font-semibold text-[#121621] mb-1.5">Payment API</p>
+          <p class="text-[13px] text-[#6b7676] leading-[1.7]">Full control via REST API. Embed the payment experience directly in your checkout flow. Requires PCI SAQ-A or SAQ-D compliance.</p>
+        </div>
+        <div class="bg-white border border-[#ededed] rounded-[20px] p-7">
+          <div class="w-10 h-10 rounded-[10px] bg-[#e8f4f4] flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-[#277777]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8"><path stroke-linecap="round" stroke-linejoin="round" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg>
+          </div>
+          <p class="text-[15px] font-semibold text-[#121621] mb-1.5">Platform plugins</p>
+          <p class="text-[13px] text-[#6b7676] leading-[1.7]">Ready-made plugins for Shopify, WooCommerce, Magento, and PrestaShop. Install in minutes, no custom development required.</p>
+        </div>
+      </div>
+      <p class="text-[13px] text-[#8a9696] mt-6 reveal">3D Secure authentication is included at no extra charge across all integration methods.</p>
+    </div>
+  </section>
+
+  <!-- ═══ SURCHARGES (applies to both) ═══ -->
   <section class="border-t border-black/[0.06] bg-[#f7f9f9]">
+    <div class="max-w-[1100px] mx-auto px-16 py-20">
+
+      <div class="reveal mb-12">
+        <div class="flex items-center gap-3 mb-3">
+          <p class="text-[13px] font-semibold text-[#277777] tracking-[0.06em] uppercase">Additional costs</p>
+          <span class="text-[11px] font-semibold text-[#525d5d] bg-[#f5f7f7] border border-[#e0e5e5] px-3 py-1 rounded-full tracking-wide">Applies to in-store &amp; online</span>
+        </div>
+        <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em] mb-2">Surcharges &amp; other fees</h2>
+        <p class="text-[15px] text-[#6b7676] max-w-[560px]">These charges are applied on top of the basic transaction rate where applicable.</p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 reveal">
+
+        <!-- Surcharges -->
+        <div class="bg-white border border-[#ededed] rounded-[16px] overflow-hidden">
+          <div class="bg-[#f7f9f9] px-6 py-3.5 border-b border-[#ededed]">
+            <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Surcharges (applied on top of basic rate)</span>
+          </div>
+          <div class="divide-y divide-[#f3f4f6]">
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Minimum transaction cost</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">Applies to all payment methods</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€0.15 / txn</span>
+              </div>
+            </div>
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Commercial cards surcharge</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard, Bancontact</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#277777] flex-shrink-0">+1.20%</span>
+              </div>
+            </div>
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Non-EEA transactions surcharge</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#277777] flex-shrink-0">+1.20%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Other fees -->
+        <div class="bg-white border border-[#ededed] rounded-[16px] overflow-hidden">
+          <div class="bg-[#f7f9f9] px-6 py-3.5 border-b border-[#ededed]">
+            <span class="text-[11px] font-semibold text-[#525d5d] uppercase tracking-[0.06em]">Other fees</span>
+          </div>
+          <div class="divide-y divide-[#f3f4f6]">
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Chargeback fee</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">Per dispute filed by cardholder — all payment methods</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€30.00</span>
+              </div>
+            </div>
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Compliance guarantee</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">PCI DSS file management — per merchant, not per terminal</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€60.00 / yr</span>
+              </div>
+            </div>
+            <div class="pm-row px-6 py-4">
+              <div class="flex items-start justify-between gap-4">
+                <div>
+                  <p class="text-[14px] font-medium text-[#121621]">Environmental fee</p>
+                  <p class="text-[12px] text-[#8a9696] mt-0.5">Batteries &amp; recycling — one-time per device (in-store only)</p>
+                </div>
+                <span class="text-[14px] font-semibold text-[#121621] flex-shrink-0">€0.63</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <p class="text-[13px] text-[#8a9696] mt-6 reveal">Refunds are processed at the same rate as the original transaction.</p>
+
+    </div>
+  </section>
+
+  <!-- ═══ FAQ ═══ -->
+  <section class="border-t border-black/[0.06]">
     <div class="max-w-[720px] mx-auto px-8 py-20">
       <div class="text-center mb-12 reveal">
         <h2 class="text-[32px] font-semibold text-[#121621] tracking-[-0.025em]">Frequently asked questions</h2>
       </div>
 
       <div class="flex flex-col gap-2 reveal">
+
+        <details class="border border-[#ededed] rounded-[12px] overflow-hidden bg-white">
+          <summary class="flex items-center justify-between px-6 py-5 gap-4">
+            <span class="text-[15px] font-medium text-[#121621]">What's the difference between in-store and online rates?</span>
+            <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
+            In-store (card-present) transactions carry lower rates because the physical card and cardholder are verified at the point of sale, reducing fraud risk. Online (card-not-present) transactions are slightly higher to account for the increased risk of fraud and chargebacks. For example, Visa Credit is 1.40% in-store versus 1.65% online for domestic transactions.
+          </div>
+        </details>
 
         <details class="border border-[#ededed] rounded-[12px] overflow-hidden bg-white">
           <summary class="flex items-center justify-between px-6 py-5 gap-4">
@@ -427,7 +672,7 @@
             <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </summary>
           <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
-            The +1.20% commercial cards surcharge applies whenever a business or corporate card is used instead of a consumer card — on Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard, and Bancontact. This is determined automatically by the card network and added on top of the basic rate. You cannot predict which card your customer will present, so it's worth factoring this into your margin for B2B transactions.
+            The +1.20% commercial cards surcharge applies whenever a business or corporate card is used instead of a consumer card — on Visa, Mastercard, Maestro, Visa Debit, Debit Mastercard, and Bancontact. This applies to both in-store and online transactions. It is determined automatically by the card network and added on top of the basic rate.
           </div>
         </details>
 
@@ -437,7 +682,17 @@
             <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </summary>
           <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
-            The +1.20% non-EEA surcharge applies when a card issued outside the European Economic Area is used for a Visa, Mastercard, Maestro, Visa Debit, or Debit Mastercard transaction. For example, a tourist paying with a US-issued Visa card would trigger this surcharge. It does not apply to Alipay+, WeChat Pay, UnionPay, JCB, or Diners/Discover, which are priced at a flat 1.40% for all regions.
+            The +1.20% non-EEA surcharge applies when a card issued outside the European Economic Area is used for a Visa, Mastercard, Maestro, Visa Debit, or Debit Mastercard transaction — both in-store and online. For example, a tourist paying with a US-issued Visa card would trigger this surcharge. It does not apply to Alipay+, WeChat Pay, UnionPay, JCB, or Diners/Discover.
+          </div>
+        </details>
+
+        <details class="border border-[#ededed] rounded-[12px] overflow-hidden bg-white">
+          <summary class="flex items-center justify-between px-6 py-5 gap-4">
+            <span class="text-[15px] font-medium text-[#121621]">Are Apple Pay and Google Pay charged differently?</span>
+            <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
+          </summary>
+          <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
+            No. Apple Pay and Google Pay are tokenised versions of underlying cards — the transaction is processed at the same rate as the card stored in the wallet. A Visa Debit card in Apple Pay costs the same as a physical Visa Debit tap at the terminal. No wallet surcharge applies.
           </div>
         </details>
 
@@ -447,7 +702,7 @@
             <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </summary>
           <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
-            If a cardholder disputes a transaction, a chargeback fee of €30.00 applies regardless of the outcome. Worldline will notify you and guide you through submitting evidence. If you win the dispute, the original transaction amount is returned to your balance — but the €30.00 fee is not refunded. Maintaining clear transaction records and delivery evidence is the best way to contest chargebacks successfully.
+            If a cardholder disputes a transaction, a chargeback fee of €30.00 applies regardless of the outcome. Worldline will notify you and guide you through submitting evidence. If you win the dispute, the original transaction amount is returned to your balance — but the €30.00 fee is not refunded. Online merchants typically see higher chargeback rates; maintaining clear order records and delivery evidence is key.
           </div>
         </details>
 
@@ -457,7 +712,7 @@
             <svg class="faq-chev w-4 h-4 text-[#8a9696] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
           </summary>
           <div class="faq-body px-6 pb-5 text-[14px] text-[#6b7676] leading-[1.75] border-t border-[#f3f4f6]" style="padding-top:16px;">
-            The €60.00/year compliance guarantee covers PCI DSS file management — the ongoing administration to keep your merchant account compliant with card network security standards. This is charged once per merchant, not per terminal. So whether you have one device or five, you only pay this fee once per year.
+            The €60.00/year compliance guarantee covers PCI DSS file management — the ongoing administration to keep your merchant account compliant with card network security standards. This is charged once per merchant, not per terminal or integration. Whether you have one device, five terminals, or an online store, you pay this fee once per year.
           </div>
         </details>
 
@@ -479,14 +734,15 @@
   <section class="bg-[#0d1117] py-24">
     <div class="max-w-[1100px] mx-auto px-16 text-center reveal">
       <h2 class="text-[44px] font-semibold text-white tracking-[-0.03em] leading-[1.1] mb-5">Ready to get started?</h2>
-      <p class="text-[18px] text-white/50 mb-10 max-w-[460px] mx-auto">Choose your terminal and start accepting payments with no setup fees and no lock-in.</p>
+      <p class="text-[18px] text-white/50 mb-10 max-w-[460px] mx-auto">No setup fees, no lock-in. Pick in-store, online, or both.</p>
       <div class="flex items-center justify-center gap-4">
         <a href="index.html" class="inline-flex items-center h-12 px-8 bg-[#277777] text-white font-semibold text-[15px] rounded-[8px] hover:bg-[#1f5c5c] transition-colors">
           View terminals
           <svg class="w-3.5 h-3.5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
-        <a href="#" class="inline-flex items-center h-12 px-8 border border-white/20 text-white/70 font-medium text-[15px] rounded-[8px] hover:border-white/40 hover:text-white transition-colors">
-          Contact sales
+        <a href="ecommerce.html" class="inline-flex items-center h-12 px-8 border border-white/20 text-white/70 font-medium text-[15px] rounded-[8px] hover:border-white/40 hover:text-white transition-colors">
+          Online payments
+          <svg class="w-3.5 h-3.5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
     </div>
@@ -506,12 +762,27 @@
   </footer>
 
   <script>
+    // Tab switcher
+    function switchTab(tab) {
+      const instore = tab === 'instore';
+      document.getElementById('instore-tx').classList.toggle('hidden', !instore);
+      document.getElementById('instore-hw').classList.toggle('hidden', !instore);
+      document.getElementById('online-tx').classList.toggle('hidden', instore);
+      document.getElementById('online-integration').classList.toggle('hidden', instore);
+      document.getElementById('tab-instore').classList.toggle('active', instore);
+      document.getElementById('tab-online').classList.toggle('active', !instore);
+      // Re-trigger reveal animations for newly visible elements
+      document.querySelectorAll('.reveal:not(.visible)').forEach(el => observer.observe(el));
+    }
+
+    // Scroll reveal
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
     }, { threshold: 0.08 });
     revealEls.forEach(el => observer.observe(el));
 
+    // Nav hide on scroll
     (function () {
       const nav = document.querySelector('header');
       const NAV_H = 72;
