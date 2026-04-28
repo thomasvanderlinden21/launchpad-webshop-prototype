@@ -189,13 +189,13 @@
       </div>
       <div class="grid grid-cols-3 gap-4">
 
-        <!-- Physical location (default selected) -->
-        <button class="option-card selected flex flex-col p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white min-h-[240px]"
+        <!-- Physical location -->
+        <button class="option-card flex flex-col p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white min-h-[240px]"
           data-biz="physical" onclick="selectBusinessType(this)">
           <div class="flex items-center justify-between w-full mb-6">
             <span class="text-[12px] font-medium text-[#277777] bg-[#e6f0ef] px-3 py-1 rounded-full">Retail</span>
-            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#277777] flex items-center justify-center flex-shrink-0 transition-colors">
-              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777]"></div>
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c0c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
@@ -290,13 +290,13 @@
       </div>
       <div class="grid grid-cols-3 gap-4">
 
-        <!-- Terminal (default selected) -->
-        <button class="option-card selected flex flex-col p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white min-h-[240px]"
+        <!-- Terminal -->
+        <button class="option-card flex flex-col p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white min-h-[240px]"
           data-payment="terminal" onclick="selectPaymentMethod(this)">
           <div class="flex items-center justify-between w-full mb-6">
             <span class="text-[12px] font-medium text-[#277777] bg-[#e6f0ef] px-3 py-1 rounded-full">In-person</span>
-            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#277777] flex items-center justify-center flex-shrink-0 transition-colors">
-              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777]"></div>
+            <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c0c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+              <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
             </div>
           </div>
           <div class="flex-1 flex items-center justify-center">
@@ -423,10 +423,10 @@
       <div class="grid grid-cols-2 gap-4">
 
         <!-- Yes -->
-        <button class="option-card selected flex items-center gap-4 p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white"
+        <button class="option-card flex items-center gap-4 p-5 border border-[#e0e0e0] rounded-[16px] text-left bg-white"
           data-group="receipts" data-value="yes" onclick="selectOption(this)">
-          <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#277777] flex items-center justify-center flex-shrink-0 transition-colors">
-            <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777]"></div>
+          <div class="radio-dot w-5 h-5 rounded-full border-2 border-[#c0c8c8] flex items-center justify-center flex-shrink-0 transition-colors">
+            <div class="radio-fill w-[10px] h-[10px] rounded-full bg-[#277777] hidden"></div>
           </div>
           <div>
             <p class="text-[15px] font-medium text-[#121621]">Yes</p>
@@ -860,7 +860,7 @@
     }
 
     // ── Selection state ──────────────────────────────────────────────────────────
-    const selections = { businessType: 'physical', paymentMethod: 'terminal', receipts: 'yes' };
+    const selections = { businessType: null, paymentMethod: null, receipts: null };
 
     function _selectRadioGroup(btn, attr) {
       document.querySelectorAll(`.option-card[${attr}]`).forEach(el => {
@@ -962,14 +962,12 @@
       const { transactions: txn, avgSpend: spend, needsPrinter, businessTypes, paymentMethods } = answers;
       const IDS = ['tap-on-mobile', 'link-2500', 'ex4000', 'saturn-1000f2'];
 
-      // Step 1 — cost-based score. Lower monthly cost → higher score (0–10 scale).
-      const costs = {};
-      IDS.forEach(id => { costs[id] = estimateMonthlyCost(id, txn, spend); });
-      const maxCost = Math.max(...Object.values(costs));
-      const minCost = Math.min(...Object.values(costs));
-      const range   = maxCost - minCost || 1;
-      const scores  = {};
-      IDS.forEach(id => { scores[id] = ((maxCost - costs[id]) / range) * 10; });
+      // Step 1 — hardware cost score (0–10 scale).
+      // All products share the same per-transaction rates; the only cost difference
+      // is hardware amortisation. Tap €0, Link €3.29, EX4000 €9.92, Saturn €20.79 / month.
+      const HW = { 'tap-on-mobile': 0, 'link-2500': 3.29, 'ex4000': 9.92, 'saturn-1000f2': 20.79 };
+      const scores = {};
+      IDS.forEach(id => { scores[id] = ((20.79 - HW[id]) / 20.79) * 10; });
 
       // Step 2 — qualitative adjustments
       const isPhysical    = businessTypes.includes('physical');
