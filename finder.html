@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="tokens.css" />
   <script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async></script>
   <script src="cart.js" defer></script>
+  <script src="pricing-engine.js"></script>
   <style>
     body { font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-synthesis: none; }
 
@@ -951,35 +952,9 @@
       updateSlider('spend-slider', 'spend-tooltip', 'spend-label', formatSpend);
     });
 
-    // ── Cost model (based on real pricing data) ──────────────────────────────────
-    //
-    // Tap on Mobile:  1.68% on all txn, no hardware, no monthly fee
-    // Link/2500:      €149 hw / 24mo + €0.13/txn (domestic flat) + €60/yr compliance
-    // EX4000:         €199 hw / 24mo + €0.13/txn (domestic flat) + €60/yr compliance
-    // Saturn 1000F2:  €499 hw / 24mo + €96.60 SIM / 24mo + avg €24/mo service pkg
-    //                 + €5/mo compliance + 70% debit @€0.115/txn + 30% credit @1.10%
-    //
+    // ── Cost model — delegates to pricing-engine.js ──────────────────────────────
     function estimateMonthlyCost(id, txn, spend) {
-      if (id === 'tap-on-mobile') {
-        // 1.68% on every transaction value
-        return txn * spend * 0.0168;
-      }
-      if (id === 'link-2500') {
-        // Fixed: hw amortised + compliance / Variable: flat €0.13 per txn
-        return (149 / 24) + (60 / 12) + txn * 0.13;
-      }
-      if (id === 'ex4000') {
-        // Same structure as Link but slightly higher hw cost
-        return (199 / 24) + (60 / 12) + txn * 0.13;
-      }
-      if (id === 'saturn-1000f2') {
-        // Fixed: hw + SIM + service package (avg yr1 free, yr2 €48 → €24/mo avg) + compliance
-        const fixed = (499 / 24) + (96.60 / 24) + 24 + 5;
-        // Variable: 70% debit at €0.115/txn, 30% credit at 1.10% of spend
-        const variable = 0.7 * txn * 0.115 + 0.3 * txn * spend * 0.011;
-        return fixed + variable;
-      }
-      return Infinity;
+      return calculateTotalMonthlyCost(id, merchantInputsFromFinderAnswers(txn, spend));
     }
 
     // ── Recommendation scoring ───────────────────────────────────────────────────
