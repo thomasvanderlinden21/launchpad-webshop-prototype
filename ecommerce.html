@@ -96,8 +96,8 @@
       <p class="text-[17px] text-[#6b7676] leading-[1.7] mb-3 fade-up-2">Enjoy unbeatable payments performance, a wide range of payment methods and the highest authorisation rates at the lowest cost.</p>
       <p class="text-[15px] text-[#8a9696] leading-[1.65] mb-10 fade-up-2">Trusted by over 1 million businesses across Europe — from global airlines to local retailers.</p>
       <div class="flex items-center gap-3 fade-up-3">
-        <a href="#signup" class="inline-flex items-center gap-2 h-12 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors">
-          Get started
+        <a href="#signup" id="cta-signup" class="inline-flex items-center gap-2 h-12 px-7 rounded-[8px] bg-[#277777] text-white font-medium text-[15px] hover:bg-[#1f5c5c] transition-colors">
+          Sign up
           <svg class="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
         </a>
         <a href="contact.html" class="inline-flex items-center h-12 px-7 rounded-[8px] border border-[#d4d8d8] text-[15px] font-medium text-[#525d5d] hover:border-[#277777] hover:text-[#277777] transition-colors">
@@ -324,6 +324,12 @@
   </footer>
 
   <script>
+    document.getElementById('cta-signup').addEventListener('click', function(e) {
+      e.preventDefault();
+      document.getElementById('signup').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => document.querySelector('#signup input').focus(), 600);
+    });
+
     const revealEls = document.querySelectorAll('.reveal');
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
