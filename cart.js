@@ -14,8 +14,8 @@ const PRODUCT_DATA = {
   },
   'link-2500': {
     name: 'Link/2500',
-    price: 79,
-    priceLabel: '€79.00',
+    price: 149,
+    priceLabel: '€149.00',
     category: 'Mobile Terminal',
     image: 'assets/Terminal renders/Link/link_2.png',
     specs: { Connectivity: '4G/LTE, Wi-Fi, Bluetooth', Battery: '8 hours', Printer: 'Not included', Screen: '2.4"', Weight: '165g', OS: 'Android 10' }
@@ -359,8 +359,8 @@ function renderBuyPageAccessories(productId) {
   if (productId === 'link-2500') {
     accessories = LINK2500_ACCESSORIES;
     terminalName = 'Link/2500';
-    terminalPriceNum = 79;
-    terminalPriceLabel = '€79';
+    terminalPriceNum = 149;
+    terminalPriceLabel = '€149';
   } else if (productId === 'saturn-1000f2') {
     accessories = SATURN1000F2_ACCESSORIES;
     terminalName = 'Saturn 1000F2';

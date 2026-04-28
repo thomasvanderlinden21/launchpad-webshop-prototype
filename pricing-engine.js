@@ -2,14 +2,21 @@
 //
 // Clean separation of concerns:
 //   Cost engine    — objective, contract-accurate, same rates for all terminals
-//   Suitability    — subjective fit score (0–10), never unfairly penalises Link
+//   Suitability    — subjective fit score (0–10)
 //   Combined score — suitability × 0.8  +  costScore × 0.2
 //
 // Key contract truth: Link/2500, EX4000, and Saturn share the SAME pricing
 // profile. Monthly cost differences are driven ONLY by hardware amortisation:
-//   Tap  €0 / Link €3.29 / EX4000 €9.92 / Saturn €20.79 per month
+//   Tap  €0 / Link €6.21 / EX4000 €9.92 / Saturn €20.79 per month
 //
 // EX4000 vs Saturn ≈ €10–11 / month — NOT hundreds.
+//
+// Suitability factors (in order of weight):
+//   1. Transaction value  — high avg spend signals premium hardware preference
+//   2. Volume + throughput — monthly txn and estimated peak txn/hour
+//   3. Printer need        — EX4000 / Saturn have built-in printers
+//   4. Business type       — physical countertop vs popup/mobile
+//   5. Payment channel     — terminal vs pay-by-link vs online
 
 // ─────────────────────────────────────────────────────────────────────────────
 // PRICING PROFILES
@@ -41,7 +48,7 @@ const PRICING_PROFILES = {
 
 const DEVICE_PROFILES = {
   'tap-on-mobile': { hardwareCost:   0, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
-  'link-2500':     { hardwareCost:  79, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
+  'link-2500':     { hardwareCost: 149, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
   'ex4000':        { hardwareCost: 238, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
   'saturn-1000f2': { hardwareCost: 499, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
 };
@@ -150,10 +157,15 @@ function calculateTotalMonthlyCost(productId, merchantInputs) {
 //  • Final score is clamped to [0, 10].
 
 function calculateSuitability(productId, answers) {
-  const { transactions: txn, needsPrinter, businessTypes, paymentMethods } = answers;
+  const { transactions: txn, needsPrinter, businessTypes, paymentMethods, avgSpend } = answers;
+  const avgSpendVal   = avgSpend || 50;
   const isPhysical    = businessTypes.includes('physical');
   const isPopup       = businessTypes.includes('popup');
   const wantsTerminal = paymentMethods.includes('terminal');
+
+  // Estimated peak transactions per hour (8-hour operating day, 30-day month).
+  // Used to assess whether processing speed is a constraint.
+  const txnPerHour = txn / 30 / 8;
 
   // Base: innate mobility / form-factor score
   let score = { 'tap-on-mobile': 6, 'link-2500': 5, 'ex4000': 4, 'saturn-1000f2': 3 }[productId] ?? 3;
@@ -163,7 +175,7 @@ function calculateSuitability(productId, answers) {
     if (productId === 'ex4000')        score += 3;  // built-in printer
     if (productId === 'saturn-1000f2') score += 3;  // high-speed built-in printer
     if (productId === 'link-2500')     score += 1;  // can pair with Bluetooth printer
-    if (productId === 'tap-on-mobile') score -= 2;  // soft penalty — no print option
+    if (productId === 'tap-on-mobile') score -= 2;  // no print option
   } else {
     if (productId === 'tap-on-mobile') score += 1;  // rewarded for lightweight setup
     if (productId === 'link-2500')     score += 1;
@@ -180,19 +192,70 @@ function calculateSuitability(productId, answers) {
     if (productId === 'saturn-1000f2') score -= 2;  // countertop, poor fit for popup
   }
 
-  // ── Volume ────────────────────────────────────────────────────────────────
-  if (txn >= 10000) {
-    // Very high volume: Saturn's reliability and speed justify the premium
-    if (productId === 'saturn-1000f2') score += 6;
+  // ── Transaction value — premium / prestige signal ─────────────────────────
+  // Higher avg spend correlates with customer expectations of professional,
+  // premium-looking hardware. A jeweller's customer expects a Saturn, not a phone app.
+  // Low spend + low volume → lightweight setup is the right fit.
+  if (avgSpendVal >= 200) {
+    // Luxury / high-value transactions (jewellery, premium retail, high-end hospitality)
+    if (productId === 'saturn-1000f2') score += 4;  // premium countertop presence
+    if (productId === 'ex4000')        score += 2;  // professional portable
+    if (productId === 'tap-on-mobile') score -= 3;  // poor fit for luxury clients
+    if (productId === 'link-2500')     score -= 2;  // underwhelming for high-value sales
+  } else if (avgSpendVal >= 80) {
+    // Moderately high spend — capable, professional hardware preferred
+    if (productId === 'saturn-1000f2') score += 2;
     if (productId === 'ex4000')        score += 1;
+    if (productId === 'tap-on-mobile') score -= 1;
+  }
+
+  // ── Volume — monthly baseline ─────────────────────────────────────────────
+  if (txn >= 10000) {
+    // Very high volume: Saturn's throughput and reliability are critical
+    if (productId === 'saturn-1000f2') score += 5;
+    if (productId === 'ex4000')        score += 2;
+    if (productId === 'tap-on-mobile') score -= 3;
+    if (productId === 'link-2500')     score -= 1;
   } else if (txn >= 3000) {
     if (productId === 'ex4000')        score += 3;
     if (productId === 'link-2500')     score += 1;
     if (productId === 'saturn-1000f2') score += 1;
   } else if (txn < 500) {
-    // Very low volume: hardware investment is hard to justify
-    if (productId === 'tap-on-mobile') score += 2;
-    if (productId === 'link-2500')     score += 2;
+    if (avgSpendVal < 50) {
+      // Low volume AND low spend — ultra-lightweight is ideal (e.g. hairdresser, market stall)
+      if (productId === 'tap-on-mobile') score += 3;
+      if (productId === 'link-2500')     score += 2;
+    } else {
+      // Low volume but meaningful spend — nudge toward more capable hardware
+      if (productId === 'tap-on-mobile') score += 1;
+      if (productId === 'link-2500')     score += 2;
+      if (productId === 'ex4000')        score += 1;
+    }
+  }
+
+  // ── Throughput — peak processing demand ──────────────────────────────────
+  // Monthly volume tells one story; peak txn/hour tells another.
+  // A busy lunch service or market stall needs hardware that won't queue up.
+  if (txnPerHour >= 20) {
+    // Sustained high throughput — fast, reliable hardware is non-negotiable
+    if (productId === 'saturn-1000f2') score += 2;
+    if (productId === 'ex4000')        score += 1;
+    if (productId === 'tap-on-mobile') score -= 2;
+  } else if (txnPerHour >= 10) {
+    // Moderate-high throughput — EX4000 starts to outperform basic mobile
+    if (productId === 'ex4000')        score += 1;
+  } else if (txnPerHour < 3) {
+    // Low peak rate — mobile solutions are more than sufficient
+    if (productId === 'tap-on-mobile') score += 1;
+    if (productId === 'link-2500')     score += 1;
+  }
+
+  // ── High-volume popup — professional portable over basic mobile ───────────
+  // At market stalls / food trucks with >3 000 txn/month, throughput and
+  // battery endurance make EX4000 the better choice over Link.
+  if (isPopup && txn >= 3000) {
+    if (productId === 'ex4000')    score += 2;
+    if (productId === 'link-2500') score -= 1;
   }
 
   // ── Payment channel ───────────────────────────────────────────────────────
