@@ -1027,10 +1027,10 @@
         scores['link-2500'] += 1;
       }
       if (txn >= 10000) {
-        // Saturn's flat debit fee (€0.115/txn) beats 1.68% or €0.13 at scale
-        scores['saturn-1000f2'] += 3;
-        scores['ex4000']        += 1;
-        scores['tap-on-mobile'] -= 4; // 1.68% becomes very expensive
+        // Very high volume — Saturn's reliability, fast printer, and always-on
+        // connectivity make the hardware cost worthwhile over EX4000
+        scores['saturn-1000f2'] += 5;
+        scores['tap-on-mobile'] -= 4;
       }
 
       // High avg spend — percentage fee (TOM 1.68%) gets costly vs flat fee
