@@ -131,10 +131,18 @@ function getPerformanceTier(monthlyTransactions) {
   return 'very_high';
 }
 
-function getBusinessTypeFitScore(productId, bizType) {
+function getBusinessTypeFitScore(productId, bizType, txn) {
   if (!bizType || !BUSINESS_TYPE_RECOMMENDATIONS[bizType]) return 4;
   const rec = BUSINESS_TYPE_RECOMMENDATIONS[bizType];
-  if (rec.primary     === productId) return 10;
+  if (rec.primary === productId) return 10;
+
+  // Food Truck: alternative depends on monthly transaction volume
+  // Spreadsheet rule: >600 txn → Saturn 1000F2, ≤600 txn → Link/2500
+  if (bizType === 'food_truck_popup_food') {
+    const alt = (txn || 0) > 600 ? 'saturn-1000f2' : 'link-2500';
+    return productId === alt ? 7 : 4;
+  }
+
   if (rec.alternative === productId) return 7;
   return 4;
 }
@@ -358,7 +366,7 @@ function getTerminalRecommendation(answers, merchantInputs) {
 
   // Business type fit
   const bizFit = {};
-  IDS.forEach(id => { bizFit[id] = getBusinessTypeFitScore(id, detectedBusinessType); });
+  IDS.forEach(id => { bizFit[id] = getBusinessTypeFitScore(id, detectedBusinessType, txn); });
 
   // Combined scores with adjustments
   const finalScores = {};
@@ -391,6 +399,18 @@ function getTerminalRecommendation(answers, merchantInputs) {
     if ((txn || 0) >= 10000) {
       if (id === 'saturn-1000f2') adj += 1.5;
       if (id === 'tap-on-mobile') adj -= 1.5;
+    }
+
+    // Food Truck volume rule (from spreadsheet):
+    // >600 txn/month → Saturn 1000F2 is the alternative
+    // ≤600 txn/month → Link/2500 is the alternative
+    // Saturn's popup suitability penalty means it needs an explicit boost
+    // to reflect its superiority over Link at higher food-truck volumes.
+    if (detectedBusinessType === 'food_truck_popup_food') {
+      if ((txn || 0) > 600) {
+        if (id === 'saturn-1000f2') adj += 3;
+        if (id === 'link-2500')     adj -= 2;
+      }
     }
 
     // Meal voucher support
