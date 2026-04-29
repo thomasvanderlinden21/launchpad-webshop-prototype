@@ -43,6 +43,7 @@
     /* Tab toggle */
     .tab-btn { color: #6b7676; background: transparent; border: none; cursor: pointer; font-family: inherit; }
     .tab-btn.active { background: white; color: #121621; box-shadow: 0 1px 6px rgba(0,0,0,0.08); font-weight: 600; }
+    #pricing-sticky-bar { transition: top 0.35s cubic-bezier(0.16,1,0.3,1); }
   </style>
   <script>
   (function (m, a, z, e) {
@@ -108,7 +109,7 @@
   </section>
 
   <!-- Sticky tab bar -->
-  <div class="sticky top-[72px] z-[9000] bg-white/90 backdrop-blur-xl border-b border-black/[0.06] py-3">
+  <div id="pricing-sticky-bar" class="sticky top-[72px] z-[9000] bg-white/90 backdrop-blur-xl border-b border-black/[0.06] py-3" style="box-shadow:0 1px 0 rgba(0,0,0,0.04);">
     <div class="flex justify-center">
       <div class="flex bg-[#f5f7f7] rounded-[12px] p-1 gap-1">
         <button id="tab-instore" onclick="switchTab('instore')" class="tab-btn active px-7 py-2.5 rounded-[10px] text-[14px] transition-all">
@@ -785,18 +786,31 @@
     }, { threshold: 0.08 });
     revealEls.forEach(el => observer.observe(el));
 
-    // Nav hide on scroll
+    // Hide-on-scroll nav — tab bar tracks the nav exactly as on product pages
     (function () {
       const nav = document.querySelector('header');
+      const bar = document.getElementById('pricing-sticky-bar');
       const NAV_H = 72;
-      let lastY = window.scrollY;
+      let lastY  = window.scrollY;
       let hidden = false;
+
       window.addEventListener('scroll', () => {
         const y = window.scrollY;
         if (y > NAV_H) {
-          if (y > lastY && !hidden) { nav.style.transform = 'translateY(-100%)'; hidden = true; }
-          else if (y < lastY && hidden) { nav.style.transform = 'translateY(0)'; hidden = false; }
-        } else if (hidden) { nav.style.transform = 'translateY(0)'; hidden = false; }
+          if (y > lastY && !hidden) {
+            nav.style.transform = 'translateY(-100%)';
+            bar.style.top = '0px';
+            hidden = true;
+          } else if (y < lastY && hidden) {
+            nav.style.transform = 'translateY(0)';
+            bar.style.top = NAV_H + 'px';
+            hidden = false;
+          }
+        } else if (hidden) {
+          nav.style.transform = 'translateY(0)';
+          bar.style.top = NAV_H + 'px';
+          hidden = false;
+        }
         lastY = y;
       }, { passive: true });
     })();
