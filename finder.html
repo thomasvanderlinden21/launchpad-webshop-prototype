@@ -528,6 +528,34 @@
         </div>
       </section>
 
+      <!-- Cost comparison table -->
+      <section id="rec-cost-section" class="hidden max-w-[1100px] mx-auto px-16 pb-8">
+        <div class="bg-white rounded-[12px] border border-[#e6ebeb] overflow-hidden shadow-sm">
+          <div class="flex items-center justify-between px-6 py-4 border-b border-[#f0f2f2]">
+            <div>
+              <h3 class="text-[14px] font-semibold text-[#121621]">Monthly cost comparison</h3>
+              <p id="rec-savings-line" class="text-[13px] text-[#6b7676] mt-0.5"></p>
+            </div>
+            <span class="text-[11px] font-medium text-[#9aa5a5] bg-[#f5f7f7] px-3 py-1 rounded-full">Excl. hardware</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="border-b border-[#f0f2f2]">
+                  <th class="text-left px-6 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide w-[180px]">Terminal</th>
+                  <th class="text-right px-4 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide">Monthly cost</th>
+                  <th class="text-right px-4 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide">Transaction fees</th>
+                  <th class="text-right px-4 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide">Subscription</th>
+                  <th class="text-right px-4 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide">Per transaction</th>
+                  <th class="text-right px-6 py-3 text-[11px] font-semibold text-[#9aa5a5] uppercase tracking-wide">Effective rate</th>
+                </tr>
+              </thead>
+              <tbody id="rec-cost-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
       <!-- 2-column recommendation cards -->
       <section class="max-w-[1100px] mx-auto px-16 py-6 pb-16">
         <div class="grid grid-cols-2 gap-6">
@@ -1073,6 +1101,58 @@
       return `Identified as ${biz} · ${txn} · ${pay}`;
     }
 
+    function renderCostTable(rec) {
+      const NAMES = {
+        'tap-on-mobile': 'Tap on Mobile',
+        'link-2500':     'Link/2500',
+        'ex4000':        'EX4000',
+        'saturn-1000f2': 'Saturn 1000F2',
+      };
+
+      // Sort all four terminals by Y1 cost for the table
+      const IDS = ['tap-on-mobile','link-2500','ex4000','saturn-1000f2'];
+      const sorted = IDS.slice().sort((a, b) => rec.costs[a] - rec.costs[b]);
+
+      const tbody = document.getElementById('rec-cost-table-body');
+      tbody.innerHTML = sorted.map((id, i) => {
+        const bd      = rec.costBreakdowns[id];
+        const isBest  = i === 0;
+        const hasSub  = id === 'saturn-1000f2';
+        const name    = NAMES[id];
+
+        const monthlyCostLabel = hasSub
+          ? `€${bd.totalY1.toFixed(2)} <span class="text-[10px] text-[#9aa5a5] font-normal">/ €${bd.totalAfterY1.toFixed(2)} Y2+</span>`
+          : `€${bd.totalY1.toFixed(2)}`;
+
+        const subLabel = hasSub ? `€0 <span class="text-[10px] text-[#9aa5a5]">/ €48 Y2+</span>` : '€0';
+
+        return `
+          <tr class="border-b border-[#f9fafb] ${isBest ? 'bg-[#f5faf9]' : ''}">
+            <td class="px-6 py-3.5 text-[13px] font-medium ${isBest ? 'text-[#277777]' : 'text-[#121621]'}">
+              ${isBest ? '<svg class="w-3 h-3 inline mr-1.5 text-[#277777]" viewBox="0 0 14 14" fill="none"><path d="M2 7l3.5 3.5L12 3.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : ''}${name}
+            </td>
+            <td class="text-right px-4 py-3.5 text-[13px] ${isBest ? 'text-[#277777] font-semibold' : 'text-[#525d5d]'}">${monthlyCostLabel}</td>
+            <td class="text-right px-4 py-3.5 text-[13px] text-[#525d5d]">€${bd.breakdown.txnCost.toFixed(2)}</td>
+            <td class="text-right px-4 py-3.5 text-[13px] text-[#525d5d]">${subLabel}</td>
+            <td class="text-right px-4 py-3.5 text-[13px] text-[#525d5d]">€${bd.breakdown.costPerTxn.toFixed(4)}</td>
+            <td class="text-right px-6 py-3.5 text-[13px] text-[#525d5d]">${bd.breakdown.effectivePct.toFixed(2)}%</td>
+          </tr>`;
+      }).join('');
+
+      // Savings line
+      const sv = rec.savings;
+      const bestName  = NAMES[sv.best];
+      const secName   = NAMES[sv.secondBest];
+      const savLine   = document.getElementById('rec-savings-line');
+      if (sv.monthly > 0.005) {
+        savLine.textContent = `${bestName} saves €${sv.monthly.toFixed(2)}/month vs ${secName} — €${sv.annual.toFixed(2)}/year`;
+      } else {
+        savLine.textContent = `${bestName} and ${secName} have identical monthly costs`;
+      }
+
+      document.getElementById('rec-cost-section').classList.remove('hidden');
+    }
+
     function renderBullets(id, bullets) {
       document.getElementById(id).innerHTML = bullets.map(b => `
         <li class="flex items-center gap-2">
@@ -1128,6 +1208,7 @@
       if (answers.businessTypes.includes('online') && !answers.businessTypes.includes('physical') && !answers.businessTypes.includes('popup')) {
         ecomEl.style.display = 'block';
         resultEl.classList.remove('visible');
+        document.getElementById('rec-cost-section').classList.add('hidden');
         setTimeout(() => ecomEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
         return;
       }
@@ -1154,6 +1235,9 @@
       } else {
         explanationEl.classList.add('hidden');
       }
+
+      // Cost comparison table
+      if (lastRecommendation) renderCostTable(lastRecommendation);
 
       // Render cards
       renderCard('rec-best', bestId, PRODUCTS[bestId], true,  answers, altId);

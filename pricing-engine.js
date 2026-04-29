@@ -1,54 +1,18 @@
 // ── Worldline Terminal Pricing Engine v3 ─────────────────────────────────────
 //
-// Four-component scoring:
+// Cost formula (transaction fees + subscription only, hardware excluded):
+//   Link/2500:     T × max(1.10% × A, €0.15)          + €0/month
+//   Saturn 1000F2: T × max(1.10% × A, €0.15)          + €0/month (Y1), €48/month (Y2+)
+//   EX4000:        (V × 1.40%) + (T × €0.10)           + €0/month
+//   Tap on Mobile: V × 1.68%                            + €0/month
+//
+//   V = monthly volume (€),  T = number of transactions,  A = V / T
+//
+// Four-component recommendation scoring:
 //   costScore          × 0.35  — relative monthly cost (lower = better)
 //   suitabilityScore   × 0.35  — printer / mobility / payment-channel fit
 //   performanceScore   × 0.20  — transaction volume tier fit
 //   businessTypeFit    × 0.10  — business-type primary/alternative/other
-//
-// Post-score adjustments applied before final ranking:
-//   Meal voucher: EX4000+3, Saturn+3, Tap−3, Link−1
-//   Premium (avgSpend≥250): Saturn+2, EX4000+1
-//   Budget (avgSpend<30 && txn<1000): Tap+2, Link+1
-//
-// Key contract truth: Link/2500, EX4000, and Saturn share the SAME pricing
-// profile. Monthly cost differences are driven ONLY by hardware amortisation:
-//   Tap  €0 / Link €6.21 / EX4000 €9.92 / Saturn €20.79 per month
-
-// ─────────────────────────────────────────────────────────────────────────────
-// PRICING PROFILES
-// ─────────────────────────────────────────────────────────────────────────────
-
-const PRICING_PROFILES = {
-  standard: {
-    rates: {
-      visaMastercard:     { type: 'percent', rate: 0.011  },   // 1.10 %
-      debitBelowOrEqual5: { type: 'fixed',   fee:  0.038  },   // €0.038 flat
-      debitAbove5:        { type: 'fixed',   fee:  0.115  },   // €0.115 flat
-      alternativeCards:   { type: 'percent', rate: 0.0265 },   // 2.65 %
-    },
-    // Minimum REPLACES lower fee — does not add on top
-    minimumFeePerTransaction: 0.15,
-    // Surcharges — NOT cumulative: apply max(commercialShare, nonEEAShare)
-    surcharges: {
-      commercial: 0.012,   // +1.20 %
-      nonEEA:     0.012,   // +1.20 %
-    },
-    chargebackFee:       30,   // € per event
-    complianceAnnualFee: 60,   // €60 / year → €5 / month
-  }
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// DEVICE PROFILES
-// ─────────────────────────────────────────────────────────────────────────────
-
-const DEVICE_PROFILES = {
-  'tap-on-mobile': { hardwareCost:   0, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
-  'link-2500':     { hardwareCost: 149, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
-  'ex4000':        { hardwareCost: 238, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
-  'saturn-1000f2': { hardwareCost: 499, amortisationMonths: 24, pricingProfile: 'standard', deviceMonthlyFee: 0 },
-};
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BUSINESS TYPE RECOMMENDATIONS
@@ -148,86 +112,77 @@ function getBusinessTypeFitScore(productId, bizType, txn) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PAYMENT MIX
+// COST ENGINE
 // ─────────────────────────────────────────────────────────────────────────────
 
-function defaultPaymentMix(avgSpend) {
-  if (avgSpend <= 5)  return { debitBelowOrEqual5: 0.70, debitAbove5: 0.10, visaMastercard: 0.15, alternativeCards: 0.05 };
-  if (avgSpend <= 15) return { debitBelowOrEqual5: 0.10, debitAbove5: 0.50, visaMastercard: 0.30, alternativeCards: 0.10 };
-  if (avgSpend <= 40) return { debitBelowOrEqual5: 0.00, debitAbove5: 0.45, visaMastercard: 0.40, alternativeCards: 0.15 };
-  return               { debitBelowOrEqual5: 0.00, debitAbove5: 0.25, visaMastercard: 0.55, alternativeCards: 0.20 };
+/**
+ * Build inputs from the two configurator slider values.
+ * V = monthly transaction volume in €  (T × avgSpend)
+ * T = number of transactions
+ * A = average transaction value = V / T
+ */
+function merchantInputsFromFinderAnswers(T, avgSpend) {
+  return { T, V: T * avgSpend, avgTransactionValue: avgSpend };
 }
 
-function merchantInputsFromFinderAnswers(txn, avgSpend) {
-  return {
-    monthlyTransactions: txn,
-    avgTransactionValue: avgSpend,
-    paymentMix:          defaultPaymentMix(avgSpend),
-    commercialCardShare: 0.20,   // 20 % assumed corporate/business cards
-    nonEEAShare:         0.05,   // 5 % assumed non-EEA issued cards
-    chargebackRate:      0.001,  // 0.1 % of transactions → chargeback
-  };
-}
+/**
+ * Calculate monthly cost for one terminal using the simplified formula.
+ * Hardware and one-off setup costs are excluded.
+ *
+ * Returns:
+ *   total        — Year-1 monthly cost used for ranking
+ *   totalY1      — Year-1 monthly cost (Saturn sub = €0)
+ *   totalAfterY1 — Monthly cost from Year 2 onwards (Saturn sub = €48)
+ *   breakdown    — { txnCost, sub, subAfterY1, costPerTxn, effectivePct }
+ */
+function calculateSimpleMonthlyCost(productId, V, T) {
+  const A = T > 0 ? V / T : 0;
+  let txnCost, sub, subAfterY1;
 
-// ─────────────────────────────────────────────────────────────────────────────
-// COST ENGINE  (objective)
-// ─────────────────────────────────────────────────────────────────────────────
+  switch (productId) {
+    case 'link-2500':
+      // 1.10 % × A, min €0.15 per transaction
+      txnCost    = T * Math.max(0.011 * A, 0.15);
+      sub        = 0;
+      subAfterY1 = 0;
+      break;
 
-function calculateCostBreakdown(productId, merchantInputs) {
-  const device = DEVICE_PROFILES[productId];
-  if (!device) return null;
+    case 'saturn-1000f2':
+      // 1.10 % × A, min €0.15 per transaction; €48/month subscription from Year 2
+      txnCost    = T * Math.max(0.011 * A, 0.15);
+      sub        = 0;
+      subAfterY1 = 48;
+      break;
 
-  const profile = PRICING_PROFILES[device.pricingProfile];
-  const { monthlyTransactions: txn, avgTransactionValue: spend,
-          paymentMix: mix, commercialCardShare, nonEEAShare, chargebackRate } = merchantInputs;
+    case 'ex4000':
+      // 1.40 % of volume  +  €0.10 fixed per transaction
+      txnCost    = (V * 0.014) + (T * 0.10);
+      sub        = 0;
+      subAfterY1 = 0;
+      break;
 
-  // Helper: minimum fee replaces, does not add
-  function effectiveFee(rateEntry) {
-    const raw = rateEntry.type === 'percent' ? spend * rateEntry.rate : rateEntry.fee;
-    return Math.max(raw, profile.minimumFeePerTransaction);
+    case 'tap-on-mobile':
+      // 1.68 % of volume, no minimum fee
+      txnCost    = V * 0.0168;
+      sub        = 0;
+      subAfterY1 = 0;
+      break;
+
+    default:
+      return null;
   }
 
-  // 1. Hardware amortisation
-  const hardware = device.hardwareCost / device.amortisationMonths;
-
-  // 2. Transaction fees — identical for all products on the same profile
-  const vmPerTxn    = effectiveFee(profile.rates.visaMastercard);
-  const dbLowPerTxn = effectiveFee(profile.rates.debitBelowOrEqual5);
-  const dbHiPerTxn  = effectiveFee(profile.rates.debitAbove5);
-  const altPerTxn   = effectiveFee(profile.rates.alternativeCards);
-
-  const transactions =
-    (mix.visaMastercard     || 0) * txn * vmPerTxn    +
-    (mix.debitBelowOrEqual5 || 0) * txn * dbLowPerTxn +
-    (mix.debitAbove5        || 0) * txn * dbHiPerTxn  +
-    (mix.alternativeCards   || 0) * txn * altPerTxn;
-
-  // 3. Surcharges — non-cumulative
-  const monthlyVolume  = txn * spend;
-  const surchargeShare = Math.max(commercialCardShare, nonEEAShare);
-  const surcharges     = monthlyVolume * surchargeShare * profile.surcharges.commercial;
-
-  // 4. Chargebacks
-  const chargebacks = txn * chargebackRate * profile.chargebackFee;
-
-  // 5. Compliance
-  const compliance = profile.complianceAnnualFee / 12;
-
-  // 6. Device fee (e.g. SIM, service plan)
-  const deviceFee = device.deviceMonthlyFee;
-
-  const total = hardware + transactions + surcharges + chargebacks + compliance + deviceFee;
+  const totalY1      = txnCost + sub;
+  const totalAfterY1 = txnCost + subAfterY1;
+  const costPerTxn   = T > 0 ? totalY1 / T : 0;
+  const effectivePct = V > 0 ? (totalY1 / V) * 100 : 0;
 
   return {
-    total,
-    breakdown: { hardware, transactions, surcharges, chargebacks, compliance, deviceFee },
-    pricingProfile: device.pricingProfile,
+    total:       totalY1,   // used for ranking — Year 1 pricing
+    totalY1,
+    totalAfterY1,
+    breakdown: { txnCost, sub, subAfterY1, costPerTxn, effectivePct },
   };
-}
-
-function calculateTotalMonthlyCost(productId, merchantInputs) {
-  const r = calculateCostBreakdown(productId, merchantInputs);
-  return r ? r.total : Infinity;
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -343,17 +298,23 @@ function generateExplanation(recommendedId, altId, answers, tier, detectedBizTyp
 function getTerminalRecommendation(answers, merchantInputs) {
   const IDS = ['tap-on-mobile', 'link-2500', 'ex4000', 'saturn-1000f2'];
   const { transactions: txn, avgSpend, detectedBusinessType, needsMealVouchers } = answers;
+  const { V, T } = merchantInputs;
 
-  // Cost
-  const costs = {}, breakdowns = {};
+  // Cost (new simplified formula — hardware excluded)
+  const costs = {}, costBreakdowns = {};
   IDS.forEach(id => {
-    const r = calculateCostBreakdown(id, merchantInputs);
-    costs[id]      = r.total;
-    breakdowns[id] = r;
+    const r = calculateSimpleMonthlyCost(id, V, T);
+    costs[id]          = r.total;   // Year-1 cost used for ranking
+    costBreakdowns[id] = r;
   });
   const maxCost   = Math.max(...Object.values(costs));
   const minCost   = Math.min(...Object.values(costs));
   const costRange = (maxCost - minCost) || 1;
+
+  // Savings between cheapest and second-cheapest (by Y1 cost)
+  const rankedByCost    = IDS.slice().sort((a, b) => costs[a] - costs[b]);
+  const monthlySavings  = costs[rankedByCost[1]] - costs[rankedByCost[0]];
+  const annualSavings   = monthlySavings * 12;
 
   // Suitability
   const suitability = {};
@@ -425,7 +386,7 @@ function getTerminalRecommendation(answers, merchantInputs) {
   });
 
   const ranked   = IDS.slice().sort((a, b) => finalScores[b] - finalScores[a]);
-  const cheapest = IDS.slice().sort((a, b) => costs[a] - costs[b])[0];
+  const cheapest = rankedByCost[0];
 
   const explanation = generateExplanation(
     ranked[0], ranked[1], answers, tier, detectedBusinessType || null
@@ -436,8 +397,14 @@ function getTerminalRecommendation(answers, merchantInputs) {
     alternative: ranked[1],
     cheapest,
     ranked,
-    costs,
-    breakdowns,
+    costs,          // { productId: Y1 total } — used by savings box
+    costBreakdowns, // full breakdown per terminal for cost table
+    savings: {
+      monthly:    monthlySavings,
+      annual:     annualSavings,
+      best:       rankedByCost[0],
+      secondBest: rankedByCost[1],
+    },
     suitability,
     finalScores,
     explanation,
