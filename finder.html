@@ -159,7 +159,6 @@
       <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Instore</a>
       <a href="ecommerce.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
       <a href="pricing.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
-      <a href="contact.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
       <a href="support.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
     </nav>
     <div class="ml-auto flex items-center gap-1">
@@ -522,10 +521,6 @@
           </span>
         </div>
 
-        <!-- Recommendation explanation -->
-        <div id="rec-explanation" class="hidden mt-5 p-5 rounded-[10px] border border-[rgba(39,119,119,0.18)]" style="background: linear-gradient(170deg, rgba(39,119,119,0.05) 0%, rgba(255,255,255,0.6) 100%);">
-          <ul id="rec-explanation-list" class="flex flex-col gap-2"></ul>
-        </div>
       </section>
 
       <!-- 2-column recommendation cards -->
@@ -575,6 +570,11 @@
             </div>
           </div>
 
+        </div>
+
+        <!-- Recommendation explanation -->
+        <div id="rec-explanation" class="hidden mt-6">
+          <ul id="rec-explanation-list" class="flex flex-col gap-2"></ul>
         </div>
       </section>
 
@@ -717,7 +717,7 @@
       <div class="flex items-center gap-6">
         <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Privacy</a>
         <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Terms</a>
-        <a href="contact.html" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
+        <a href="support.html" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
       </div>
     </div>
   </footer>
@@ -1100,19 +1100,19 @@
         const savingsText = document.getElementById('rec-best-savings-text');
         const recCost     = lastRecommendation.costs[productId];
         const altCost     = lastRecommendation.costs[altId];
-        const diff        = Math.round(Math.abs(altCost - recCost));
+        const diff        = Math.abs(altCost - recCost);
+        const diffFmt     = diff.toFixed(2);
 
-        if (diff === 0) {
+        if (diff < 0.01) {
           savingsEl.classList.add('hidden');
         } else if (altCost > recCost) {
           // Recommended is cheaper — standard savings message
           savingsEl.classList.remove('hidden');
-          savingsText.innerHTML = `<strong>€${diff.toLocaleString('nl-NL')} cheaper to run per month</strong> than ${PRODUCTS[altId].name}.`;
+          savingsText.innerHTML = `<strong>€${diffFmt} cheaper to run per month</strong> than ${PRODUCTS[altId].name}.`;
         } else {
           // Alternative is cheaper — show it as a budget note
-          // (same transaction fees, only hardware differs)
           savingsEl.classList.remove('hidden');
-          savingsText.innerHTML = `${PRODUCTS[altId].name} saves <strong>€${diff.toLocaleString('nl-NL')}/month</strong> on hardware — identical transaction fees, lower upfront cost.`;
+          savingsText.innerHTML = `${PRODUCTS[altId].name} saves <strong>€${diffFmt}/month</strong> on hardware — identical transaction fees, lower upfront cost.`;
         }
       }
     }

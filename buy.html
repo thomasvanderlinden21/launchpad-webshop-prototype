@@ -63,10 +63,9 @@
       <img src="logo.svg" alt="Worldline" width="160" height="16" style="display:block">
     </a>
     <nav class="absolute left-1/2 -translate-x-1/2 flex items-center gap-8">
-      <a href="index.html" class="text-sm font-medium text-[#277777] transition-colors">Instore</a>
+      <a href="index.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Instore</a>
       <a href="ecommerce.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">E-commerce</a>
       <a href="pricing.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Pricing</a>
-      <a href="contact.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Contact</a>
       <a href="support.html" class="text-sm font-medium text-[#525d5d] hover:text-[#277777] transition-colors">Support</a>
     </nav>
     <div class="ml-auto flex items-center gap-1">
@@ -105,7 +104,7 @@
     <div class="flex gap-16 items-start">
 
       <!-- Product image carousel — sticky while reading right column -->
-      <div class="w-[460px] flex-shrink-0 fade-up sticky top-[128px]">
+      <div class="w-[460px] flex-shrink-0 fade-up">
         <div class="bg-gradient-to-br from-[#f5f7f7] to-[#eaefef] rounded-[24px] h-[460px] overflow-hidden relative" id="carousel-track-wrap">
           <div id="carousel-track" class="flex h-full" style="transition: transform 0.45s cubic-bezier(0.16,1,0.3,1);"></div>
           <button onclick="carouselMove(-1)" aria-label="Previous" id="carousel-prev" class="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 bg-white/80 backdrop-blur-sm rounded-full shadow flex items-center justify-center text-[#525d5d] hover:text-[#121621] hover:bg-white transition-colors">
@@ -116,6 +115,13 @@
           </button>
         </div>
         <div class="flex items-center justify-center gap-2 mt-4" id="carousel-dots"></div>
+
+        <!-- Accessories under image -->
+        <div id="image-accessories" class="hidden mt-6">
+          <p class="text-[13px] font-semibold text-[#121621] mb-3">Accessories</p>
+          <div id="image-acc-list" class="flex flex-col gap-2"></div>
+          <button id="image-acc-toggle" class="hidden mt-3 text-[13px] font-medium text-[#277777] hover:text-[#1f5c5c] transition-colors"></button>
+        </div>
       </div>
 
       <!-- Content -->
@@ -144,13 +150,6 @@
               <svg class="w-4 h-4 text-[#8a9696] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
             </button>
             <div id="hero-specs-body" class="hidden border-t border-[#f0f2f2] px-4 pb-2 pt-1"></div>
-          </div>
-          <div id="hero-acc-wrap" class="hidden border border-[#e6ebeb] rounded-[10px] overflow-hidden">
-            <button onclick="toggleAccordion(this)" class="w-full flex items-center justify-between px-4 py-3.5 text-left bg-[#fafafa] hover:bg-[#f3f5f5] transition-colors">
-              <span class="text-[13px] font-semibold text-[#121621]">Accessories</span>
-              <svg class="w-4 h-4 text-[#8a9696] transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div id="hero-acc-body" class="hidden border-t border-[#f0f2f2] px-4 pb-2 pt-1"></div>
           </div>
         </div>
 
@@ -204,7 +203,7 @@
       <div class="flex items-center gap-6">
         <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Privacy</a>
         <a href="#" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Terms</a>
-        <a href="contact.html" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
+        <a href="support.html" class="text-sm text-[#4a5555] hover:text-white/60 transition-colors">Contact</a>
       </div>
     </div>
   </footer>
@@ -477,29 +476,55 @@
          </div>`
       ).join('');
 
-      // Accessories panel
+      // Accessories under image
+      renderImageAccessories(id);
+
+    }
+
+    function renderImageAccessories(id) {
       let accList = [];
       if (id === 'link-2500' && typeof LINK2500_ACCESSORIES !== 'undefined') accList = LINK2500_ACCESSORIES;
       else if (id === 'saturn-1000f2' && typeof SATURN1000F2_ACCESSORIES !== 'undefined') accList = SATURN1000F2_ACCESSORIES;
-      const accWrap = document.getElementById('hero-acc-wrap');
-      if (accList.length) {
-        accWrap.classList.remove('hidden');
-        document.getElementById('hero-acc-body').innerHTML = accList.map(a => {
-          const accImg = a.image
-            ? `<img src="${a.image}" alt="${a.name}" class="w-full h-full object-contain p-1" />`
-            : `<div class="w-5 h-5 bg-[#e0e6e6] rounded"></div>`;
-          return `
-            <div class="flex items-center gap-3 py-2 border-b border-[#f0f2f2] last:border-0">
-              <div class="w-10 h-10 bg-[#f5f7f7] rounded-[8px] flex items-center justify-center flex-shrink-0 overflow-hidden">${accImg}</div>
-              <div class="flex-1 min-w-0">
-                <p class="text-[13px] font-medium text-[#121621] truncate">${a.name}</p>
-                <p class="text-[12px] text-[#6b7676]">${a.priceLabel}</p>
-              </div>
-              <button onclick="addAddonToCart('${a.id}','${a.name.replace(/'/g,"\\'")}',${a.price},'${a.priceLabel}','${(a.image||'').replace(/'/g,"\\'")}')" class="text-[12px] font-medium text-[#277777] border border-[#277777] rounded-[6px] px-3 py-1.5 hover:bg-[#f0f7f7] transition-colors flex-shrink-0">Add</button>
-            </div>`;
-        }).join('');
-      }
+      else if (id === 'ex4000' && typeof EX4000_ACCESSORIES !== 'undefined') accList = EX4000_ACCESSORIES;
+      if (!accList.length) return;
 
+      const SHOW = 3;
+      const wrapper = document.getElementById('image-accessories');
+      const listEl  = document.getElementById('image-acc-list');
+      const toggleBtn = document.getElementById('image-acc-toggle');
+
+      wrapper.classList.remove('hidden');
+
+      listEl.innerHTML = accList.map((a, i) => {
+        const extra = i >= SHOW ? ' image-acc-extra hidden' : '';
+        const safeId   = a.id;
+        const safeName = a.name.replace(/'/g, "\\'");
+        const safeImg  = (a.image || '').replace(/'/g, "\\'");
+        const imgHtml  = a.image
+          ? `<img src="${a.image}" alt="${a.name}" class="w-full h-full object-contain p-1" />`
+          : `<div class="w-5 h-5 bg-[#e0e6e6] rounded"></div>`;
+        return `
+          <div class="flex items-center gap-3 bg-[#f9fafa] border border-[#e6ebeb] rounded-[12px] p-3${extra}">
+            <div class="w-12 h-12 bg-white rounded-[8px] flex items-center justify-center flex-shrink-0 overflow-hidden border border-[#e6ebeb]">${imgHtml}</div>
+            <div class="flex-1 min-w-0">
+              <p class="text-[13px] font-medium text-[#121621] truncate">${a.name}</p>
+              <p class="text-[12px] text-[#6b7676]">${a.priceLabel}</p>
+            </div>
+            <button onclick="addAddonToCart('${safeId}','${safeName}',${a.price},'${a.priceLabel}','${safeImg}')" class="text-[12px] font-medium text-[#277777] border border-[#277777] rounded-[6px] px-3 py-1.5 hover:bg-[#f0f7f7] transition-colors flex-shrink-0 whitespace-nowrap">Add</button>
+          </div>`;
+      }).join('');
+
+      const extra = accList.length - SHOW;
+      if (extra > 0) {
+        toggleBtn.classList.remove('hidden');
+        toggleBtn.textContent = `Show ${extra} more`;
+        let expanded = false;
+        toggleBtn.onclick = () => {
+          expanded = !expanded;
+          document.querySelectorAll('.image-acc-extra').forEach(el => el.classList.toggle('hidden', !expanded));
+          toggleBtn.textContent = expanded ? 'Show less' : `Show ${extra} more`;
+        };
+      }
     }
 
     function toggleAccordion(btn) {

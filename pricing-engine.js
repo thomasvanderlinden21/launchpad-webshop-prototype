@@ -360,6 +360,16 @@ function getTerminalRecommendation(answers, merchantInputs) {
       }
     }
 
+    // Printer requirement: when a merchant needs receipts, terminals with a
+    // built-in printer must win over Link (Bluetooth only) or Tap (no print).
+    // Applied additively so it can override cost/performance advantages.
+    if (answers.needsPrinter) {
+      if (id === 'ex4000')        adj += 2;
+      if (id === 'saturn-1000f2') adj += 2;
+      if (id === 'link-2500')     adj -= 1;
+      if (id === 'tap-on-mobile') adj -= 2;
+    }
+
     // Meal voucher support
     if (needsMealVouchers) {
       if (id === 'ex4000')        adj += 3;
