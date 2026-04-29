@@ -251,42 +251,28 @@ function generateExplanation(recommendedId, altId, answers, tier, detectedBizTyp
   const bizRec  = detectedBizType ? BUSINESS_TYPE_RECOMMENDATIONS[detectedBizType] : null;
   const lines   = [];
 
-  // Primary recommendation reason
+  // Primary reason
   if (bizRec) {
-    lines.push(`${recName} is recommended for ${bizRec.label} businesses — ${bizRec.rationale.replace(/\.$/, '').toLowerCase()}.`);
+    lines.push(`${recName} fits ${bizRec.label} — ${bizRec.rationale.replace(/\.$/, '').toLowerCase()}.`);
   } else {
-    lines.push(`${recName} is your best match based on your transaction volume, business setup, and cost profile.`);
+    lines.push(`${recName} best matches your volume and business profile.`);
   }
 
-  // Performance context
-  const tierLabel = { low: 'low', medium: 'moderate', high: 'high', very_high: 'very high' }[tier] || tier;
-  lines.push(`With ${tierLabel} monthly transaction volume, this terminal offers the right balance of performance and running cost.`);
-
-  // Printer note
-  if (answers.needsPrinter) {
-    if (recommendedId === 'ex4000' || recommendedId === 'saturn-1000f2') {
-      lines.push(`It includes a built-in receipt printer to match your requirement.`);
-    } else if (recommendedId === 'link-2500') {
-      lines.push(`It can pair with a Bluetooth printer for receipt printing.`);
-    }
+  // Printer / meal voucher / premium — only if relevant
+  if (answers.needsPrinter && (recommendedId === 'ex4000' || recommendedId === 'saturn-1000f2')) {
+    lines.push(`Built-in receipt printer included.`);
+  } else if (answers.needsPrinter && recommendedId === 'link-2500') {
+    lines.push(`Pairs with a Bluetooth printer for receipts.`);
   }
-
-  // Meal voucher note
   if (answers.needsMealVouchers && (recommendedId === 'ex4000' || recommendedId === 'saturn-1000f2')) {
-    lines.push(`It supports meal vouchers — important for your business type.`);
+    lines.push(`Supports meal vouchers.`);
   }
-
-  // Premium note
   if ((answers.avgSpend || 0) >= 250 && recommendedId === 'saturn-1000f2') {
-    lines.push(`The premium countertop design fits the high-value transactions your customers expect.`);
+    lines.push(`Premium countertop design suits high-value transactions.`);
   }
 
-  // Alternative reason
-  if (bizRec && bizRec.alternative === altId) {
-    lines.push(`${altName} is the recommended alternative — offering a good balance of capability and flexibility for your profile.`);
-  } else {
-    lines.push(`${altName} is a strong alternative with a slightly different cost and feature balance.`);
-  }
+  // Alternative
+  lines.push(`${altName} is the alternative.`);
 
   return lines;
 }
